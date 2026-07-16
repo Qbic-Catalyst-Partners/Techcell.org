@@ -1,0 +1,305 @@
+<div class="container">
+  <div class="">
+    <div class="row align-items-center">
+      <div class="col-lg-6 text-center">
+        <div class="w-75 mx-auto">
+          <img
+            class="img-fluid"
+            src="../../../../assets/images/contact-us.png"
+            alt="contact-us.png"
+          />
+        </div>
+        <div>
+          <p class="c-text-secondary">
+            Our streamlined feedback form simplifies the process for anyone to
+            share their thoughts, report issues, or ask questions.
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body p-2">
+            <blockquote class="blockquote">
+              <p class="mb-2">Questions, bug reports, feedback, requests</p>
+              <footer class="blockquote-footer text-end">
+                we're here for all.
+              </footer>
+            </blockquote>
+            <form
+              class="form-box"
+              [formGroup]="headerForm"
+              (ngSubmit)="submitData()"
+              ngbAutofocus
+            >
+              <div class="form-group">
+                <label for="category">Category</label>
+                <select
+                  formControlName="category"
+                  class="form-select"
+                  aria-label="Default select example"
+                  id="category"
+                  name="category"
+                >
+                  <option class="text-gray" value="" disabled>Category</option>
+                  <option *ngFor="let cat of categoryList" [value]="cat.name">
+                    {{ cat.name }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    (fieldName['category'].touched || isSubmitted) &&
+                    fieldName['category'].errors
+                  "
+                >
+                  <div
+                    *ngIf="fieldName['category'].errors?.['required']"
+                    class="text-danger d-inline-block mt-1"
+                  >
+                    Please enter category
+                  </div>
+                </div>
+              </div>
+              <div class="form-group mt-2">
+                <label for="subject">Subject</label>
+                <input
+                  formControlName="subject"
+                  type="text"
+                  class="form-control"
+                  id="subject"
+                  placeholder="Enter Subject"
+                  required
+                  [maxlength]="maxChars"
+                />
+                <div class="remaining-character d-flex align-items-baseline">
+                  <div
+                    *ngIf="
+                      (fieldName['subject'].touched || isSubmitted) &&
+                      fieldName['subject'].errors
+                    "
+                  >
+                    <div
+                      *ngIf="fieldName['subject'].errors?.['required']"
+                      class="text-danger d-inline-block mt-1"
+                    >
+                      Please enter subject
+                    </div>
+                  </div>
+                  <div class="ms-auto c-text-secondary">
+                    {{ fieldName["subject"].value?.length }}/{{ maxChars }}
+                    Characters left
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea
+                  formControlName="message"
+                  type="text"
+                  class="form-control"
+                  id="message"
+                  placeholder="Message"
+                  required
+                  name=""
+                  id=""
+                  cols="30"
+                  rows="5"
+                  [maxlength]="descriptionMaxChars"
+                ></textarea>
+                <div class="d-flex align-items-baseline">
+                  <div
+                    *ngIf="
+                      (fieldName['message'].touched || isSubmitted) &&
+                      fieldName['message'].errors
+                    "
+                  >
+                    <div
+                      *ngIf="fieldName['message'].errors?.['required']"
+                      class="text-danger mt-1"
+                    >
+                      Please enter message
+                    </div>
+                  </div>
+                  <div class="ms-auto c-text-secondary remaining-character">
+                    {{ fieldName["message"].value?.length }}/{{
+                      descriptionMaxChars
+                    }}
+                    Characters left
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="fw-medium">Attach File</div>
+                <div class="d-flex align-items-center btn-container gap-3">
+                  <div class="upload-btn-wrapper">
+                    <button class="upload-btn">Upload</button>
+                    <input
+                      type="file"
+                      name="screenShot"
+                      [accept]="imageType"
+                      (change)="upload($event, 'screenShot')"
+                      formControlName="screenShot"
+                    />
+                  </div>
+                  <div class="d-flex align-items-center flex-1 gap-2">
+                    <img
+                      src="../../../../assets/svg/info.svg"
+                      class="info-icon"
+                      alt="Info icon"
+                      (mouseenter)="onMouseEnter()"
+                      (mouseleave)="onMouseLeave()"
+                    />
+                    <div class="file-size" *ngIf="showFileSize">
+                      (.jpg, .png, .jpeg, .doc or .pdf) Max size 1 MB
+                    </div>
+                  </div>
+                  <div
+                    class="file-name mx-3"
+                    *ngIf="fieldName['screenShot'].valid"
+                  >
+                    {{ screenShotName }}
+                  </div>
+                  <div
+                    *ngIf="
+                      (fieldName['screenShot'].touched || isSubmitted) &&
+                      fieldName['screenShot'].errors
+                    "
+                    class="mx-2"
+                  >
+                    <div
+                      *ngIf="fieldName['screenShot'].errors?.['required']"
+                      class="text-danger d-inline-block mt-1"
+                    >
+                      Please add Profile photo
+                    </div>
+                    <div
+                      *ngIf="fieldName['screenShot'].errors?.['fileSize'] && !fieldName['screenShot'].errors?.['fileType']"
+                      class="text-danger d-inline-block mt-1"
+                    >
+                      File size exceeds the limit (1 MB).
+                    </div>
+                    <div
+                      *ngIf="fieldName['screenShot'].errors?.['fileType']"
+                      class="text-danger d-inline-block mt-1"
+                    >
+                      Invalid File Type
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center submit-btn">
+                <button type="submit" class="btn btn-primary">Send</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row">
+       
+        <div class="col-12 col-sm-5 col-md-5 col-lg-5 d-flex flex-column justify-content-center ">
+            <div class="p-lg-3 p-md-3 p-sm-3">
+                <img class="img-fluid" src="../../../../assets/images/contact-us.png" alt="contact-us.png">
+            </div>
+            <div class="info-text">
+                Our streamlined feedback form simplifies the process for anyone to share their thoughts, report issues,
+                or ask questions.
+            </div>
+        </div>
+        <div class="col-12 col-sm-7 col-md-7 col-lg-7 position-relative">
+            <div class="border m-1 m-lg-3 m-md-3 m-sm-3 main-box pe-1 pe-lg-3 pe-md-3 pe-sm-3 px-1 px-lg-3 px-md-3 px-sm-3 pt-1 pt-lg-3 pt-md-3 pt-sm-3 pb-2">
+                <strong>
+                    Questions, bug reports, feedback, requests
+                </strong>
+                <div class="d-flex justify-content-end text-black-50">
+                    - we're here for all.
+                </div>
+                <div class="container-fluid form-box">
+                    <div class="row">
+                        <form class="form-box" [formGroup]="headerForm" (ngSubmit)="submitData()" ngbAutofocus>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select formControlName="category" class="form-select"
+                                    aria-label="Default select example" id="category" name="category">
+                                    <option class="text-gray" value="" disabled>Category</option>
+                                    <option *ngFor="let cat of categoryList" [value]="cat.name">
+                                        {{cat.name}}
+                                    </option>
+                                </select>
+                                <div
+                                    *ngIf="(fieldName['category'].touched || isSubmitted) && fieldName['category'].errors">
+                                    <div *ngIf="fieldName['category'].errors?.['required']"
+                                        class="text-danger d-inline-block mt-1">
+                                        Please enter category
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="subject">subject</label>
+                                <input formControlName="subject" type="text" class="form-control" id="subject"
+                                    placeholder="Enter Subject" required [maxlength]="maxChars" />
+                                    <div class="remaining-character d-flex justify-content-end">
+                                        {{fieldName['subject'].value?.length}}/{{maxChars}} Characters left
+                                    </div>
+                                <div
+                                    *ngIf="(fieldName['subject'].touched || isSubmitted) && fieldName['subject'].errors">
+                                    <div *ngIf="fieldName['subject'].errors?.['required']"
+                                        class="text-danger d-inline-block mt-1">
+                                        Please enter subject
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea formControlName="message" type="text" class="form-control" id="message"
+                                    placeholder="message" required name="" id="" cols="30" rows="5" [maxlength]="descriptionMaxChars"></textarea>
+                                    <div class="remaining-character d-flex justify-content-end">
+                                        {{fieldName['message'].value?.length}}/{{descriptionMaxChars}} Characters left
+                                    </div>
+                                <div
+                                    *ngIf="(fieldName['message'].touched || isSubmitted) && fieldName['message'].errors">
+                                    <div *ngIf="fieldName['message'].errors?.['required']"
+                                        class="text-danger d-inline-block mt-1">
+                                        Please enter message
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center btn-container mt-2">
+                                <strong class="me-3 fw-medium">Attach File </strong>
+                                <div class="upload-btn-wrapper">
+                                    <button class="upload-btn">Upload</button>
+                                    <input type="file" name="screenShot" [accept]="imageType"
+                                        (change)="upload($event, 'screenShot')" formControlName="screenShot" />
+                                </div>
+                                <div class="file-name mx-3" *ngIf="fieldName['screenShot'].valid">
+                                    {{screenShotName}}
+                                </div>
+                                <div *ngIf="(fieldName['screenShot'].touched || isSubmitted) && fieldName['screenShot'].errors"
+                                    class="mx-2">
+                                    <div *ngIf="fieldName['screenShot'].errors?.['required']"
+                                        class="text-danger d-inline-block mt-1">
+                                        Please add Profile photo
+                                    </div>
+                                    <div *ngIf="fieldName['screenShot'].errors?.['fileSize'] && !fieldName['screenShot'].errors?.['fileType']"
+                                        class="text-danger d-inline-block mt-1">
+                                        File size exceeds the limit (1 MB).
+                                    </div>
+                                    <div *ngIf="fieldName['screenShot'].errors?.['fileType']" class="text-danger d-inline-block mt-1">
+                                        Invalid File Type
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-size">
+                                (.jpg, .png, .jpeg, .doc or .pdf) Max size 1 MB
+                            </div>
+                            <div class="d-flex justify-content-center submit-btn">
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>

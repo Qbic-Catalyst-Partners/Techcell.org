@@ -1,0 +1,295 @@
+<div class="container p-3">
+  <div class="row modal-h-ctrl">
+    <div class="d-flex justify-content-between mb-2 align-items-center">
+      <p class="fs-5 fw-semibold">Upload Blog</p>
+      <img
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="cur-p add-blog-close"
+        (click)="close()"
+      />
+    </div>
+    <div class="col-12">
+      <div>
+        <form
+          [formGroup]="blogForm"
+          (ngSubmit)="submitForm()"
+          autocomplete="off"
+          ngbAutofocus
+        >
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 mb-2">
+              <label for="title">Title<span class="text-danger">*</span></label>
+              <input
+                formControlName="title"
+                type="text"
+                class="form-control"
+                id="title"
+                placeholder="Enter Blog Title"
+                required
+                [maxlength]="maxChars"
+              />
+              <div class="remaining-character d-flex justify-content-end">
+                {{ fieldName["title"].value?.length }}/{{ maxChars }}
+                Characters left
+              </div>
+              <div
+                *ngIf="
+                  (fieldName['title'].touched || isSubmitted) &&
+                  fieldName['title'].errors
+                "
+              >
+                <div
+                  *ngIf="fieldName['title'].errors?.['required']"
+                  class="c-text-danger text-danger d-inline-block mt-1"
+                >
+                  Please enter Title
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 mb-2">
+              <label for="title"
+                >Short Description<span class="text-danger">*</span></label
+              >
+              <input
+                formControlName="shortDescription"
+                type="text"
+                class="form-control"
+                id="ShortDescription"
+                placeholder="Enter short Description"
+                required
+                [maxlength]="maxChars"
+              />
+              <div class="remaining-character d-flex justify-content-end">
+                {{ fieldName["shortDescription"].value?.length }}/{{ maxChars }}
+                Characters left
+              </div>
+              <div
+                *ngIf="
+                  (fieldName['shortDescription'].touched || isSubmitted) &&
+                  fieldName['shortDescription'].errors
+                "
+              >
+                <div
+                  *ngIf="fieldName['shortDescription'].errors?.['required']"
+                  class="c-text-danger text-danger d-inline-block mt-1"
+                >
+                  Please enter Short Description
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 mb-2">
+              <label for="PrimaryTag"
+                >Primary Tag<span class="text-danger">*</span></label
+              >
+              <div class="tag-input">
+                <tag-input
+                  formControlName="tags"
+                  [identifyBy]="'id'"
+                  [displayBy]="'description'"
+                  [onlyFromAutocomplete]="true"
+                  (input)="getText($event)"
+                  [onTextChangeDebounce]="1000"
+                  [maxItems]="1"
+                >
+                  <tag-input-dropdown
+                    [appendToBody]="true"
+                    [autocompleteItems]="tagItems"
+                    [identifyBy]="'id'"
+                    [displayBy]="'description'"
+                    [zIndex]="99999"
+                  >
+                  </tag-input-dropdown>
+                </tag-input>
+              </div>
+              <div
+                *ngIf="
+                  (fieldName['tags'].touched || isSubmitted) &&
+                  fieldName['tags'].errors
+                "
+              >
+                <div
+                  *ngIf="fieldName['tags'].errors?.['required']"
+                  class="c-text-danger text-danger d-inline-block mt-1"
+                >
+                  Please enter Primary Tag
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 mb-2">
+              <label for="title">Secondary Tag</label>
+              <div class="tag-input">
+                <tag-input
+                  formControlName="secondaryTag"
+                  [identifyBy]="'id'"
+                  [displayBy]="'description'"
+                  [onlyFromAutocomplete]="true"
+                  (input)="getText($event)"
+                  [onTextChangeDebounce]="1000"
+                >
+                  <tag-input-dropdown
+                    [appendToBody]="true"
+                    [autocompleteItems]="tagItems"
+                    [identifyBy]="'id'"
+                    [displayBy]="'description'"
+                    [zIndex]="99999"
+                  >
+                  </tag-input-dropdown>
+                </tag-input>
+              </div>
+              <div
+                *ngIf="
+                  (fieldName['secondaryTag'].touched || isSubmitted) &&
+                  fieldName['secondaryTag'].errors
+                "
+              >
+                <div
+                  *ngIf="fieldName['secondaryTag'].errors?.['required']"
+                  class="c-text-danger text-danger d-inline-block mt-1"
+                >
+                  Please enter Secondary Tag
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-12 col-lg-12 mb-2">
+              <label for="title"
+                >Description<span class="text-danger">*</span></label
+              >
+              <textarea
+                class="form-control"
+                id="description"
+                formControlName="description"
+                placeholder="Description"
+                required
+                rows="4"
+                [maxlength]="descriptionMaxChars"
+              >
+              </textarea>
+              <div class="remaining-character d-flex justify-content-end">
+                {{ fieldName["description"].value?.length }}/{{
+                  descriptionMaxChars
+                }}
+                Characters left
+              </div>
+              <div
+                *ngIf="
+                  (fieldName['description'].touched || isSubmitted) &&
+                  fieldName['description'].errors
+                "
+              >
+                <div
+                  *ngIf="fieldName['description'].errors?.['required']"
+                  class="c-text-danger text-danger d-inline-block mt-1"
+                >
+                  Please enter Description
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 mb-3">
+              <div
+                class="d-flex align-items-center btn-container gap-2 fileUplod-mobile-screen info-container"
+              >
+                <label for="title" class="m-0 form-label"
+                  >Thumbnail<span class="text-danger">*</span></label
+                >
+                <div class="upload-btn-wrapper">
+                  <button class="upload-btn">Upload</button>
+                  <input
+                    type="file"
+                    id="upload"
+                    name="Thumbnail"
+                    [accept]="imageType"
+                    (change)="upload($event)"
+                    formControlName="thumbnail"
+                  />
+                </div>
+                <div class="tooltip-wrapper">
+                  <div class="file-info">
+                    <img
+                      class="info-icon-img cur-p"
+                      (mouseenter)="activeThumbnailTooltip = true"
+                      (mouseleave)="activeThumbnailTooltip = false"
+                      src="../../../../assets/svg/info.svg"
+                      alt="Info Icon"
+                    />
+                  </div>
+                  <div class="file-tooltip" *ngIf="activeThumbnailTooltip">
+                    (.jpg, .png, .jpeg) Max size 1 mb
+                  </div>
+                </div>
+                <div
+                  class="file-name mx-3"
+                  *ngIf="fieldName['thumbnail'].valid"
+                >
+                  {{ thubnilName }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  (fieldName['thumbnail'].touched || isSubmitted) &&
+                  fieldName['thumbnail'].errors
+                "
+              >
+                <div
+                  *ngIf="fieldName['thumbnail'].errors?.['required']"
+                  class="text-danger d-inline-block mt-1"
+                >
+                  Please add Thumbnail
+                </div>
+                <div
+                  *ngIf="fieldName['thumbnail'].errors?.['fileSize'] && !fieldName['thumbnail'].errors?.['fileType']"
+                  class="text-danger d-inline-block mt-1"
+                >
+                  File size exceeds the limit (1 MB).
+                </div>
+                <div
+                  *ngIf="fieldName['thumbnail'].errors?.['fileType']"
+                  class="text-danger d-inline-block mt-1"
+                >
+                  Invalid File Type
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <angular-editor #blogEditor [config]="editorConfig" formControlName="blogContent"></angular-editor>
+            <div
+              *ngIf="
+                (fieldName['blogContent'].touched || isSubmitted) &&
+                fieldName['blogContent'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['blogContent'].errors?.['required']"
+                class="c-text-danger text-danger d-inline-block mt-1"
+              >
+                Please add Blog Content
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-2">
+            <div class="d-flex justify-content-center align-items-center gap-3">
+              <button
+                type="button"
+                class="btn c-pop-btn-outline"
+                (click)="close()"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn c-pop-btn-primary">
+                Confirm
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

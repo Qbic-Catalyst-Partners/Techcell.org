@@ -1,0 +1,366 @@
+@import "../../../../styles/variables";
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid rgb(20, 69, 87);
+  background-color: rgb(20, 69, 87);
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: block;
+    object-fit: cover;
+  }
+}
+
+.profile-box {
+  height: calc(100vh - 100px);
+  overflow-y: scroll;
+}
+
+.profile-box::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.profile-box::-webkit-scrollbar {
+  width: 3px;
+  background-color: #f5f5f5;
+}
+
+.profile-box::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgba(20, 69, 87, 1);
+}
+
+.user-info-box {
+  width: 50%;
+}
+
+.user-name {
+  color: var(--c-text-primary);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.user-type {
+  color: #8787a3;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.user-level {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--c-text-secondary);
+}
+
+.user-experience {
+  font-size: 14px;
+  font-weight: 400;
+  color: #8787a3;
+  text-align: center;
+}
+
+.hr-line {
+  width: 60%;
+  text-align: left;
+  margin-left: 0;
+  color: black !important;
+  border: 0.8px solid black;
+  opacity: 1;
+}
+
+.my-info-card {
+  width: calc(100% - 200px);
+  .card-header {
+    background-color: rgba(77, 119, 135, 1);
+    color: $white;
+    font-size: 22px;
+  }
+
+  .edit-btn {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    border-radius: 30px;
+    padding: 1px 12px;
+    background-color: #144557 !important;
+    color: #fff;
+    border: none;
+    // &:hover {
+    //   color: rgba(28, 181, 235, 1);
+    // }
+
+    &:active,
+    &:focus {
+      border: none;
+    }
+
+    img {
+      width: 16px;
+    }
+  }
+
+  .field-box {
+    width: 100%;
+    display: flex;
+
+    input,
+    select {
+      border: 1px solid rgba(28, 181, 235, 1);
+      padding: 0.575rem 0.75rem;
+    }
+    .col-form-label {
+      font-weight: 500;
+      color: rgba(16, 21, 64, 1);
+    }
+  }
+  @media (max-width: 575.98px) {
+    width: 100%;
+  }
+}
+
+// Below Css is for upload button
+.upload-btn-wrapper {
+  position: relative;
+  width: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  input[type="file"] {
+    z-index: 1;
+  }
+
+  .file-info {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.upload-btn {
+  color: $white;
+  background-color: $button-primary;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.file-name {
+  color: $red;
+}
+
+.box-s {
+  box-shadow: 0 5px 7px -6px;
+}
+
+.content-tagging {
+  font-size: 14px;
+  color: var(--c-text-secondary);
+  text-align: center;
+  line-height: 22px;
+}
+
+.tags-container {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  border: 1px solid #144557;
+  cursor: default;
+  outline: none;
+  border-radius: 200px;
+  height: 26px;
+}
+
+.chip-content {
+  cursor: inherit;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding-left: 12px;
+  font-size: 14px;
+  line-height: 100%;
+  color: var(--c-text-primary);
+}
+
+.chip-svg {
+  color: #999999;
+  cursor: pointer;
+  height: auto;
+  margin: 4px 4px 0 -8px;
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  font-size: 24px;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.chip-close {
+  cursor: pointer;
+  svg {
+    width: 16px;
+    height: 16px;
+    margin: 0 2px;
+  }
+}
+
+.disabledBtn {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.form-select-deactive {
+  border: 1px solid #e9ecef !important;
+}
+
+.input-group-eye {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .my-info-card {
+    .field-box {
+      display: block;
+    }
+  }
+}
+
+// Small Device Break point //
+@media (max-width: 575.98px) {
+  .user-info-box {
+    width: 100%;
+  }
+  .img-avatar {
+    margin: 0;
+  }
+}
+
+////////////////////////////////////////////
+// Simtech code
+
+.form-control {
+  font-size: 14px;
+  padding: 0.575rem 0.75rem;
+  color: #667085;
+  background-color: #d4d2d2 !important;
+
+  &::placeholder {
+    font-size: 14px;
+  }
+}
+
+select.form-control {
+  padding-right: 40px;
+}
+
+.form-control-active,
+select.form-control:not(.form-select-deactive) {
+  border: 1px solid #d4d2d2 !important;
+  background-color: #fff !important;
+
+  &::placeholder {
+    color: #bebebe;
+  }
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+}
+
+.text-danger {
+  font-size: 14px;
+}
+
+.img-avatar {
+  margin: 0;
+}
+
+.card-header {
+  .edit-btn {
+    font-size: 14px;
+  }
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.tooltip-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-tooltip {
+  color: #828282;
+  background-color: #ffdd9a;
+  border-radius: 10px;
+  padding: 6px 10px;
+  display: grid;
+  grid-template-columns: max-content;
+  font-size: 14px;
+}
+
+.card-info-title {
+  font-size: 14px;
+}
+
+label {
+  font-size: 14px;
+}
+
+select {
+  font-size: 15px;
+}
+
+::ng-deep .ng2-tag-input__text-input {
+  width: 100%;
+}
+
+.input-group-text {
+  font-size: 14px;
+}
+
+.btn.edit-btn.disabled-btn {
+  background-color: #144557 !important;
+  border: none;
+
+  &:active,
+  &:focus {
+    border: none;
+  }
+}
+
+::ng-deep .chip {
+  border: 1px solid #8787a3 !important;
+
+  .chip-content {
+    color: #8787a3;
+  }
+}

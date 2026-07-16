@@ -1,0 +1,36 @@
+<!-- All Notifications tab content -->
+<article [ngClass]="{'noti-card': true, 'unread': !n.isRead}" *ngFor="let n of allNotifications" (click)="onCardClick($event, n)">
+  <span class="noti-card__indicator" [ngClass]="{ 'unread': !n.isRead }"></span>
+  <span class="noti-card__img-wrapper">
+    <img class="noti-card__img cur-p" [src]="n.photoUrl" alt="user" (click)="viewProfile(n); $event.stopPropagation()" />
+  </span>
+  <div class="noti-card__content d-flex">
+    <span class="noti-card__time-sm d-lg-none">{{ n.createdDate | relativeTime }}</span>
+    <span class="noti-card__text-content" [innerHTML]="n.message | safeHtml" (click)="onMessageClick($event, n)"></span>
+
+    <!-- Show comment content or rejection reason -->
+    <span class="noti-card__comment-content" *ngIf="n.formattedCommentContent" [innerHTML]="n.formattedCommentContent" (click)="onMessageClick($event, n)"></span>
+    <span class="noti-card__comment-content" *ngIf="!n.formattedCommentContent && n.reason">{{ n.reason }}</span>
+
+    <ng-container *ngIf="n.eventType === 'PROJECT_INVITE'">
+      <span class="noti-card__project-action-btns" *ngIf="n.inviteStatus === 'INVITED'">
+        <button class="btn c-pop-btn-primary btn-sm me-2" (click)="acceptInvite(n); $event.stopPropagation()">Accept</button>
+        <button class="btn c-pop-btn-outline btn-sm" (click)="rejectInvite(n); $event.stopPropagation()">Reject</button>
+      </span>
+      <span class="status-accepted" *ngIf="n.inviteStatus === 'ACCEPTED'">Accepted</span>
+      <span *ngIf="n.inviteStatus === 'DECLINED'" class="status-rejected">Rejected</span>
+    </ng-container>
+  </div>
+  <span class="noti-card__time d-none d-lg-block">{{ n.createdDate | relativeTime }}</span>
+  <button mat-icon-button class="action-btn ms-2" [ngbTooltip]="actionTpl" [tooltipContext]="{n: n, tooltip: actT}" triggers="manual" #actT="ngbTooltip" (click)="toggleTooltip(actT); $event.stopPropagation()">
+    <img src="/assets/svg/action-icon.svg" alt="action" class="action-icon" />
+  </button>
+</article>
+
+<ng-template #actionTpl let-n="n" let-tooltip="tooltip">
+  <div class="action-tooltip">
+    <div class="action-item" (click)="markAsRead(n, tooltip);" *ngIf="!n.isRead">Mark as read</div>
+    <div class="action-item" (click)="markAsUnread(n, tooltip);" *ngIf="n.isRead">Mark as unread</div>
+    <div class="action-item" (click)="clear(n, tooltip);">Clear</div>
+  </div>
+</ng-template> 

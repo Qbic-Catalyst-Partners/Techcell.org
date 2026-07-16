@@ -1,0 +1,354 @@
+.video-container {
+  // min-height: 400px;
+}
+
+.video-modal-height {
+  max-height: 80vh;
+}
+
+.approve {
+  color: #ffffff;
+  background-color: #2d7734;
+}
+.reject {
+  background-color: #d92e2e;
+  color: #ffffff;
+}
+
+.video-parent-container {
+  background-color: #fff;
+  border-radius: 12px;
+
+  padding: 10px 0;
+
+  &__inner {
+    max-height: 510px;
+
+    overflow-y: scroll;
+
+    @media (min-width: 768px) {
+      max-height: 700px;
+    }
+
+    &::-webkit-scrollbar {
+      width: 3px;
+      background-color: #f5f5f5;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      // border-radius: 6px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: rgba(20, 69, 87, 1);
+    }
+  }
+}
+
+// /* You can also customize other aspects of the modal */
+// .custom-size-modal .modal-content {
+//   max-height: 700px; /* For example, 80% of viewport height */
+//   height: 85vh; /* Maximum height */
+//   overflow-y: scroll;
+
+//   &::-webkit-scrollbar {
+//     width: 1px;
+//     background-color: #f5f5f5;
+//   }
+
+//   &::-webkit-scrollbar-thumb {
+//     // border-radius: 6px;
+//     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+//     background-color: rgba(20, 69, 87, 1);
+//   }
+// }
+
+.name {
+  font-size: 20px;
+  color: rgba(65, 65, 65, 1);
+}
+
+.posted-date {
+  font-size: 20px;
+  color: rgba(155, 147, 147, 1);
+}
+
+.comment-input-wrapper {
+  position: relative;
+  .comment-input {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    height: 61px;
+    border: 0.5px solid rgba(0, 0, 0, 1);
+    border-radius: 40px;
+    padding: 0px 17px;
+    border: 0.5px solid rgba(0, 0, 0, 1);
+    &:focus {
+      outline: none;
+    }
+  }
+  .send-message {
+    position: absolute;
+    right: 74px;
+  }
+}
+
+.title {
+  color: rgba(3, 0, 0, 1);
+  font-size: 16px;
+}
+
+.feed-like,
+.views,
+.feed-comments {
+  font-size: 14px;
+}
+
+.feed-comments {
+  color: rgba(4, 107, 236, 1);
+}
+.view-more {
+  color: rgba(4, 107, 236, 1);
+  font-weight: 400;
+  img {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.title-text {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #414141;
+}
+
+.posted {
+  color: #9b9393;
+  font-family: Lato;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.icon-img {
+  color: #144557;
+}
+
+.images {
+  position: relative;
+}
+
+.lady-image {
+  position: absolute;
+  top: 10px;
+  right: 7px;
+}
+
+.video-wrapper {
+}
+
+.avatar-round {
+  cursor: pointer;
+}
+
+.text-title {
+  color: #414141;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 0;
+  line-height: 100%;
+  // flex-basis: 20%;
+
+  &:hover {
+    text-decoration: underline;
+    color: rgb(4, 107, 236);
+    
+    // Ensure nested spans (e.g., last name) also get the underline & color
+    span {
+      text-decoration: underline;
+      color: rgb(4, 107, 236);
+    }
+  }
+}
+
+.posted-date {
+  font-size: 12px;
+  color: #b6b6b6;
+
+  @media (min-width: 576px) {
+    font-size: 14px;
+  }
+}
+
+.title,
+.short-description {
+  font-size: 12px;
+}
+
+.line-h-100 {
+  line-height: 100%;
+}
+
+.title {
+  color: var(--c-text-primary);
+  font-weight: 600;
+}
+
+.short-description {
+  color: var(--c-text-secondary);
+}
+
+.comment-header {
+  color: #110101;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 23px;
+  letter-spacing: 0em;
+}
+
+.sub-comment {
+  color: #535353;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0em;
+}
+
+.comment-body {
+  color: #0b0000;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0em;
+  padding-right: 5px;
+}
+
+.comment-tooltip {
+  position: absolute;
+  background: #ffffff;
+  padding: 5px 10px;
+  right: 10px;
+  top: 25px;
+  z-index: 1;
+  // filter: drop-shadow(2px 2px 2px #ECECEC);
+  box-shadow: 0 5px 7px -6px;
+}
+
+.close-icon {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.author-img {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #b4b4b4;
+  transition: all 0.3s ease;
+  outline: solid 3px transparent;
+  outline-offset: 3px;
+  cursor: pointer;
+
+  &:hover {
+    outline: solid 3px #5399b2;
+    box-shadow: 0px 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.video-header {
+  padding: 10px;
+}
+
+.video-footer {
+  padding: 0 10px;
+}
+
+.share-section {
+  display: flex;
+  gap: 12px;
+}
+
+.comment-section {
+  padding: 0 10px;
+}
+
+.video-description-container {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.video-description {
+  padding: 10px;
+  padding-top: 8px;
+  background-color: #eee;
+  border-radius: 8px;
+  height: 34px;
+  overflow: hidden;
+  position: relative;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: height;
+
+  &.expanded {
+    overflow: visible;
+  }
+}
+
+.video-description-show-more {
+  position: absolute;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 200px;
+  background-image: linear-gradient(to right, transparent, #eee 50%, #eee 100%);
+  cursor: pointer;
+  color: #046bec;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 1;
+  pointer-events: auto;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.video-description-show-less {
+  cursor: pointer;
+  color: #046bec;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 1;
+  pointer-events: auto;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.video-legal-text {
+  color: var(--c-text-secondary);
+  font-size: 12px;
+}

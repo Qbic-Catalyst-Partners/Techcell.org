@@ -1,0 +1,71 @@
+<div class="container-fluid max-height mb-5 mt-3">
+  <!-- <div class="mt-5"> -->
+  <ng-container
+    *ngFor="
+      let item of all_software_list;
+      let i = index;
+      let first = first;
+      let last = last
+    "
+  >
+    <div
+      class=""
+      appScroll
+      (elementVisible)="getData($event)"
+      [isTargetElement]="i + 1 === all_software_list.length"
+      *ngIf="i + 1 === all_software_list.length"
+    >
+      <ng-container
+        *ngTemplateOutlet="content; context: { item }"
+      ></ng-container>
+    </div>
+    <div class="" *ngIf="i + 1 != all_software_list.length">
+      <ng-container
+        *ngTemplateOutlet="content; context: { item }"
+      ></ng-container>
+    </div>
+  </ng-container>
+  <!-- </div> -->
+</div>
+
+<ng-template #content let-item="item">
+  <div class="software-card">
+    <div class="software-card__img-wrapper">
+      <img
+        [src]="item.thumbnail"
+        alt="Card image cap"
+        class="software-card__img"
+      />
+    </div>
+    <div class="software-card__content">
+      <div class="software-card__row">
+        <span class="software-card__property">Software:</span>
+        <span class="software-card__value" [title]="item.softwareName">
+          {{ commonService.trimText(item.softwareName, 8) }}</span
+        >
+      </div>
+      <div class="software-card__row">
+        <span class="software-card__property">Version:</span>
+        <span class="software-card__value">{{ item.version }}</span>
+      </div>
+      <div class="software-card__row">
+        <span class="software-card__property">Release date:</span>
+        <span class="software-card__value">{{
+          item.releaseDate | date : "dd/MM/YYYY"
+        }}</span>
+      </div>
+      <button
+        class="btn btn-primary software-card__download-btn"
+        (click)="downloadSoftware(item)"
+        [ngClass]="item?.status == 'Active' ? 'cur-p' : 'disable'"
+      >
+        <img
+          class="download-btn cur-p"
+          src="../../../../assets/svg/material-symbols_download.svg"
+          alt="download btn"
+        />
+        Download
+      </button>
+    </div>
+  </div>
+</ng-template>

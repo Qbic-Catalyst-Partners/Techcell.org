@@ -1,0 +1,882 @@
+<div class="container-fluid px-lg-4">
+  <form [formGroup]="registerForm" (ngSubmit)="submitForm()" autocomplete="off">
+    <div class="px-2 py-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="firstName"
+              >First Name<sup class="text-danger fs-6">*</sup></label
+            >
+            <input
+              formControlName="firstName"
+              type="text"
+              class="form-control"
+              id="firstName"
+              placeholder="Enter your First name"
+              required
+              (keydown)="this.commonService.alphaOnly($event)"
+            />
+            <div
+              *ngIf="
+                (fieldName['firstName'].touched || isSubmitted) &&
+                fieldName['firstName'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.firstName?.errors?.['required']">
+                First Name is required
+              </div>
+              <div
+                *ngIf="fieldName['firstName'].errors?.['maxlength']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Max Character can't be more then 50
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="lastName"
+              >Last Name<sup class="text-danger fs-6">*</sup></label
+            >
+            <input
+              formControlName="lastName"
+              type="text"
+              class="form-control"
+              id="lastName"
+              placeholder="Enter your Last name"
+              (keydown)="this.commonService.alphaOnly($event)"
+            />
+            <div
+              *ngIf="
+                (fieldName['lastName'].touched || isSubmitted) &&
+                fieldName['lastName'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.lastName?.errors?.['required']">
+                Last Name is required
+              </div>
+              <div
+                *ngIf="fieldName['lastName'].errors?.['maxlength']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Max Character can't be more then 50
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="email"
+              >Email Id<sup class="text-danger fs-6">*</sup></label
+            >
+            <input
+              formControlName="email"
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Enter your email"
+            />
+            <div
+              *ngIf="
+                (fieldName['email'].touched || isSubmitted) &&
+                fieldName['email'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.email?.errors?.['required']">
+                Email Id is required
+              </div>
+              <div
+                *ngIf="fieldName['email'].errors?.['pattern']"
+                class="text-danger"
+              >
+                Email Id is not Valid
+              </div>
+              <div
+                *ngIf="fieldName['email'].errors?.['maxlength']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Max Character can't be more then 50
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="mobile"
+              >Mobile Number<sup class="text-danger fs-6">*</sup></label
+            >
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon1">+91</span>
+              <input
+                formControlName="mobile"
+                type="text"
+                class="form-control"
+                id="mobile"
+                placeholder=""
+                maxlength="10"
+                (input)="onMobileInput($event)"
+                (keypress)="onMobileKeyPress($event)"
+              />
+            </div>
+            <div
+              *ngIf="
+                (fieldName['mobile'].touched || isSubmitted) &&
+                fieldName['mobile'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.mobile?.errors?.['required']">
+                Mobile Number is required
+              </div>
+              <div *ngIf="fieldName.mobile?.errors?.['pattern']">
+                Please Enter 10 digit Mobile Number.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3 info-container">
+            <div class="d-flex">
+              <label for="password"
+                >Password<sup class="text-danger fs-6">*</sup></label
+              >
+              <div class="password-info ms-auto">
+                <img
+                  class="info-icon-img cur-p"
+                  (mouseenter)="activeTooltip = true"
+                  (mouseleave)="activeTooltip = false"
+                  src="../../../../assets/svg/info.svg"
+                  alt="Info Icon"
+                />
+              </div>
+            </div>
+            <div class="custom-tooltip" *ngIf="activeTooltip">
+              <b>Password Policy</b>
+              <ul class="m-0 p-0 list-unstyled">
+                <li>1. Min 8 and Max 16 character length</li>
+                <li>2. Must contain 1 special character</li>
+                <li>3. Must contain 1 upper case letter (A to Z)</li>
+                <li>4. Must contain at least 1 number (0 to 9)</li>
+              </ul>
+            </div>
+            <div class="position-relative">
+              <input
+                formControlName="password"
+                class="form-control"
+                id="password"
+                placeholder="Enter password"
+                [type]="isPwd ? 'text' : 'password'"
+                (keydown.space)="$event.preventDefault()"
+              />
+              <img
+                *ngIf="!isPwd"
+                src="./../../../assets/lucide-icons/eye-off.svg"
+                class="input-group-eye"
+                height="30"
+                width="30"
+                alt=""
+                (click)="togglePwd()"
+              />
+              <img
+                *ngIf="isPwd"
+                src="./../../../assets/lucide-icons/eye.svg"
+                class="input-group-eye"
+                height="30"
+                width="30"
+                alt=""
+                (click)="togglePwd()"
+              />
+            </div>
+            <div
+              *ngIf="
+                (fieldName['password'].touched || isSubmitted) &&
+                fieldName['password'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.password?.errors?.['required']">
+                Password is required
+              </div>
+              <div *ngIf="fieldName.password?.errors?.['pattern']">
+                Password Don't meet the requirement
+                <i
+                  class="fa fa-info-circle"
+                  aria-hidden="true"
+                  data-toggle="popover"
+                  title="Popover title"
+                  data-content="And here's some amazing content. It's very engaging. Right?"
+                ></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="confirmPassword"
+              >Confirm Password<sup class="text-danger fs-6">*</sup></label
+            >
+            <div class="position-relative">
+              <input
+                formControlName="confirmPassword"
+                [type]="isCfPwd ? 'text' : 'password'"
+                class="form-control"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                (keydown.space)="$event.preventDefault()"
+              />
+              <img
+                *ngIf="!isCfPwd"
+                src="./../../../assets/lucide-icons/eye-off.svg"
+                class="input-group-eye"
+                height="30"
+                width="30"
+                alt=""
+                (click)="toggleCnfPwd()"
+              />
+              <img
+                *ngIf="isCfPwd"
+                src="./../../../assets/lucide-icons/eye.svg"
+                class="input-group-eye"
+                height="30"
+                width="30"
+                alt=""
+                (click)="toggleCnfPwd()"
+              />
+            </div>
+            <div
+              *ngIf="
+                (fieldName['confirmPassword'].touched || isSubmitted) &&
+                fieldName['confirmPassword'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.confirmPassword?.errors?.['required']">
+                Confirm Password is required
+              </div>
+            </div>
+            <div
+              class="text-danger"
+              *ngIf="fieldName.confirmPassword.value != '' && registerForm.errors?.['PasswordNotMatched']"
+            >
+              Password Does not match
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="gender"
+              >Gender<sup class="text-danger fs-6">*</sup></label
+            >
+            <select
+              formControlName="gender"
+              class="select-option"
+              aria-label="Default select example"
+              id="gender"
+              name="gender"
+            >
+              <option value="">Select Gender</option>
+              <option
+                *ngFor="let gender of genderList"
+                [value]="gender.genderName"
+              >
+                {{ gender.genderName }}
+              </option>
+            </select>
+
+            <div
+              *ngIf="
+                (fieldName['gender'].touched || isSubmitted) &&
+                fieldName['gender'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.gender?.errors?.['required']">
+                Gender is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="dob"
+              >Date of Birth<sup class="text-danger fs-6">*</sup></label
+            >
+            <div class="mat-datepicker">
+              <input
+                class="form-control"
+                [matDatepicker]="picker"
+                placeholder="DD-MM-YYYY"
+                formControlName="dob"
+                (keydown)="this.commonService.tabOnly($event)"
+                [max]="commonService.todayDate"
+              />
+              <mat-datepicker #picker></mat-datepicker>
+              <img
+                class="calendar-icon"
+                (click)="picker.open()"
+                src="./../../../assets/lucide-icons/calender.svg"
+                alt="calendar"
+              />
+            </div>
+            <div
+              *ngIf="
+                (fieldName['dob'].touched || isSubmitted) &&
+                fieldName['dob'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.dob?.errors?.['required']">
+                DOB is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="institute"
+              >Institute/College Name<sup class="text-danger fs-6"
+                >*</sup
+              ></label
+            >
+            <input
+              formControlName="institute"
+              type="text"
+              class="form-control"
+              id="institute"
+              placeholder="Enter institute name"
+              [ngbTypeahead]="searchInstitute"
+              [resultFormatter]="resultFormatInstitute"
+              [inputFormatter]="inputFormatInstitute"
+              popupClass="inst-popup"
+              (selectItem)="onInstituteSelected($event)"
+            />
+            <div
+              *ngIf="
+                (fieldName['institute'].touched || isSubmitted) &&
+                fieldName['institute'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.institute?.errors?.['required']">
+                Institute name is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="AICTECode">AICTE Code</label>
+            <input
+              formControlName="AICTECode"
+              type="text"
+              class="form-control"
+              id="AICTECode"
+              placeholder="AICTE Code"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="city">City</label>
+            <input
+              formControlName="city"
+              type="text"
+              class="form-control"
+              id="city"
+              placeholder="Enter City"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="state">State</label>
+            <input
+              formControlName="state"
+              type="text"
+              class="form-control"
+              id="state"
+              placeholder="Enter State"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="studentId"
+              >Student ID Number<sup class="text-danger fs-6">*</sup></label
+            >
+            <input
+              formControlName="studentId"
+              type="text"
+              class="form-control"
+              id="studentId"
+              placeholder="Enter Student registration number"
+              appIdField
+            />
+            <div
+              *ngIf="
+                (fieldName['studentId'].touched || isSubmitted) &&
+                fieldName['studentId'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.studentId?.errors?.['required']">
+                Student Id is required
+              </div>
+              <div
+                *ngIf="fieldName['studentId'].errors?.['maxlength']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Max Character can't be more then 50
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="pragramName"
+              >Program Name<sup class="text-danger fs-6">*</sup></label
+            >
+            <select
+              formControlName="pragramName"
+              class="select-option registration-select"
+              aria-label="Default select example"
+              (ngModelChange)="selectProgram($event)"
+            >
+              <option value="">Select Program Name</option>
+              <option
+                *ngFor="let prog of programList"
+                [value]="prog.programCode"
+              >
+                {{ prog.description }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                (fieldName['pragramName'].touched || isSubmitted) &&
+                fieldName['pragramName'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.pragramName?.errors?.['required']">
+                Program Name is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="courseLevel">Course Level</label>
+            <input
+              formControlName="courseLevel"
+              type="text"
+              class="form-control"
+              id="courseLevel"
+              placeholder="Enter course level"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="stream"
+              >Stream<sup class="text-danger fs-6">*</sup></label
+            >
+            <select
+              formControlName="stream"
+              class="select-option registration-select"
+              aria-label="Default select example"
+              placeholder="Stream"
+            >
+              <option value="">Select stream</option>
+              <option
+                *ngFor="let stlist of streamList"
+                [value]="stlist.description"
+              >
+                {{ stlist.description }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                (fieldName['stream'].touched || isSubmitted) &&
+                fieldName['stream'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.stream?.errors?.['required']">
+                Stream is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="enrollmentYear"
+              >Enrolment Year<sup class="text-danger fs-6">*</sup></label
+            >
+            <div class="row w-100">
+              <dp-date-picker
+                theme="dp-material"
+                [config]="config1"
+                placeholder="(MM/YYYY)"
+                formControlName="enrollmentYear"
+                required="true"
+                [mode]="'month'"
+                (keydown)="this.commonService.tabOnly($event)"
+              >
+              </dp-date-picker>
+            </div>
+            <div
+              *ngIf="
+                (fieldName['enrollmentYear'].touched || isSubmitted) &&
+                fieldName['enrollmentYear'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.enrollmentYear?.errors?.['required']">
+                Enrollment Year is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="graduationYear"
+              >Graduation Year<sup class="text-danger fs-6">*</sup></label
+            >
+            <div class="row w-100">
+              <dp-date-picker
+                theme="dp-material"
+                [config]="config1"
+                placeholder="(MM/YYYY)"
+                formControlName="graduationYear"
+                required="true"
+                [mode]="'month'"
+                (keydown)="this.commonService.tabOnly($event)"
+              >
+              </dp-date-picker>
+            </div>
+            <div
+              *ngIf="
+                (fieldName['graduationYear'].touched || isSubmitted) &&
+                fieldName['graduationYear'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.graduationYear?.errors?.['required']">
+                Graduation Year is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="securityQuestion"
+              >Security Question<sup class="text-danger fs-6">*</sup></label
+            >
+            <select
+              formControlName="securityQuestion"
+              class="select-option registration-select"
+              aria-label="Default select example"
+              placeholder="Stream"
+            >
+              <option value="">Select security question</option>
+              <option
+                *ngFor="let qlist of securityQuestionList"
+                [value]="qlist.questionId"
+              >
+                {{ qlist.questiondesc }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                (fieldName['securityQuestion'].touched || isSubmitted) &&
+                fieldName['securityQuestion'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.securityQuestion?.errors?.['required']">
+                Security Question is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="securityAnswer"
+              >Security Answer<sup class="text-danger fs-6">*</sup></label
+            >
+            <input
+              formControlName="securityAnswer"
+              type="text"
+              class="form-control"
+              id="securityAnswer"
+              placeholder="Enter security answer"
+              appSpecialChracter
+            />
+            <div
+              *ngIf="
+                (fieldName['securityAnswer'].touched || isSubmitted) &&
+                fieldName['securityAnswer'].errors
+              "
+              class="text-danger"
+            >
+              <div *ngIf="fieldName.securityAnswer?.errors?.['required']">
+                Security Answer is required
+              </div>
+              <div
+                *ngIf="fieldName['securityAnswer'].errors?.['maxlength']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Max Character can't be more then 50
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="d-flex align-items-center">
+            <div
+              class="d-flex align-items-center btn-container gap-2 fileUplod-mobile-screen info-container"
+            >
+              <label for="formFile" class="m-0 form-label">
+                Student Id Card<sup class="text-danger fs-6">*</sup>
+              </label>
+
+              <div class="upload-btn-wrapper">
+                <button class="upload-btn">Upload</button>
+                <input
+                  type="file"
+                  name="studentIdCard"
+                  accept="image/png, image/jpeg"
+                  (change)="upload($event, 'studentId')"
+                  formControlName="studentIdCard"
+                />
+              </div>
+
+              <div class="tooltip-wrapper">
+                <div class="file-info">
+                  <img
+                    class="info-icon-img"
+                    (mouseenter)="activeStudentIdTooltip = true"
+                    (mouseleave)="activeStudentIdTooltip = false"
+                    src="../../../../assets/svg/info.svg"
+                    alt="Info Icon"
+                  />
+                </div>
+
+                <div class="file-tooltip" *ngIf="activeStudentIdTooltip">
+                  (.jpg, .png, .jpeg) Max size 1mb
+                </div>
+              </div>
+            </div>
+            <div
+              class="file-name mx-3"
+              *ngIf="fieldName['studentIdCard'].valid"
+            >
+              {{ commonService.trimText(studentIdCardName, 20) }}
+            </div>
+            <div
+              *ngIf="
+                (fieldName['studentIdCard'].touched || isSubmitted) &&
+                fieldName['studentIdCard'].errors
+              "
+              class=""
+            >
+              <div
+                *ngIf="fieldName['studentIdCard'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please add studentId
+              </div>
+              <div
+                *ngIf="fieldName['studentIdCard'].errors?.['fileSize'] && !fieldName['studentIdCard'].errors?.['fileType']"
+                class="text-danger d-inline-block mt-1"
+              >
+                File size exceeds the limit (1 MB).
+              </div>
+              <div
+                *ngIf="fieldName['studentIdCard'].errors?.['fileType']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Invalid File Type
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="d-flex align-items-center">
+            <div
+              class="d-flex align-items-center btn-container gap-2 fileUplod-mobile-screen info-container"
+            >
+              <label for="formFile" class="m-0 form-label"
+                >Profile Photo<sup class="text-danger fs-6">*</sup></label
+              >
+              <div class="upload-btn-wrapper">
+                <button class="upload-btn">Upload</button>
+                <input
+                  type="file"
+                  name="profilePhoto"
+                  [accept]="imageType"
+                  (change)="upload($event, 'profilePhoto')"
+                  formControlName="profilePhoto"
+                />
+              </div>
+              <div class="tooltip-wrapper">
+                <div class="file-info">
+                  <img
+                    class="info-icon-img"
+                    (mouseenter)="activeProfilePhotoTooltip = true"
+                    (mouseleave)="activeProfilePhotoTooltip = false"
+                    src="../../../../assets/svg/info.svg"
+                    alt="Info Icon"
+                  />
+                </div>
+
+                <div class="file-tooltip" *ngIf="activeProfilePhotoTooltip">
+                  (.jpg, .png, .jpeg) Max size 1mb
+                </div>
+              </div>
+            </div>
+            <div class="file-name mx-3" *ngIf="fieldName['profilePhoto'].valid">
+              {{ commonService.trimText(profilePhotoName, 20) }}
+            </div>
+            <div
+              *ngIf="
+                (fieldName['profilePhoto'].touched || isSubmitted) &&
+                fieldName['profilePhoto'].errors
+              "
+              class=""
+            >
+              <div
+                *ngIf="fieldName['profilePhoto'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please add Profile photo
+              </div>
+              <div
+                *ngIf="fieldName['profilePhoto'].errors?.['fileSize']"
+                class="text-danger d-inline-block mt-1"
+              >
+                File size exceeds the limit (1 MB).
+              </div>
+              <div
+                *ngIf="fieldName['profilePhoto'].errors?.['fileType']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Invalid File Type
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="d-flex flex-column">
+            <div class="d-flex align-items-center gap-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                formControlName="termsConditions"
+                class="checkbox"
+              />
+              <span class="agreement">I have read and agree to the</span>
+
+              <a (click)="navigateTo('tnc')" class="agreement c-btn-link"
+                >Terms & Conditions</a
+              >
+            </div>
+
+            <div
+              *ngIf="
+                (fieldName['termsConditions'].touched || isSubmitted) &&
+                fieldName['termsConditions'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['termsConditions'].errors?.['required']"
+                class="text-danger"
+              >
+                Please select the checkbox
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="d-flex flex-column">
+            <div class="d-flex align-items-center gap-3">
+              <input
+                type="checkbox"
+                formControlName="privacyPolicy"
+                class="checkbox"
+              />
+              <span class="agreement">I have read and agree to the</span>
+
+              <a (click)="navigateTo('privacy')" class="agreement c-btn-link"
+                >Privacy policy</a
+              >
+            </div>
+            <div
+              *ngIf="
+                (fieldName['privacyPolicy'].touched || isSubmitted) &&
+                fieldName['privacyPolicy'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['privacyPolicy'].errors?.['required']"
+                class="text-danger"
+              >
+                Please select the checkbox
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="d-flex flex-column">
+            <div class="d-flex align-items-center gap-3">
+              <input
+                type="checkbox"
+                formControlName="cookiePolicy"
+                class="checkbox"
+              />
+              <span class="agreement">I have read and agree to the</span>
+              <a
+                class="agreement c-btn-link"
+                (click)="this.commonService.cookieModal()"
+                >Cookie Policy</a
+              >
+            </div>
+
+            <div
+              *ngIf="
+                (fieldName['cookiePolicy'].touched || isSubmitted) &&
+                fieldName['cookiePolicy'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['cookiePolicy'].errors?.['required']"
+                class="text-danger d-inline-block"
+              >
+                Please select the checkbox
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="d-flex flex-column">
+            <div class="d-flex align-items-center gap-3">
+              <input
+                type="checkbox"
+                formControlName="refundPolicy"
+                class="checkbox"
+              />
+              <span class="agreement">I have read and agree to the</span>
+              <a
+                class="agreement c-btn-link"
+                (click)="this.commonService.refundModal()"
+                >Refund Policy</a
+              >
+            </div>
+
+            <div
+              *ngIf="
+                (fieldName['refundPolicy'].touched || isSubmitted) &&
+                fieldName['refundPolicy'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['refundPolicy'].errors?.['required']"
+                class="text-danger d-inline-block"
+              >
+                Please select the checkbox
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary register-button">
+      Pre-Register
+    </button>
+  </form>
+</div>

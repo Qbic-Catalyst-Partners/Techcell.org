@@ -1,0 +1,27 @@
+<!-- Mentions Notifications tab content -->
+<article [ngClass]="{'noti-card': true, 'unread': !n.isRead}" *ngFor="let n of mentions" (click)="onCardClick($event, n)">
+  <span class="noti-card__indicator" [ngClass]="{ 'unread': !n.isRead }"></span>
+  <span class="noti-card__img-wrapper">
+    <img class="noti-card__img cur-p" [src]="n.photoUrl" alt="user" (click)="viewProfile(n); $event.stopPropagation()" />
+  </span>
+  <div class="noti-card__content d-flex">
+    <span class="noti-card__time-sm d-lg-none">{{ n.createdDate | relativeTime }}</span>
+    <span class="noti-card__text-content" [innerHTML]="n.message | safeHtml" (click)="onMessageClick($event, n)"></span>
+
+    <!-- comment content -->
+    <span class="noti-card__comment-content" *ngIf="n.formattedCommentContent" [innerHTML]="n.formattedCommentContent" (click)="onMessageClick($event, n)"></span>
+
+  </div>
+  <span class="noti-card__time d-none d-lg-block">{{ n.createdDate | relativeTime }}</span>
+  <button mat-icon-button class="action-btn ms-2" [ngbTooltip]="actionTpl" [tooltipContext]="{n: n, tooltip: actT}" triggers="manual" #actT="ngbTooltip" (click)="toggleTooltip(actT); $event.stopPropagation()">
+    <img src="/assets/svg/action-icon.svg" alt="action" class="action-icon" />
+  </button>
+</article>
+
+<ng-template #actionTpl let-n="n" let-tooltip="tooltip">
+  <div class="action-tooltip">
+    <div class="action-item" (click)="markAsRead(n, tooltip);" *ngIf="!n.isRead">Mark as read</div>
+    <div class="action-item" (click)="markAsUnread(n, tooltip);" *ngIf="n.isRead">Mark as unread</div>
+    <div class="action-item" (click)="clear(n, tooltip);">Clear</div>
+  </div>
+</ng-template> 

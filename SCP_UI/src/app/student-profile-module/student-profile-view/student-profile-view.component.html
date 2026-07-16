@@ -1,0 +1,68 @@
+<div class="container-fluid rounded height-controller">
+  <div class="row">
+    <div class="col-12 header px-3 user-name">
+      {{ userInfo?.firstName }}&nbsp;{{ userInfo?.lastName }}’s Profile
+    </div>
+  </div>
+  <div class="row pb-2">
+    <div class="col-12 col-lg-4 col-md-4 d-flex justify-content-center m-top">
+      <div class="text-center">
+        <img
+          [src]="profilePhoto"
+          onError="this.src='../../../assets/images/Ellipse 77.png'"
+          class="rounded-img mb-3"
+          alt=""
+        />
+        <div class="d-flex mt-1 align-items-center justify-content-center">
+          <div class="profile d-inline-block px-2">
+            {{ userInfo?.firstName }}&nbsp;{{ userInfo?.lastName }}
+          </div>
+          <div class="profile-bw d-inline-block px-2">Student</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-7 col-lg-7 bg-white">
+      <div class="row mt-4 mb-2">
+        <div class="col-12">
+          <p class="title">About Me</p>
+          <p class="desc" *ngIf="userInfo?.description">
+            {{ userInfo?.description }}
+          </p>
+          <p class="desc" *ngIf="!userInfo?.description">
+            As a computer science engineering student, I'm passionate about
+            technology and coding. I enjoy collaborating with others to create
+            innovative software solutions.
+          </p>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-12">
+          <p class="title">Course Registered</p>
+          <p class="desc registered-course">{{ userInfo?.programName }}</p>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12">
+          <p class="title mb-1">Topics of Interest</p>
+
+          <span class="border d-inline-block mx-1 px-3 rounded-4">AI</span>
+          <span class="border d-inline-block mx-1 px-3 rounded-4"
+            >Machine Learning</span
+          >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <p class="title">My Communities</p>
+          <div>
+            <app-data-table
+              [tableHeader]="studentCommunityHeader"
+              [tableData]="studentCommunityData"
+              [tableHeight]="250"
+            ></app-data-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

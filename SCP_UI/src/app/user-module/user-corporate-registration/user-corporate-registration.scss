@@ -1,0 +1,330 @@
+@import "../../../styles/_variables.scss";
+@import "@angular/cdk/overlay-prebuilt.css";
+
+.container-fluid {
+  @media (min-width: 768px) {
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+.bg-img-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.registration-type {
+  list-style-type: none;
+  padding: 0;
+  li {
+    cursor: pointer;
+    background-color: #f0efef;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 2px 5px;
+    min-width: 112px;
+    text-align: center;
+    color: #797979;
+  }
+  .active {
+    background-color: #bebebe;
+    border: 0px;
+    border-radius: 0px;
+    font-weight: bold !important;
+    border-radius: 6%;
+    margin-bottom: -2px;
+  }
+}
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
+  text-align: center;
+  color: #797979;
+}
+.nav-tabs .nav-link {
+  color: #797979;
+  font-weight: 400;
+}
+
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+
+  // height: 100vh;
+  // padding-bottom: 55px;
+  .left-section {
+    width: 80%;
+    background-color: #ffffff;
+  }
+  .register-text {
+    font-size: 30px;
+    color: rgba(3, 0, 0, 1);
+  }
+
+  .mr-6 {
+    margin-left: 6rem;
+  }
+
+  .right-section {
+    background-image: url(../../../assets/images/right-section-bg.png);
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-size: 232px 133px;
+    min-height: calc(100% + 195px);
+    background-color: #144557;
+    width: 20%;
+  }
+
+  .registration-box-spacing {
+    padding: 0 3.2rem 0 2.8rem;
+    @media (max-width: 575.98px) {
+      padding: 0;
+    }
+  }
+
+  .registration-box {
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      background-color: #f5f5f5;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: #f5f5f5;
+    }
+
+    &::-webkit-scrollbar:horizontal {
+      height: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: rgba(20, 69, 87, 1);
+    }
+  }
+
+  .registration-box {
+    position: relative;
+    right: 0px;
+    top: 25px;
+    z-index: 1;
+    height: 78vh;
+    overflow-y: scroll;
+    .card {
+      border-radius: 20px;
+      width: 100%;
+      padding: 2rem 5rem;
+      z-index: 1;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      border: none;
+    }
+    @media (max-width: 1280px) {
+      height: 70vh;
+    }
+  }
+  input:not([type="checkbox"]) {
+    background-color: $light-gray;
+    box-shadow: $common-box-shadow;
+    border: 1px solid $input-box-border;
+    padding: 15px 10px 15px 10px;
+    border-radius: 5px;
+    height: 44px;
+    &::placeholder {
+      font-size: 15px;
+    }
+  }
+
+  .select-option {
+    background-color: $light-gray;
+    box-shadow: $common-box-shadow;
+    border: 1px solid $input-box-border;
+    padding: 0 10px 0px 10px;
+    border-radius: 5px;
+    height: 44px;
+    width: 100%;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  label {
+    color: #101540;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 0.4rem;
+  }
+
+  .tech-info {
+    border-right: 1px solid #8f8f8f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 346px;
+    position: fixed;
+    left: -11px;
+    z-index: 2;
+    padding: 3%;
+    top: 230px;
+    p {
+      color: $text-gray;
+    }
+  }
+
+  .register-button {
+    position: absolute;
+    left: 33% !important;
+    bottom: -752px !important;
+    padding: 1% 15%;
+    border-radius: 50px;
+    background-color: $button-primary;
+  }
+
+  .upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: auto;
+  }
+
+  .upload-btn {
+    color: $white;
+    background-color: $button-primary;
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid rgba(143, 143, 143, 1);
+    text-shadow: $text-shadow;
+  }
+
+  .upload-btn-wrapper input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+
+  .btn-container {
+    min-width: 275px;
+  }
+
+  .file-name {
+    color: $red;
+    // font-size: 24px;
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+  }
+  .left-img {
+    position: absolute;
+    top: -40px;
+    left: 15px;
+  }
+  .right-img {
+    position: absolute;
+    top: 260px;
+    right: 0px;
+  }
+  .img-h-100 {
+    height: 100px;
+  }
+  @media (max-width: 575.98px) {
+    padding: 0;
+  }
+}
+
+.img-fluid {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media (max-width: 1280px) {
+    height: auto;
+  }
+}
+
+a {
+  color: #1cb5eb !important;
+}
+
+.brand-logo-wrapper {
+  width: 100px;
+  height: 100px;
+  margin-bottom: -7px;
+}
+
+.brand-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 575.98px) {
+  .registration-box {
+    overflow-y: unset !important;
+  }
+}
+
+.nav-item {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+///////////////////////////////////////////////////
+// SIMTECH CODE
+
+.registration-wrapper {
+  display: grid;
+  min-height: 100dvh;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 600px 1fr;
+  }
+}
+
+.registration-wrapper-left {
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.registration-wrapper-right {
+  padding: 20px;
+
+  @media (min-width: 768px) {
+  }
+}
+
+.full-height {
+  height: 100dvh;
+}
+
+.logo-2 {
+  width: auto;
+  height: 70px;
+}

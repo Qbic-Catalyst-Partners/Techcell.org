@@ -1,0 +1,18 @@
+<div [ngClass]="{ 'mb-4': enableBanner }" class="header">
+  <app-banner *ngIf="enableBanner"></app-banner>
+</div>
+<div [ngClass]="{ 'router-outlet': enableBanner }" style="position: relative">
+  <router-outlet />
+  <div class="social-icons" *ngIf="enableBanner">
+    <app-social-icon></app-social-icon>
+  </div>
+</div>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="large"
+  type="ball-clip-rotate-multiple"
+  [fullScreen]="true"
+>
+  <p style="font-size: 20px; color: white; margin-top: 16px">Loading...</p>
+</ngx-spinner>

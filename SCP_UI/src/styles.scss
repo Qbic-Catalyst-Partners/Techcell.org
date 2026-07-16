@@ -1,0 +1,815 @@
+/* You can add global styles to this file, and also import other style files */
+@import "@angular/cdk/overlay-prebuilt.css";
+@import "./styles/variables";
+@import "ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
+@import "ngx-owl-carousel-o/lib/styles/scss/owl.theme.default";
+@import "./styles/fonts";
+
+:root {
+  --c-text-primary: #0a0a0a;
+  --c-text-secondary: #a3a3a3;
+  --primary-blue: #1cb5eb;
+}
+
+// *,
+// *::after,
+// *::before {
+//   outline: 1px solid red;
+// }
+
+html,
+body {
+  height: 0px;
+  font-family: "arial-regular" !important;
+  overflow: unset !important;
+}
+
+body {
+  margin: 0;
+  background: $body-bg;
+}
+
+#buffering-img {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
+p {
+  padding: 0px;
+  margin: 0px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+dp-date-picker.dp-material .dp-picker-input {
+  background-color: rgba(237, 240, 242, 1) !important;
+
+  border: 1px solid rgba(143, 143, 143, 1) !important;
+  padding: 15px 10px 15px 10px !important;
+  border-radius: 5px !important;
+  height: 44px !important;
+  width: calc(100% + 23px) !important;
+}
+
+dp-date-picker.dp-material .dp-picker-input:focus {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+}
+
+dp-date-picker.dp-normal .dp-picker-input {
+  border: var(--bs-border-width) solid var(--bs-border-color) !important;
+  outline: none !important;
+  padding: 15px 10px 15px 10px !important;
+  border-radius: 5px !important;
+  height: 44px !important;
+  width: calc(100% + 23px) !important;
+}
+
+.btn-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1cb5eb;
+  color: #ffffff;
+  max-height: 31px;
+}
+
+.disabled {
+  cursor: default;
+  color: #fff;
+  pointer-events: none;
+
+  border-color: transparent;
+  opacity: var(--bs-btn-disabled-opacity);
+}
+
+.btn:disabled,
+.btn.disabled,
+fieldset:disabled .btn {
+  cursor: default;
+  color: #fff;
+  pointer-events: none;
+  background-color: #bbbcbd;
+  border-color: transparent;
+  opacity: var(--bs-btn-disabled-opacity);
+}
+
+.btn:hover {
+  background-color: #1cb5eb;
+  color: #ffffff;
+}
+
+.btn:active {
+  background-color: #1cb5eb;
+  color: #ffffff;
+}
+
+.btn-check:checked + .btn,
+:not(.btn-check) + .btn:active,
+.btn:first-child:active,
+.btn.active,
+.btn.show {
+  background-color: #1cb5eb;
+  color: #ffffff;
+}
+
+.text-primary {
+  color: #10aaec !important;
+}
+
+a {
+  text-decoration: none !important;
+  cursor: pointer;
+  color: var(--bs-blue) !important;
+}
+
+.router-outlet {
+  margin-top: 64px;
+}
+
+.btn-primary {
+  color: $white;
+  background: $primary;
+  min-width: 92px;
+  min-height: 33px;
+  border-radius: 30px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.owl-theme .owl-nav {
+  display: none;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 8px !important;
+}
+
+iframe {
+  width: 100% !important;
+}
+
+// This class hides the play button which displays by default in the video
+.youtube-player-placeholder-button {
+  display: none !important;
+}
+
+.zoom {
+  transform: scale(1.5);
+}
+
+.angular-editor .angular-editor-wrapper {
+  background-color: #ffffff;
+}
+
+// Custom Text list Carousel
+
+$black2: #44484c;
+
+.custom-carousel-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+  min-width: 10%;
+
+  .carousel-container {
+    color: $black2;
+    display: flex;
+    column-gap: 1rem;
+    flex-grow: 1;
+    margin: 0;
+    overflow: hidden;
+    padding-left: 1rem;
+  }
+
+  span {
+    user-select: none;
+  }
+
+  li {
+    box-sizing: border-box;
+    display: flex;
+    max-height: 33px;
+    gap: 4px;
+    padding: 0.15rem 0.5rem;
+    align-items: center;
+    border: 0.5px solid rgba(28, 181, 235, 1);
+    border-radius: 10px;
+    color: rgba(28, 181, 235, 1);
+    font-weight: 500;
+    font-size: 14px;
+    white-space: nowrap;
+    // cursor: grab;
+    &:hover {
+      border: none;
+      background-color: #cee7f0;
+      transform: scale(1.1);
+    }
+
+    // &:active {
+    //   background-color: silver;
+    // }
+  }
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: gainsboro !important;
+  box-shadow: none !important;
+}
+
+// owl-carousel override for login screen
+// #login-screen, .owl-carousel .owl-item img {
+//   width: 380px !important;
+//   height: 150px !important;
+// }
+/* .modal-content {
+  border-radius: 12px;
+} */
+
+.btn-radius {
+  border-radius: 8px;
+}
+
+// This class is overridden for angular material date picker
+.cdk-overlay-container {
+  z-index: 1200 !important;
+}
+
+.mat-datepicker {
+  position: relative;
+
+  .calendar-icon {
+    position: absolute;
+    width: 20px;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+  }
+}
+
+.cancel-button,
+.confirm-button {
+  width: 220px;
+  font-weight: 500;
+  font-size: 20px;
+  min-height: 40px !important;
+}
+
+.btn-bg-white {
+  background-color: $white !important;
+  border: 1px solid $body-bg;
+  color: $primary;
+
+  &:hover {
+    color: $primary !important;
+  }
+}
+
+.modal-756px {
+  min-width: 756px !important;
+}
+
+input {
+  border: 1px solid rgba(208, 213, 221, 1) !important;
+}
+
+// Upload Button design
+.upload-btn {
+  color: #ffffff !important;
+  background-color: #1cb5eb;
+  padding: 5px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+// Below Css is for upload button
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: auto;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.file-name {
+  color: $red;
+}
+
+.ng2-tag-input {
+  padding: 0 !important;
+  border: 1px solid rgb(208, 213, 221);
+  border-radius: 6px;
+}
+
+.ng2-tag-input__text-input {
+  border: none !important;
+  padding: 0;
+  width: "100%" !important;
+}
+
+.ng-tns-c3083841879-1 {
+  height: auto !important;
+  border-radius: 4px !important;
+}
+
+.ng-trigger {
+  border-radius: 0 !important;
+}
+
+.countryCode {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="30"><text x="5" y="21" fill="black" fill-opacity="0.6" style="font: bold 16px Arial">+91</text></svg>')
+    no-repeat;
+  background-position: left;
+  border: 1px solid #555;
+  box-sizing: border-box;
+  font: 16px "Arial";
+  padding-left: 40px !important;
+}
+
+.header-title,
+.title-text {
+  font-family: "arial-bold";
+}
+
+.active-text-color {
+  color: #10aaec !important;
+}
+
+.Inactive-text-color {
+  color: #f35e5e !important;
+}
+
+.list-down-arr {
+  transform: rotate(180deg);
+}
+
+.filterSearchText {
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 12px;
+  color: #000000;
+  text-align: center;
+}
+
+.clear-float {
+  clear: both;
+}
+
+.mat-mdc-menu-content {
+  padding: 0 !important;
+  background-color: #f0f0f0 !important;
+}
+
+.mat-mdc-menu-item {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  background: #ffffff !important;
+  margin: 2px 3px !important;
+  border-radius: 5px !important;
+  width: 113px !important;
+  padding: 3px !important;
+  min-height: 0 !important;
+  height: 28px;
+  text-align: center !important;
+}
+
+.total {
+  color: #10aaec;
+}
+.accept {
+  color: #0b8510;
+}
+.reject {
+  color: #ff0000;
+}
+.pending {
+  color: #144557;
+}
+
+// Scroll-design
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f5f5f5;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgba(20, 69, 87, 1);
+}
+
+.activeTag {
+  background-color: #cee7f0 !important;
+  border: none;
+}
+
+// table styles
+
+table {
+  tbody,
+  th {
+    font-size: 16px !important;
+  }
+
+  td:not(:first-child) {
+    text-align: center;
+  }
+
+  th:not(:first-child) {
+    text-align: center;
+  }
+}
+
+.view {
+  border: 1px solid rgba(105, 105, 105, 1) !important;
+}
+
+.remaining-character {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(86, 84, 84, 1);
+}
+
+.file-size-tool-tip {
+  font-weight: 400;
+  color: rgba(130, 130, 130, 1);
+  font-size: 12px;
+  background-color: rgba(255, 221, 154, 1);
+  border-radius: 5px;
+  padding: 7px 8px;
+}
+
+.custom-dialog-backdrop .cdk-overlay-backdrop {
+  background-color: rgba(
+    255,
+    0,
+    0,
+    0.5
+  ) !important; /* Example: Red with transparency */
+}
+
+.custom-dialog-container .mat-dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100% !important; /* Ensure it takes full height */
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+.mdc-dialog__surface {
+  overflow-y: unset !important;
+}
+
+@media (max-width: 575.98px) {
+  .custom-class {
+    .modal-content {
+      border-radius: 40px;
+    }
+  }
+}
+
+select {
+  appearance: none; /* Removes default styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("assets/lucide-icons/chevron-down.svg"); /* Custom caret */
+  background-size: 6%;
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Adjust position */
+  padding-right: 30px; /* Make space for the icon */
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.c-btn-link {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+.hover-link-blue {
+  &:hover {
+    color: #046bec !important;
+  }
+}
+
+.cur-p {
+  cursor: pointer;
+}
+
+.info-icon-img {
+  width: 16px;
+  height: 16px;
+}
+
+.c-text-link-blue {
+  color: rgb(4, 107, 236) !important;
+}
+
+.c-text-link-blue-hover {
+  &:hover {
+    color: rgb(4, 107, 236) !important;
+  }
+}
+
+// Bootstrap css variable overrides
+.table {
+  --bs-table-hover-bg: #dbe7f7;
+}
+
+.modal-backdrop {
+  height: 500vh !important;
+  width: 500vw !important;
+}
+
+.c-text-link {
+  transition: all 0.3s ease;
+  &:hover {
+    text-decoration: underline;
+    color: rgb(4, 107, 236) !important;
+    cursor: pointer;
+  }
+}
+
+.px-1-custom {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+/* Add this to your global styles.scss or component styles */
+.custom-size-modal .modal-dialog {
+  width: calc(100vw - 10px);
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c-text-primary {
+  color: var(--c-text-primary) !important;
+}
+
+.c-text-secondary {
+  color: var(--c-text-secondary) !important;
+}
+
+.c-pop-btn-outline {
+  &,
+  &:focus {
+    color: var(--c-text-secondary);
+    background-color: transparent;
+    border-radius: 999px;
+    padding: 6px 32px !important;
+    border: 1px solid #e5e5e5;
+  }
+
+  &:hover {
+    color: var(--primary-blue);
+    background-color: #e5e5e5;
+  }
+}
+
+.c-pop-btn-outline.c-btn-small {
+  padding: 6px 12px !important;
+}
+
+.c-pop-btn-primary {
+  color: #fff;
+  background-color: var(--primary-blue);
+  border-radius: 999px;
+  padding: 6px 32px !important;
+  border: 1px solid var(--primary-blue);
+
+  &:hover {
+    background-color: #1691bc;
+    border-color: #1691bc;
+  }
+
+  &--sm {
+    padding: 3px 16px !important;
+  }
+}
+
+.fs-sm {
+  font-size: 14px !important;
+}
+
+.fs-tn {
+  font-size: 12px !important;
+}
+
+.modal-close-icon {
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out;
+  width: 24px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+/* Modal Stacking */
+.modal-backdrop {
+  z-index: 1040 !important;
+}
+
+.modal {
+  z-index: 1050 !important;
+}
+
+.modal-top {
+  z-index: 1060 !important;
+}
+
+/* Ensure modals are always on top */
+.modal-dialog {
+  z-index: 1070 !important;
+}
+
+.status-accepted {
+  font-size: 10px;
+  background-color: #bbf7d0;
+  align-self: start;
+  padding: 2px 12px;
+  color: #16a34a;
+  margin-top: 4px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+.status-rejected {
+  font-size: 10px;
+  background-color: #fecaca;
+  align-self: start;
+  padding: 2px 12px;
+  color: #dc2626;
+  margin-top: 4px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+// Review status styling for student profile lists
+.review-status {
+  font-size: 10px !important;
+}
+
+/* ---- Student-profile career table sizing ---- */
+.career-padding {
+  app-internship-list,
+  app-project-list,
+  app-job-list,
+  app-certification-list-view {
+    display: block;
+    height: 100% !important;
+  }
+
+  .table-container {
+    height: 100% !important;
+    max-height: none !important;
+  }
+}
+
+.smooth-table-curve {
+  border-radius: 8px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  border: 1px solid #144557;
+  cursor: default;
+  outline: none;
+  border-radius: 200px;
+  height: 26px;
+}
+
+.chip-content {
+  cursor: inherit;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding-left: 12px;
+  font-size: 14px;
+  line-height: 100%;
+  color: var(--c-text-primary);
+}
+
+.chip-svg {
+  color: #999999;
+  cursor: pointer;
+  height: auto;
+  margin: 4px 4px 0 -8px;
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  font-size: 24px;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.chip-close {
+  cursor: pointer;
+  svg {
+    width: 16px;
+    height: 16px;
+    margin: 0 2px;
+  }
+}
+
+::ng-deep .chip {
+  border: 1px solid #8787a3 !important;
+
+  .chip-content {
+    color: #8787a3;
+  }
+}
+
+.video .youtube-player-placeholder {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.video-card .youtube-player-placeholder {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.recent-content .youtube-player-placeholder {
+  width: 100% !important;
+  height: 100% !important;
+  transform: scale(1.2) !important;
+}
+
+.ads-card__footer .youtube-player-placeholder {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transform: scale(1.4) !important;
+}
+
+.feed-card .youtube-player-placeholder {
+  width: 100% !important;
+  height: 200px !important;
+  object-fit: cover !important;
+  @media (min-width: 992px) {
+    height: 293px !important;
+  }
+
+  
+}
+
+@media (max-width: 1300px) {
+  .d-13-block {
+    display: block !important;
+  }
+
+  .d-13-none {
+    display: none !important;
+  }
+}

@@ -1,0 +1,364 @@
+<div class="secondary-header-wrapper">
+  <div class="bg-white c-shadow secondary-header">
+    <div class="row d-flex align-items-center py-2 flex-wrap">
+      <div class="carousel-box d-flex justify-content-between gap-2">
+        <div class="search-box flex-grow-1 d-none d-lg-block d-md-block">
+          <input
+            type="text"
+            placeholder="Search Hashtags"
+            [(ngModel)]="term"
+            (input)="getSearchText($event)"
+            class="form-control search-bar"
+          />
+          <svg
+            class="search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+              stroke="#a1a1a1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M20.9984 21.0004L16.6484 16.6504"
+              stroke="#a1a1a1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <div
+          class="d-flex flex-column position-relative"
+          *ngIf="viewType == 'list'"
+          (click)="openFilterSearch(currentTab)"
+        >
+          <img
+            class="cur-p filter-icon"
+            src="../../../assets/svg/tabler_filter-search.svg"
+            alt="prev arrow"
+          />
+        </div>
+        <!-- <button
+          class="btn btn-primary btn-add"
+          (click)="addModal(currentTab)"
+          *ngIf="userInfo?.role === 'Admin' || userInfo?.role === 'Corporate'"
+        > -->
+        <button
+          class="btn btn-primary btn-add"
+          (click)="addModal(currentTab)"
+          *ngIf="userInfo?.role === 'Admin'"
+        >
+          Add
+        </button>
+        <section class="custom-carousel-container" id="filter">
+          <div class="arrow-left" (click)="scrollTo(menu, -1)">
+            <svg
+              class="tag-slider-icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <ul class="carousel-container" #menu swiper-scroll>
+            <ng-container
+              *ngIf="hashTagList | searchFilter : term : 'text' as hashTagList"
+            >
+              <li
+                [attr.data-item]="hash.id"
+                *ngFor="let hash of hashTagList; let i = index"
+                [ngClass]="{ activeTag: selectedTag == hash.id }"
+              >
+                <div
+                  class="search__filter__title cur-p"
+                  (click)="getDynamicHashTagList(hash, null, true, currentTab)"
+                >
+                  {{ hash.description }}
+                </div>
+                <span
+                  class="cur-p"
+                  *ngIf="selectedTag == hash.id"
+                  (click)="cancelTag()"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                      stroke="#fff"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M15 9L9 15"
+                      stroke="#fff"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M9 9L15 15"
+                      stroke="#fff"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </li>
+              <p *ngIf="hashTagList.length === 0">No Record found</p>
+            </ng-container>
+          </ul>
+          <div class="arrow-right" (click)="scrollTo(menu, 1)">
+            <svg
+              class="tag-slider-icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="career-content">
+  <div class="career-content__inner">
+    <div class="d-flex justify-content-between align-items-center content-view">
+      <!-- Career navigation tabs -->
+      <nav class="career-nav-wrapper">
+        <ul class="career-nav">
+          <li
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a routerLink="/careers/internships" routerLinkActive="active"
+              >Internships</a
+            >
+          </li>
+          <li
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a routerLink="/careers/projects" routerLinkActive="active"
+              >Projects</a
+            >
+          </li>
+          <li
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a routerLink="/careers/jobs" routerLinkActive="active"
+              >Job Listings</a
+            >
+          </li>
+          <li
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a routerLink="/careers/certifications" routerLinkActive="active"
+              >Certification</a
+            >
+          </li>
+        </ul>
+      </nav>
+      <div class="border rounded view d-none d-lg-block">
+        <img
+          class="gray-scale cur-p"
+          [ngClass]="{ 'active-scale': viewType == 'grid' }"
+          (click)="viewList('grid')"
+          src="../../../assets/svg/grid-view.svg"
+          alt="Grid View"
+        />
+        <img
+          class="gray-scale cur-p"
+          [ngClass]="{ 'active-scale': viewType == 'list' }"
+          (click)="viewList('list')"
+          src="../../../assets/svg/list-view.svg"
+          alt="List View"
+        />
+      </div>
+    </div>
+
+    <!-- Test cards start -->
+    <!-- <div
+      style="
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+        max-width: 1200px;
+        margin: 0 auto;
+      "
+    >
+      <article class="career-card">
+        <div class="career-card__img-wrapper">
+          <img
+            src="/assets/images/landscape-2.jpg"
+            alt=""
+            class="career-card__img-logo"
+          />
+          <img
+            class="career-card__bg-img"
+            src="/assets/images/landscape-1.jpg"
+            alt=""
+          />
+        </div>
+        <div class="career-card__text-content">
+          <div class="career-card__row">
+            <div class="career-card__col-1">Company:</div>
+            <div class="career-card__col-2">Simtech</div>
+          </div>
+          <div class="career-card__row">
+            <div class="career-card__col-1">Position:</div>
+            <div class="career-card__col-2">Software Developer</div>
+          </div>
+          <div class="career-card__row">
+            <div class="career-card__col-1">Apply Before:</div>
+            <div class="career-card__col-2">30/05/2025</div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-sm btn-apply c-pop-btn-primary">
+              Apply
+            </button>
+          </div>
+        </div>
+      </article>
+    </div> -->
+    <!-- Test cards end -->
+
+    <div class="tab-content nav-tabs-container m-0" id="nav-tabContent">
+      <!-- Internships Tab Content -->
+      <div
+        class="tab-pane"
+        id="internships"
+        role="tabpanel"
+        [ngClass]="{ 'active show': currentTab === 'INTERNSHIP' }"
+      >
+        <ng-container *ngIf="viewType == 'grid' && currentTab == 'INTERNSHIP'">
+          <app-internships
+            *ngIf="hashTagList.length"
+            [selectedTagData]="selectedTagData"
+            [tagListData]="hashTagList"
+            [isApiRefreshed]="isApiRefreshed"
+          ></app-internships>
+        </ng-container>
+        <ng-container *ngIf="viewType == 'list' && currentTab == 'INTERNSHIP'">
+          <app-internship-list
+            [filterData]="filterData"
+            [tag]="selectedTag"
+            [tagDescription]="selectedTagData.selectedTag?.description"
+          ></app-internship-list>
+        </ng-container>
+      </div>
+
+      <!-- Projects Tab Content -->
+      <div
+        class="tab-pane"
+        id="projects"
+        role="tabpanel"
+        [ngClass]="{ 'active show': currentTab === 'PROJECT' }"
+      >
+        <ng-container *ngIf="viewType == 'grid' && currentTab == 'PROJECT'">
+          <app-projects
+            *ngIf="hashTagList.length"
+            [selectedTagData]="selectedTagData"
+            [isApiRefreshed]="isApiRefreshed"
+            [tagListData]="hashTagList"
+          ></app-projects>
+        </ng-container>
+        <ng-container *ngIf="viewType == 'list' && currentTab == 'PROJECT'">
+          <app-project-list
+            [filterData]="filterData"
+            [tag]="selectedTag"
+            [tagDescription]="selectedTagData.selectedTag?.description"
+          ></app-project-list>
+        </ng-container>
+      </div>
+
+      <!-- Job Listings Tab Content -->
+      <div
+        class="tab-pane"
+        id="job-listings"
+        role="tabpanel"
+        [ngClass]="{ 'active show': currentTab === 'JOB_LISTING' }"
+      >
+        <ng-container *ngIf="viewType == 'grid' && currentTab == 'JOB_LISTING'">
+          <app-job-listings
+            *ngIf="hashTagList.length"
+            [selectedTagData]="selectedTagData"
+            [isApiRefreshed]="isApiRefreshed"
+            [tagListData]="hashTagList"
+          ></app-job-listings>
+        </ng-container>
+        <ng-container *ngIf="viewType == 'list' && currentTab == 'JOB_LISTING'">
+          <app-job-list
+            [filterData]="filterData"
+            [tag]="selectedTag"
+            [tagDescription]="selectedTagData.selectedTag?.description"
+          ></app-job-list>
+        </ng-container>
+      </div>
+
+      <!-- Certification Tab Content -->
+      <div
+        class="tab-pane"
+        id="certification"
+        role="tabpanel"
+        [ngClass]="{ 'active show': currentTab === 'CERTIFICATION' }"
+      >
+        <ng-container
+          *ngIf="viewType == 'grid' && currentTab == 'CERTIFICATION'"
+        >
+          <app-certification-grid-view
+            [selectedTagData]="selectedTagData"
+            [isApiRefreshed]="isApiRefreshed"
+            *ngIf="hashTagList.length"
+            [tagListData]="hashTagList"
+          ></app-certification-grid-view>
+        </ng-container>
+        <ng-container
+          *ngIf="viewType == 'list' && currentTab == 'CERTIFICATION'"
+        >
+          <app-certification-list-view
+            [filterData]="filterData"
+            [tag]="selectedTag"
+            [tagDescription]="selectedTagData.selectedTag?.description"
+          ></app-certification-list-view>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

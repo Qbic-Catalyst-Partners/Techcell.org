@@ -1,0 +1,40 @@
+.modal-header,
+.modal-footer {
+  padding: 8px;
+}
+
+.close-icon {
+  width: 20px;
+  height: 20px;
+opacity: .5;
+
+&:hover {
+  opacity: 1;
+}
+}
+
+.modal-title {
+  font-size: 14px;
+}
+
+image-cropper {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+:host ::ng-deep .modal-body {
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+}
+
+:host ::ng-deep .modal-dialog {
+  width: calc(100vw - 20px);
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+:host ::ng-deep .modal-content {
+  height: 80vh;
+  max-height: 400px;
+} 

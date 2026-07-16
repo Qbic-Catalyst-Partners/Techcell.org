@@ -1,0 +1,41 @@
+<div class="container-fluid card z-1">
+    <div class="row d-flex align-items-center shadow pt-3 pb-3 flex-wrap">
+        <div class="col-md-3 col-sm-12">
+            <div class="search-block d-flex gap-3">
+                <div>
+                    <img (click)="trigNavigate()" class="cur-p" title="back to list" src="../../../assets/svg/arrow-back.svg" alt="arrow back">
+                </div>
+                <div class="search-box d-none d-lg-block d-md-block">
+                    <input type="text" placeholder="Search Blog" [(ngModel)]="term">
+                    <img height="20" src="../../../assets/svg/search-status.svg" alt="search-status" class="search-status">
+                </div>
+                <button [disabled]="hasAsscessToAdd" class="btn btn-primary" (click)="trigBlog()" *ngIf="isAdd">Add</button>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-12">
+            <div class="carousel-box d-flex justify-content-between">
+                <section class="custom-carousel-container" id="filter">
+                    <div class="arrow-left" (click)="scrollTo(menu, -1);">
+                        <img class="cur-p" src="../../../assets/svg/prevArrow.svg" alt="prev arrow">
+                    </div>
+    
+                    <ul class="carousel-container" #menu swiper-scroll>
+                        <ng-container *ngIf="( data_list | searchFilter:term) as data_list">
+                            <li [attr.data-item]="hash.id" *ngFor="let hash of data_list; let i = index">
+                                <div class="search__filter__title cur-p"
+                                    (click)="trigSelectedTag(hash)">{{
+                                    hash.description }}
+                                </div>
+                            </li>
+                            <p *ngIf="data_list.length === 0">No Record found</p>
+                        </ng-container>
+                    </ul>
+    
+                    <div class="arrow-right" (click)="scrollTo(menu, 1)">
+                        <img class="cur-p" src="../../../assets/svg/nextArrow.svg" alt="next arrow">
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

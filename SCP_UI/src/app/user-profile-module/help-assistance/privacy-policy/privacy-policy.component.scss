@@ -1,0 +1,42 @@
+.content {
+  border: 5px solid rgba(177, 177, 177, 1);
+  border-radius: 5px;
+  padding: 2rem 5.5rem;
+  text-align: justify;
+}
+
+@media only screen and (max-width: 600px) {
+  .content {
+    padding: 5px;
+  }
+}
+
+.modal-border {
+  border: 2px solid #b1b1b1;
+  border-radius: 10px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+p {
+  margin-bottom: 16px;
+}
+
+table {
+  width: 100%;
+}
+table,
+th,
+td {
+  font: 96% Helvetica;
+  color: black;
+  text-align: left;
+  border: thin solid #ccc;
+  border-collapse: collapse;
+  font-weight: 500;
+  padding: 10px;
+  height: 37px;
+  font-size: 14px !important;
+}

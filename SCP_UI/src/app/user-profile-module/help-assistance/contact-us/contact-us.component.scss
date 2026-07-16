@@ -1,0 +1,99 @@
+.info-text {
+  color: rgba(127, 127, 131, 1);
+  font-weight: 400;
+  line-height: 18.4px;
+  font-size: 16px;
+}
+
+.text-danger {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.upload-btn {
+  border: none;
+  font-size: 14px;
+}
+
+.info-icon {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+input,
+textarea,
+select {
+  font-size: 14px;
+  // border: 1px solid rgba(91, 88, 88, 1) !important;
+  // min-height: 47px;
+  &::placeholder {
+    font-size: 14px;
+    color: var(--c-text-secondary);
+  }
+}
+
+select {
+  font-size: 14px;
+  &::placeholder {
+    color: var(--c-text-secondary);
+    font-size: 14px;
+    color: rgba(164, 158, 158, 1);
+  }
+}
+
+.form-box {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.main-box {
+  border-radius: 5px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.file-size {
+  font-weight: 400;
+  color: #828282;
+  font-size: 12px;
+  background-color: #ffdd9a;
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+
+.submit-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+}
+
+@media (max-width: 575.98px) {
+  .file-size {
+    margin: 13px 0 13px 0px;
+  }
+}
+
+//////////////////////////////////////////////
+// Simtech code
+.container {
+  padding: 12px;
+  font-size: 14px;
+ 
+}
+
+.card {
+  position: relative;
+  height: calc(100vh - 190px);
+
+}
+
+
+
+.blockquote {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.blockquote-footer {
+  font-weight: 400;
+}

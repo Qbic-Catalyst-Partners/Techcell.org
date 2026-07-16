@@ -1,0 +1,349 @@
+<div class="single-blog-content py-4">
+  <h1 class="blog-title d-none d-lg-block">
+    <span class="title-wrapper">
+      {{ data?.title }}
+      <img
+        *ngIf="isTopRated"
+        src="assets/images/top-rated-badge.png"
+        alt="top-rated-badge"
+        class="top-rated-badge"
+      />
+    </span>
+  </h1>
+  <div class="px-2 px-lg-5">
+    <div
+      class="social-bar mb-3 mt-4 justify-content-between justify-content-lg-start d-none d-lg-flex"
+    >
+      <div class="d-flex align-items-end gap-1">
+        <span class="fw-bold c-text-primary">{{ data?.views }}</span>
+        <span class="fw-medium c-text-secondary">Views</span>
+      </div>
+      <div class="d-flex align-items-end gap-1">
+        <img
+          class="cur-p like-icon"
+          src="../../../../assets/svg/like.svg"
+          alt="dislike"
+          *ngIf="!data?.liked"
+          (click)="handleLike()"
+          height="18px"
+        />
+        <img
+          class="cur-p like-icon"
+          src="../../../../assets/svg/like_fill.svg"
+          alt="like"
+          *ngIf="data?.liked"
+          (click)="handleLike()"
+          height="18px"
+        />
+
+        <span class="fw-bold c-text-primary">{{ data?.likes }}</span>
+        <span class="fw-medium c-text-secondary">Likes</span>
+      </div>
+      <div class="d-flex align-items-end gap-1">
+        <span class="c-text-link c-text-link-blue" (click)="toggelComment(data)"
+          >{{ data?.comments }} Comments</span
+        >
+      </div>
+      <span>
+        <img
+          class="cur-p"
+          src="../../../../assets/svg/star.svg"
+          *ngIf="!data?.favoured"
+          (click)="handleFavourite()"
+          alt="star"
+          height="20px"
+        />
+        <img
+          class="cur-p"
+          src="../../../../assets/svg/star_active.svg"
+          *ngIf="data?.favoured"
+          (click)="handleFavourite()"
+          alt="star active"
+          height="20px"
+        />
+      </span>
+      <span>
+        <img
+          class="cur-p"
+          src="../../../../assets/svg/next.svg"
+          alt="next"
+          height="20px"
+          (click)="openShare(data)"
+        />
+      </span>
+      <div class="c-text-secondary ms-auto d-none d-lg-block">
+        <span>Posted on: </span>
+        <span>{{ data?.createdDate | date : "dd/MM/yyyy" }}</span>
+      </div>
+    </div>
+
+    <div class="mt-3 clearfix">
+      <div class="thumbnail-container">
+        <div class="short-description mb-3 d-none d-lg-block">
+          "{{ data?.shortDescription }}"
+        </div>
+
+        <div class="blog-thumbnail">
+          <div class="mobile-posted-date d-lg-none">
+            <span>Posted on: </span>
+            <span>{{ data?.createdDate | date : "dd/MM/yyyy" }}</span>
+          </div>
+          <h1 class="mobile-title blog-title fw-bold d-lg-none">
+            {{ data?.title }}
+          </h1>
+          <img
+            *ngIf="
+              !data?.blog?.thumbnail.includes(
+                'data:image/jpeg;charset=utf-8;base64,'
+              )
+            "
+            [src]="commonService.convertTOBAse64Format(data?.blog.thumbnail)"
+            onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+          />
+        </div>
+      </div>
+      <div>
+        <div
+          class="author-card d-flex align-items-center mb-2 mx-auto ms-lg-0 me-lg-0"
+          (click)="viewProfile(data)"
+        >
+          <img
+            *ngIf="
+              !data?.postedUser?.profilePhoto.includes(
+                'data:image/jpeg;charset=utf-8;base64,'
+              )
+            "
+            [src]="
+              commonService.convertTOBAse64Format(data?.postedUser.profilePhoto)
+            "
+            onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+          />
+          <div class="ms-2">
+            <div>
+              by
+              <span class="author-name">{{ data?.postedUser?.firstName }}</span>
+              <span class="author-name"> {{ data?.postedUser?.lastName }}</span>
+            </div>
+            <div class="ms-auto">
+              <span class="c-text-secondary role fw-bold">
+                {{ data?.postedUser?.role }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="social-bar mb-3 justify-content-between justify-content-lg-start d-lg-none"
+        >
+          <div class="d-flex align-items-end gap-1">
+            <span class="fw-bold c-text-primary">{{ data?.views }}</span>
+            <span class="fw-medium c-text-secondary">Views</span>
+          </div>
+          <div class="d-flex align-items-end gap-1">
+            <img
+              class="cur-p like-icon"
+              src="../../../../assets/svg/like.svg"
+              alt="dislike"
+              *ngIf="!data?.liked"
+              (click)="handleLike()"
+              height="18px"
+            />
+            <img
+              class="cur-p like-icon"
+              src="../../../../assets/svg/like_fill.svg"
+              alt="like"
+              *ngIf="data?.liked"
+              (click)="handleLike()"
+              height="18px"
+            />
+
+            <span class="fw-bold c-text-primary">{{ data?.likes }}</span>
+            <span class="fw-medium c-text-secondary">Likes</span>
+          </div>
+          <div class="d-flex align-items-end gap-1">
+            <span
+              class="c-text-link c-text-link-blue"
+              (click)="toggelComment(data)"
+              >{{ data?.comments }} Comments</span
+            >
+          </div>
+          <span>
+            <img
+              class="cur-p"
+              src="../../../../assets/svg/star.svg"
+              *ngIf="!data?.favoured"
+              (click)="handleFavourite()"
+              alt="star"
+              height="20px"
+            />
+            <img
+              class="cur-p"
+              src="../../../../assets/svg/star_active.svg"
+              *ngIf="data?.favoured"
+              (click)="handleFavourite()"
+              alt="star active"
+              height="20px"
+            />
+          </span>
+          <span>
+            <img
+              class="cur-p"
+              src="../../../../assets/svg/next.svg"
+              alt="next"
+              height="20px"
+              (click)="openShare(data)"
+            />
+          </span>
+          <div class="c-text-secondary ms-auto d-none d-lg-block">
+            <span>Posted on: </span>
+            <span>{{ data?.createdDate | date : "dd/MM/yyyy" }}</span>
+          </div>
+        </div>
+        <div class="short-description my-3 d-lg-none">
+          "{{ data?.shortDescription }}"
+        </div>
+
+        <p class="mb-3 fw-bold">
+          {{ data?.blog?.description }}
+        </p>
+
+        <div class="contents" [innerHTML]="safeContent"></div>
+      </div>
+    </div>
+
+    <div
+      class="social-bar my-4 justify-content-between justify-content-lg-start"
+    >
+      <div class="d-flex align-items-end gap-1">
+        <span class="fw-bold c-text-primary">{{ data?.views }}</span>
+        <span class="fw-medium c-text-secondary">Views</span>
+      </div>
+      <div class="d-flex align-items-end gap-1">
+        <img
+          class="cur-p like-icon"
+          src="../../../../assets/svg/like.svg"
+          alt="dislike"
+          *ngIf="!data?.liked"
+          (click)="handleLike()"
+          height="18px"
+        />
+        <img
+          class="cur-p like-icon"
+          src="../../../../assets/svg/like_fill.svg"
+          alt="like"
+          *ngIf="data?.liked"
+          (click)="handleLike()"
+          height="18px"
+        />
+
+        <span class="fw-bold c-text-primary">{{ data?.likes }}</span>
+        <span class="fw-medium c-text-secondary">Likes</span>
+      </div>
+      <div class="d-flex align-items-end gap-1">
+        <span class="c-text-link c-text-link-blue" (click)="toggelComment(data)"
+          >{{ data?.comments }} Comments</span
+        >
+      </div>
+      <span>
+        <img
+          class="cur-p"
+          src="../../../../assets/svg/star.svg"
+          *ngIf="!data?.favoured"
+          (click)="handleFavourite()"
+          alt="star"
+          height="20px"
+        />
+        <img
+          class="cur-p"
+          src="../../../../assets/svg/star_active.svg"
+          *ngIf="data?.favoured"
+          (click)="handleFavourite()"
+          alt="star active"
+          height="20px"
+        />
+      </span>
+      <span>
+        <img
+          class="cur-p"
+          src="../../../../assets/svg/next.svg"
+          alt="next"
+          height="20px"
+          (click)="openShare(data)"
+        />
+      </span>
+      <div class="c-text-secondary ms-auto d-none d-lg-block">
+        <span>Posted on: </span>
+        <span>{{ data?.createdDate | date : "dd/MM/yyyy" }}</span>
+      </div>
+    </div>
+
+    <div
+      class="mx-5"
+      *ngIf="data?.postingId == activeCommentId && activeCommentId"
+    >
+      <app-comment [item]="data"></app-comment>
+    </div>
+
+    <h3 class="related-blog-text my-4">RELATED BLOGS</h3>
+    <div class="related-blogs-content-wrapper">
+      <div class="related-blogs-content">
+        <ng-container *ngFor="let item of relatedBlogList">
+          <div
+            class="article-wrapper flex-column d-flex"
+            (click)="navigateTo(item.postingId)"
+          >
+            <div class="profile-img-container">
+              <img
+                class="article-thumbnail"
+                [src]="commonService.convertTOBAse64Format(item.blog.thumbnail)"
+                alt="No preview available"
+              />
+              <div class="profile-info d-flex align-items-center gap-2">
+                <div class="avatar-round">
+                  <img
+                    height="20px"
+                    width="20px"
+                    [src]="
+                      commonService.convertTOBAse64Format(
+                        item.postedUser.profilePhoto
+                      )
+                    "
+                    alt="Profile Image"
+                  />
+                </div>
+                <div>{{ item.postedUser.firstName }}</div>
+              </div>
+            </div>
+            <div class="pb-2">
+              <div class="pt-1">
+                <!-- {{ commonService.trimText(item?.title) }} -->
+                <p class="title text-center">
+                  <span> {{ item?.title }} </span>
+                  <!-- <span class="date-time">{{
+              item.createdDate | date : "dd/MM/yyyy"
+            }}</span> -->
+                </p>
+              </div>
+              <div class="description">
+                <p class="description-group">
+                  <span class="description-text">
+                    {{ commonService.trimText(item.shortDescription, 22) }}
+                  </span>
+                  <span class="date-time">{{
+                    item.createdDate | date : "dd/MM/yyyy"
+                  }}</span>
+                </p>
+              </div>
+            </div>
+            <div
+              class="read-more align-self-center"
+              (click)="navigateTo(item.postingId)"
+            >
+              Read More
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="router-outlet-padding"></div>

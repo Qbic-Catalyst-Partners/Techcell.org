@@ -1,0 +1,216 @@
+<div class="card modal-h-ctrl">
+  <div class="p-3">
+    <div class="d-flex justify-content-lg-between">
+      <div class="title mx-2">
+        {{ !!formValue ? "Edit Experience" : "Add New Experience" }}
+      </div>
+      <img
+        _ngcontent-ng-c419591362=""
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="cur-p modal-close"
+        (click)="close()"
+      />
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <form
+          [formGroup]="experienceForm"
+          (ngSubmit)="submitData()"
+          ngbAutofocus
+        >
+          <div class="form-group mt-2">
+            <label for="projectTitle">Title*</label>
+            <input
+              formControlName="title"
+              type="text"
+              class="form-control"
+              id="title"
+              placeholder="Ex: Product Designer"
+              [maxlength]="maxChars"
+            />
+            <span class="remaining-character d-flex justify-content-end">
+              {{ fieldName["title"].value?.length }}/{{ maxChars }} Characters
+              left
+            </span>
+            <div
+              *ngIf="
+                (fieldName['title'].touched || isSubmitted) &&
+                fieldName['title'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['title'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Title
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="Employmenttype">Employment type*</label>
+            <input
+              formControlName="employmentType"
+              type="text"
+              class="form-control"
+              id="Field1"
+              placeholder="Ex: Full-time, Part-Time, Freelancer"
+              [maxlength]="maxChars"
+            />
+            <span class="remaining-character d-flex justify-content-end">
+              {{ fieldName["employmentType"].value?.length }}/{{ maxChars }}
+              Characters left
+            </span>
+            <div
+              *ngIf="
+                (fieldName['employmentType'].touched || isSubmitted) &&
+                fieldName['employmentType'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['employmentType'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Employment Type
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="companyName">Company Name*</label>
+            <input
+              formControlName="companyName"
+              type="text"
+              class="form-control"
+              id="url"
+              placeholder="Ex: Simtech"
+              [maxlength]="maxChars"
+            />
+            <span class="remaining-character d-flex justify-content-end">
+              {{ fieldName["companyName"].value?.length }}/{{ maxChars }}
+              Characters left
+            </span>
+            <div
+              *ngIf="
+                (fieldName['companyName'].touched || isSubmitted) &&
+                fieldName['companyName'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['companyName'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Company Name
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="description">Description*</label>
+            <textarea
+              formControlName="description"
+              placeholder="Ex: Detail description"
+              class="w-100 text-area form-control"
+              [maxlength]="maxCharsText"
+            ></textarea>
+            <span class="remaining-character d-flex justify-content-end">
+              {{ fieldName["description"].value?.length }}/{{ maxCharsText }}
+              Characters left
+            </span>
+            <div
+              *ngIf="
+                (fieldName['description'].touched || isSubmitted) &&
+                fieldName['description'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['description'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Description
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row mt-3 clear-float">
+            <div class="col">
+              <label for="startdate">Start Date*</label>
+              <div class="mat-datepicker" appCustomDateFormate>
+                <input
+                  class="form-control"
+                  [matDatepicker]="startDate"
+                  placeholder="YYYY/MM"
+                  formControlName="startDate"
+                  id="startDate"
+                  autocomplete="off"
+                />
+                <mat-datepicker
+                  #startDate
+                  startView="multi-year"
+                  (monthSelected)="setMonthAndYear($event, startDate, 'start')"
+                ></mat-datepicker>
+                <img
+                  class="calendar-icon"
+                  (click)="startDate.open()"
+                  src="../../../../../assets/lucide-icons/calender.svg"
+                  alt="calendar"
+                />
+                <div
+                  *ngIf="
+                    (fieldName['startDate'].touched || isSubmitted) &&
+                    fieldName['startDate'].errors
+                  "
+                >
+                  <div
+                    *ngIf="fieldName['startDate'].errors?.['required']"
+                    class="text-danger d-inline-block mt-1"
+                  >
+                    Please enter Start Date
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <label for="duration">End Date*</label>
+              <div class="mat-datepicker" appCustomDateFormate>
+                <input
+                  class="form-control"
+                  [matDatepicker]="endDate"
+                  placeholder="YYYY/MM"
+                  formControlName="endDate"
+                  id="endDate"
+                  autocomplete="off"
+                />
+                <mat-datepicker
+                  #endDate
+                  startView="multi-year"
+                  (monthSelected)="setMonthAndYear($event, endDate, 'end')"
+                ></mat-datepicker>
+                <img
+                  class="calendar-icon"
+                  (click)="endDate.open()"
+                  src="../../../../../assets/lucide-icons/calender.svg"
+                  alt="calendar"
+                />
+                <div
+                  *ngIf="
+                    (fieldName['endDate'].touched || isSubmitted) &&
+                    fieldName['endDate'].errors
+                  "
+                >
+                  <div
+                    *ngIf="fieldName['endDate'].errors?.['required']"
+                    class="text-danger d-inline-block mt-1"
+                  >
+                    Please enter end Date
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center mt-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

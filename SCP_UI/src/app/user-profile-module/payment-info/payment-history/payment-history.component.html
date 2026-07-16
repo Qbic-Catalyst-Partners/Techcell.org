@@ -1,0 +1,231 @@
+<div class="loading-overlay" *ngIf="isLoading">
+  <div class="spinner"></div>
+</div>
+
+<div class="p-3 bg-panel rounded">
+  <div class="pay-history-list">
+    <div class="pay-history-list-inner">
+      <div class="pay-history__filter-wrapper">
+        <div class="pay-history__filter">
+          <div class="pay-history__label">From</div>
+          <div class="cal-container">
+            <dp-date-picker
+              class="pay-history__date-picker"
+              theme="dp-material"
+              required="true"
+              [mode]="'month'"
+              [(ngModel)]="fromDate"
+              (ngModelChange)="onFromDateChange($event)"
+              [config]="{ format: 'MMM YYYY' }"
+              [placeholder]="fromDatePlaceholder"
+              #fromDatePicker
+            >
+            </dp-date-picker>
+            <span class="cal-icon" (click)="fromDatePicker.api.open()">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M16 2V6"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M8 2V6"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M3 10H21"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div class="pay-history__filter justify-content-end">
+          <div class="pay-history__label">To</div>
+          <div class="cal-container">
+            <dp-date-picker
+              theme="dp-material"
+              required="true"
+              [mode]="'month'"
+              [(ngModel)]="toDate"
+              (ngModelChange)="onToDateChange($event)"
+              [config]="{ format: 'MMM YYYY' }"
+              [placeholder]="toDatePlaceholder"
+              #toDatePicker
+            >
+            </dp-date-picker>
+            <span class="cal-icon" (click)="toDatePicker.api.open()">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M16 2V6"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M8 2V6"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M3 10H21"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="pay-history__cards-list">
+        <ng-container *ngIf="filteredRecords.length > 0; else noTransactions">
+          <article
+            class="pay-history-card"
+            (click)="selectInvoice(record)"
+            *ngFor="let record of filteredRecords"
+            [class.active]="
+              selectedInvoice &&
+              selectedInvoice.invoiceNumber === record.invoiceNumber
+            "
+          >
+            <div class="pay-history-card__body">
+              <div class="pay-history-card__date">{{ record.date }}</div>
+              <div class="pay-history-card__details">
+                <span>Invoice Number</span>
+                <span>{{ record.academicInvoiceNumber }}</span>
+                <span>₹{{ record.amount.toFixed(2) }}</span>
+              </div>
+            </div>
+            <footer class="pay-history-card__footer">
+              <div class="arrow-right" (click)="selectInvoice(record)">
+                <svg
+                  class="tag-slider-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 18L15 12L9 6"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </footer>
+          </article>
+        </ng-container>
+        <ng-template #noTransactions>
+          <div class="no-transactions">
+            No transactions available for selected date range
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="invoice-preview-section">
+    <article class="invoice" *ngIf="selectedInvoice; else noInvoiceSelected">
+      <div class="invoice__outline">
+        <div class="invoice__body">
+          <div class="invoice__month">
+            {{ getMonthYear(selectedInvoice.date) }}
+          </div>
+          <div class="invoice__paid-amount">
+            <div class="invoice__paid-amount-label">Paid Amount</div>
+            <div class="invoice__paid-amount-value">
+              ₹{{ selectedInvoice.amount.toFixed(2) }}
+            </div>
+          </div>
+          <div class="invoice__invoice-num mb-2">
+            <span class="invoice__invoice-num-label">Invoice Number :</span>
+            <span class="invoice__invoice-num-value">{{
+              selectedInvoice.academicInvoiceNumber
+            }}</span>
+          </div>
+          <div class="invoice__paid-on mb-3">
+            <span class="invoice__paid-on-label">Paid On :</span>
+            <span class="invoice__paid-on-value">{{
+              selectedInvoice.date
+            }}</span>
+          </div>
+          <div class="invoice__summary">Invoice Summary</div>
+          <div class="invoice__table">
+            <div class="invoice__table-row">
+              <div class="invoice__table-label">Payee Name</div>
+              <div class="invoice__table-value">
+                {{ selectedInvoice.payeeName }}
+              </div>
+            </div>
+            <div class="invoice__table-row">
+              <div class="invoice__table-label">Transaction Number</div>
+              <div class="invoice__table-value">
+                {{ selectedInvoice.razorpayPaymentId }}
+              </div>
+            </div>
+            <div class="invoice__table-row">
+              <div class="invoice__table-label">Payment Method</div>
+              <div class="invoice__table-value">
+                {{ selectedInvoice.paymentMethod }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="invoice__actions">
+          <button class="invoice__btn" (click)="downloadInvoice()">
+            Download Invoice
+          </button>
+          <button class="invoice__btn" (click)="emailInvoice()">
+            Email Invoice
+          </button>
+        </div>
+      </div>
+    </article>
+    <ng-template #noInvoiceSelected>
+      <div class="no-invoice-selected">
+        Please select an invoice to view details
+      </div>
+    </ng-template>
+  </div>
+</div>

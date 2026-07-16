@@ -1,0 +1,236 @@
+<div class="container p-3">
+  <div class="row modal-h-ctrl">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <p class="fs-5 fw-semibold">Upload Video</p>
+      <img
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="close-icon cur-p"
+        (click)="close()"
+      />
+    </div>
+
+    <form
+      [formGroup]="videoForm"
+      (ngSubmit)="submitForm()"
+      autocomplete="off"
+      ngbAutofocus
+    >
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12 mb-xxl-2">
+          <label for="title">Video Title<span class="text-danger">*</span></label>
+          <input
+            formControlName="title"
+            type="text"
+            class="form-control"
+            id="title"
+            placeholder="Enter Video Title"
+            [maxlength]="maxChars"
+            required
+          />
+          <div class="remaining-character d-flex justify-content-end">
+            {{ fieldName["title"].value?.length }}/{{ maxChars }}
+            Characters left
+          </div>
+          <div
+            *ngIf="
+              (fieldName['title'].touched || isSubmitted) &&
+              fieldName['title'].errors
+            "
+          >
+            <div
+              *ngIf="fieldName['title'].errors?.['required']"
+              class="text-danger c-text-danger d-inline-block mt-1"
+            >
+              Please enter Title
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12 mb-xxl-2">
+          <label for="shortDescription">Short Description<span class="text-danger">*</span></label>
+          <input
+            formControlName="shortDescription"
+            type="text"
+            class="form-control"
+            id="shortDescription"
+            [maxlength]="maxChars"
+            placeholder="Enter Short Description"
+            required
+          />
+          <div class="remaining-character d-flex justify-content-end">
+            {{ fieldName["shortDescription"].value?.length }}/{{ maxChars }}
+            Characters left
+          </div>
+          <div
+            *ngIf="
+              (fieldName['shortDescription'].touched || isSubmitted) &&
+              fieldName['shortDescription'].errors
+            "
+          >
+            <div
+              *ngIf="fieldName['shortDescription'].errors?.['required']"
+              class="text-danger c-text-danger d-inline-block mt-1"
+            >
+              Please enter Short Description
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12 mb-xxl-2">
+          <label for="description">Description<span class="text-danger">*</span></label>
+          <textarea
+            formControlName="description"
+            type="text"
+            class="form-control"
+            id="description"
+            [maxlength]="descriptionMaxChars"
+            placeholder="Description"
+            required
+            name=""
+            id=""
+            cols="30"
+            rows="5"
+          ></textarea>
+          <div class="remaining-character d-flex justify-content-end">
+            {{ fieldName["description"].value?.length }}/{{
+              descriptionMaxChars
+            }}
+            Characters left
+          </div>
+          <div
+            *ngIf="
+              (fieldName['description'].touched || isSubmitted) &&
+              fieldName['description'].errors
+            "
+          >
+            <div
+              *ngIf="fieldName['description'].errors?.['required']"
+              class="text-danger c-text-danger d-inline-block mt-1"
+            >
+              Please enter Description
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12 col-md-12 col-lg-12 mb-xxl-2">
+          <label for="url">URL<span class="text-danger">*</span></label>
+          <input
+            formControlName="videoLink"
+            type="url"
+            class="form-control"
+            id="url"
+            placeholder="URL"
+            required
+          />
+          <div
+            *ngIf="
+              (fieldName['videoLink'].touched || isSubmitted) &&
+              fieldName['videoLink'].errors
+            "
+          >
+            <!-- <div
+              *ngIf="fieldName['videoLink'].errors?.['required']"
+              class="text-danger c-text-danger d-inline-block mt-1"
+            >
+              Please enter video url
+            </div> -->
+            <div
+              *ngIf="fieldName['videoLink'].errors?.['validUrl']"
+              class="text-danger c-text-danger d-inline-block mt-1"
+            >
+              Please enter Valid URL
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-6 mb-xxl-2">
+          <label for="PrimaryTag">Primary Tag<span class="text-danger">*</span></label>
+          <div class="tag-input">
+            <tag-input
+              class="small-input"
+              formControlName="primaryTag"
+              [identifyBy]="'id'"
+              [displayBy]="'description'"
+              [onlyFromAutocomplete]="true"
+              (input)="getText($event)"
+              [onTextChangeDebounce]="1000"
+              [maxItems]="1"
+            >
+              <tag-input-dropdown
+                class="small-input"
+                [appendToBody]="true"
+                [autocompleteItems]="tagItems"
+                [identifyBy]="'id'"
+                [displayBy]="'description'"
+                [zIndex]="99999"
+              >
+              </tag-input-dropdown>
+            </tag-input>
+          </div>
+          <div
+            *ngIf="
+              (fieldName['primaryTag'].touched || isSubmitted) &&
+              fieldName['primaryTag'].errors
+            "
+          >
+            <div
+              *ngIf="fieldName['primaryTag'].errors?.['required']"
+              class="text-danger c-text-danger d-inline-block mt-1"
+            >
+              Please enter Primary Tag
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 mb-xxl-2">
+          <label for="title">Secondary Tag</label>
+          <div class="tag-input">
+            <tag-input
+              class="small-input"
+              formControlName="secondaryTag"
+              [identifyBy]="'id'"
+              [displayBy]="'description'"
+              [onlyFromAutocomplete]="true"
+              (input)="getText($event)"
+              [onTextChangeDebounce]="1000"
+            >
+              <tag-input-dropdown
+                class="small-input"
+                [appendToBody]="true"
+                [autocompleteItems]="tagItems"
+                [identifyBy]="'id'"
+                [displayBy]="'description'"
+                [zIndex]="99999"
+              >
+              </tag-input-dropdown>
+            </tag-input>
+          </div>
+          <div
+            *ngIf="
+              (fieldName['secondaryTag'].touched || isSubmitted) &&
+              fieldName['secondaryTag'].errors
+            "
+          >
+            <div
+              *ngIf="fieldName['secondaryTag'].errors?.['required']"
+              class="text-danger c-text-danger d-inline-block mt-1"
+            >
+              Please enter Secondary Tag
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 d-flex justify-content-center mt-2 gap-3">
+        <button type="button" (click)="close()" class="btn c-pop-btn-outline">
+          Cancel
+        </button>
+        <button type="submit" class="btn c-pop-btn-primary">Confirm</button>
+      </div>
+    </form>
+  </div>
+</div>

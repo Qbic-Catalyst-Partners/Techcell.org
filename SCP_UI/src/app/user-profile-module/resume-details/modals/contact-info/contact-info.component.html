@@ -1,0 +1,139 @@
+<div class="card modal-h-ctrl">
+  <div class="p-3">
+    <div class="d-flex justify-content-lg-between">
+      <div class="title mx-2">Edit info</div>
+      <img
+        _ngcontent-ng-c419591362=""
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="cur-p modal-close"
+        (click)="close()"
+      />
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <form
+          [formGroup]="contactInfoForm"
+          (ngSubmit)="submitData()"
+          ngbAutofocus
+        >
+          <div class="form-group mt-2">
+            <label for="mobileNumber">Mobile Number*</label>
+            <input
+              formControlName="mobileNumber"
+              type="text"
+              class="form-control form-control--inactive"
+              id="mobileNumber1"
+              placeholder="Mobile Number"
+              maxlength="50"
+              [ngClass]="{ 'form-control-active': contactInfoForm.controls['mobileNumber'].enabled }"
+            />
+            <div
+              *ngIf="
+                (fieldName['mobileNumber'].touched || isSubmitted) &&
+                fieldName['mobileNumber'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['mobileNumber'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Mobile Number
+              </div>
+              <div
+                *ngIf="fieldName.mobileNumber?.errors?.['pattern']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please, Enter 10 digit Mobile Number.
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="emailId">Email ID*</label>
+            <input
+              formControlName="emailId"
+              type="text"
+              class="form-control form-control--inactive"
+              id="emailId1"
+              placeholder="Email ID"
+              maxlength="50"
+              [ngClass]="{ 'form-control-active': contactInfoForm.controls['emailId'].enabled }"
+            />
+            <div
+              *ngIf="
+                (fieldName['emailId'].touched || isSubmitted) &&
+                fieldName['emailId'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['emailId'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Email ID
+              </div>
+              <div
+                *ngIf="fieldName['emailId'].errors?.['pattern']"
+                class="text-danger"
+              >
+                Email is not Valid
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="LinkedIn">LinkedIn*</label>
+            <input
+              formControlName="linkedIn"
+              type="text"
+              class="form-control"
+              id="linkedIn1"
+              placeholder="LinkedIn"
+              maxlength="50"
+              [ngClass]="{ 'form-control-active': contactInfoForm.controls['linkedIn'].enabled }"
+            />
+            <div
+              *ngIf="
+                (fieldName['linkedIn'].touched || isSubmitted) &&
+                fieldName['linkedIn'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['linkedIn'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter LinkedIn
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="state">State*</label>
+            <input
+              formControlName="state"
+              type="text"
+              class="form-control form-control--inactive"
+              id="state1"
+              placeholder="Enter State"
+              maxlength="50"
+              [ngClass]="{ 'form-control-active': contactInfoForm.controls['state'].enabled }"
+            />
+            <div
+              *ngIf="
+                (fieldName['state'].touched || isSubmitted) &&
+                fieldName['state'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['state'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter State
+              </div>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center mt-2">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

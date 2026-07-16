@@ -1,0 +1,230 @@
+<div class="card border-0 pt-3">
+  <!-- Dynamic hash tag list Based On HashTag -->
+  <div *ngIf="dynamicTagDataList?.length">
+    <p class="header-title">{{ dynamicTagDataList[0]?.customDescription }}</p>
+
+    <div class="d-flex align-items-center px-1-custom">
+      <div class="d-none d-lg-flex arrow-left" (click)="slides.prev()">
+        <svg
+          class="tag-slider-icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 18L9 12L15 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      <div class="slide-container">
+        <div class="side-pad"></div>
+        <div class="d-flex flex-column flex-1">
+          <div class="py-1"></div>
+          <owl-carousel-o [options]="carouselOptions" #slides>
+            <ng-container
+              *ngFor="
+                let obj of dynamicTagDataList;
+                let j = index;
+                let last = last
+              "
+            >
+              <ng-template carouselSlide [width]="246" [id]="obj.id">
+                <article class="career-card" (click)="apply(obj)">
+                  <div class="career-card__img-wrapper">
+                    <img
+                      [src]="
+                        commonService.convertTOBAse64Format(obj.companyLogo)
+                      "
+                      alt=""
+                      class="career-card__img-logo"
+                    />
+                    <img
+                      class="career-card__bg-img"
+                      [src]="commonService.convertTOBAse64Format(obj.coverPage)"
+                      alt=""
+                    />
+                  </div>
+                  <div class="career-card__text-content">
+                    <div class="career-card__row">
+                      <div class="career-card__col-1">Company:</div>
+                      <div class="career-card__col-2">
+                        {{ commonService.trimText(obj.companyName, 10) }}
+                      </div>
+                    </div>
+                    <div class="career-card__row">
+                      <div class="career-card__col-1">Project Title:</div>
+                      <div class="career-card__col-2">
+                        {{ commonService.trimText(obj.title, 10) }}
+                      </div>
+                    </div>
+                    <div class="career-card__row">
+                      <div class="career-card__col-1">Apply Before:</div>
+                      <div class="career-card__col-2">
+                        {{ obj.endDate | date : "dd/MM/yyyy" }}
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <button
+                        class="btn btn-sm btn-apply c-pop-btn-primary"
+                     
+                      >
+                        {{ isAdmin ? 'View' : (obj.applied ? "Applied" : "Apply") }}
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              </ng-template>
+            </ng-container>
+          </owl-carousel-o>
+          <div class="py-3"></div>
+        </div>
+        <div class="side-pad"></div>
+      </div>
+      <div class="d-none d-lg-flex arrow-right" (click)="slides.next()">
+        <svg
+          class="tag-slider-icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9 18L15 12L9 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="category-card d-flex flex-column gap-2"
+    *ngIf="hashTagListItems.length"
+  >
+    <ng-container *ngFor="let carouselData of hashTagListItems; let i = index">
+      <div *ngIf="carouselData?.data?.length">
+        <div class="header-title">
+          {{ carouselData?.data[0]?.customDescription }}
+        </div>
+        <div class="d-flex align-items-center px-1-custom">
+          <div (click)="prevSlide(i)" class="d-none d-lg-flex arrow-left">
+            <svg
+              class="tag-slider-icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <div class="slide-container">
+            <div class="side-pad"></div>
+            <div class="d-flex flex-column flex-1">
+              <div class="py-1"></div>
+              <owl-carousel-o [options]="carouselOptions" #slides>
+                <ng-container
+                  *ngFor="
+                    let obj of carouselData.data;
+                    let j = index;
+                    let last = last
+                  "
+                >
+                  <ng-template carouselSlide [width]="246" [id]="obj.id">
+                    <article class="career-card" (click)="apply(obj)">
+                      <div class="career-card__img-wrapper">
+                        <img
+                          [src]="
+                            commonService.convertTOBAse64Format(obj.companyLogo)
+                          "
+                          alt=""
+                          class="career-card__img-logo"
+                        />
+                        <img
+                          class="career-card__bg-img"
+                          [src]="
+                            commonService.convertTOBAse64Format(obj.coverPage)
+                          "
+                          alt=""
+                        />
+                      </div>
+                      <div class="career-card__text-content">
+                        <div class="career-card__row">
+                          <div class="career-card__col-1">Company:</div>
+                          <div class="career-card__col-2">
+                            {{ commonService.trimText(obj.companyName, 10) }}
+                          </div>
+                        </div>
+                        <div class="career-card__row">
+                          <div class="career-card__col-1">Project Title:</div>
+                          <div class="career-card__col-2">
+                            {{ commonService.trimText(obj.title, 10) }}
+                          </div>
+                        </div>
+                        <div class="career-card__row">
+                          <div class="career-card__col-1">Apply Before:</div>
+                          <div class="career-card__col-2">
+                            {{ obj.endDate | date : "dd/MM/yyyy" }}
+                          </div>
+                        </div>
+                        <div class="text-center">
+                          <button
+                            class="btn btn-sm btn-apply c-pop-btn-primary"
+                           
+                          >
+                            {{ isAdmin ? 'View' : (obj.applied ? "Applied" : "Apply") }}
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+                  </ng-template>
+                </ng-container>
+              </owl-carousel-o>
+              <div class="py-3"></div>
+            </div>
+            <div class="side-pad"></div>
+          </div>
+          <div
+            (click)="nextSlide(i, carouselData)"
+            class="d-none d-lg-flex arrow-right"
+          >
+            <svg
+              class="tag-slider-icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

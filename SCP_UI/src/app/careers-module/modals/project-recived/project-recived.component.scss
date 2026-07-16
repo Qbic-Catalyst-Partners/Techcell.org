@@ -1,0 +1,8 @@
+.project-team-table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important; /* remove default vertical gap */
+
+  .team-end td {
+    border-bottom: 8px solid transparent; /* visual gap between teams */
+  }
+}

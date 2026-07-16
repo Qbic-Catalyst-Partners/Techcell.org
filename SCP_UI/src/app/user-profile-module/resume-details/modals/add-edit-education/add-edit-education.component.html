@@ -1,0 +1,219 @@
+<div class="card modal-h-ctrl">
+  <div class="p-3">
+    <div class="d-flex justify-content-lg-between">
+      <div class="title mx-2">
+        {{ !!formValue ? "Edit Education" : "Add New Education" }}
+      </div>
+      <img
+        _ngcontent-ng-c419591362=""
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="cur-p modal-close"
+        (click)="close()"
+      />
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <form
+          [formGroup]="educationForm"
+          (ngSubmit)="submitData()"
+          ngbAutofocus
+        >
+          <div class="form-group mt-2">
+            <label for="schoolName">School*</label>
+            <input
+              formControlName="schoolName"
+              type="text"
+              class="form-control"
+              id="schoolName"
+              placeholder="Ex: MVJ COLLEGE OF ENGINEERING"
+              [maxlength]="maxChars"
+            />
+            <span class="remaining-character d-flex justify-content-end">
+              {{ fieldName["schoolName"].value?.length }}/{{ maxChars }}
+              Characters left
+            </span>
+            <div
+              *ngIf="
+                (fieldName['schoolName'].touched || isSubmitted) &&
+                fieldName['schoolName'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['schoolName'].errors?.['required']"
+                class="text-danger d-inline-block"
+              >
+                Please enter School
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="degree">Degree*</label>
+            <input
+              formControlName="degree"
+              type="text"
+              class="form-control"
+              id="degree1"
+              placeholder="Ex: Bachelor’s"
+              [maxlength]="maxChars"
+            />
+            <span class="remaining-character d-flex justify-content-end">
+              {{ fieldName["degree"].value?.length }}/{{ maxChars }} Characters
+              left
+            </span>
+            <div
+              *ngIf="
+                (fieldName['degree'].touched || isSubmitted) &&
+                fieldName['degree'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['degree'].errors?.['required']"
+                class="text-danger d-inline-block"
+              >
+                Please enter Degree
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="fieldStudy">Field of Study*</label>
+            <input
+              formControlName="fieldOfStudy"
+              type="text"
+              class="form-control"
+              id="fieldOfStudy"
+              placeholder="Ex: Business"
+              [maxlength]="maxChars"
+            />
+            <span class="remaining-character d-flex justify-content-end">
+              {{ fieldName["fieldOfStudy"].value?.length }}/{{ maxChars }}
+              Characters left
+            </span>
+            <div
+              *ngIf="
+                (fieldName['fieldOfStudy'].touched || isSubmitted) &&
+                fieldName['fieldOfStudy'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['fieldOfStudy'].errors?.['required']"
+                class="text-danger d-inline-block"
+              >
+                Please enter Field of Study
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mt-2 clear-float">
+            <div class="col">
+              <label for="startdate">Start Date*</label>
+              <div class="mat-datepicker" appCustomDateFormate>
+                <div class="position-relative">
+                  <input
+                    class="form-control"
+                    [matDatepicker]="startDate"
+                    placeholder="YYYY/MM"
+                    formControlName="startDate"
+                    id="startDate"
+                    autocomplete="off"
+                  />
+                  <mat-datepicker
+                    #startDate
+                    startView="multi-year"
+                    (monthSelected)="
+                      setMonthAndYear($event, startDate, 'start')
+                    "
+                  ></mat-datepicker>
+                  <img
+                    class="calendar-icon"
+                    (click)="startDate.open()"
+                    src="../../../../../assets/lucide-icons/calender.svg"
+                    alt="calendar"
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    (fieldName['startDate'].touched || isSubmitted) &&
+                    fieldName['startDate'].errors
+                  "
+                >
+                  <div
+                    *ngIf="fieldName['startDate'].errors?.['required']"
+                    class="text-danger d-inline-block"
+                  >
+                    Please enter Start Date
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <label for="duration">End Date*</label>
+              <div class="mat-datepicker" appCustomDateFormate>
+                <div class="position-relative">
+                  <input
+                    class="form-control"
+                    [matDatepicker]="endDate"
+                    placeholder="YYYY/MM"
+                    formControlName="endDate"
+                    id="endDate"
+                    autocomplete="off"
+                  />
+                  <mat-datepicker
+                    #endDate
+                    startView="multi-year"
+                    (monthSelected)="setMonthAndYear($event, endDate, 'end')"
+                  ></mat-datepicker>
+                  <img
+                    class="calendar-icon"
+                    (click)="endDate.open()"
+                    src="../../../../../assets/lucide-icons/calender.svg"
+                    alt="calendar"
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    (fieldName['endDate'].touched || isSubmitted) &&
+                    fieldName['endDate'].errors
+                  "
+                >
+                  <div
+                    *ngIf="fieldName['endDate'].errors?.['required']"
+                    class="text-danger d-inline-block"
+                  >
+                    Please enter End Date
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="grade">Grade*</label>
+            <input
+              formControlName="grade"
+              type="text"
+              class="form-control"
+              id="grade1"
+              placeholder="Ex: 6.7 GPA"
+              maxlength="50"
+            />
+            <div
+              *ngIf="
+                (fieldName['grade'].touched || isSubmitted) &&
+                fieldName['grade'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['grade'].errors?.['required']"
+                class="text-danger d-inline-block"
+              >
+                Please enter Grade
+              </div>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center mt-2">
+            <button type="submit" class="btn c-pop-btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

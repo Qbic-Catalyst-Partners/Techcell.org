@@ -1,0 +1,1 @@
+export { PasswordVerificationComponent } from '../password-verification.component'; 

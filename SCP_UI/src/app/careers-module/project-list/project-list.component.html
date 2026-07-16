@@ -1,0 +1,120 @@
+<div class="smooth-table-curve">
+    <div class="table-container px-2 scroll-design" id="scroll-design">
+        <table class="table table-hover m-0">
+            <thead>
+                <tr class="header-row">
+                    <th class="table-header" scope="col" *ngFor="let column of header_data" (click)="sortHeader(column)" [style.width]="column.width">
+                        {{column?.fieldName}}
+                        <span *ngIf="column?.isSort">
+                            <svg
+                                [class.list-down-arr]="!column.sort"
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M12 5V19"
+                                    stroke="#9da5b9"
+                                    stroke-width="3"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                                <path
+                                    d="M19 12L12 19L5 12"
+                                    stroke="#9da5b9"
+                                    stroke-width="3"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="scroll-section">
+                <ng-container *ngFor="let row of all_data;let i = index; last as isLast">
+                    <tr *ngIf="isLast" 
+                        appScroll 
+                        (elementVisible)="getData($event)" 
+                        [isTargetElement]="true"
+                        (click)="apply(row)">
+                        <ng-container *ngTemplateOutlet="content; context: {row}"></ng-container>
+                    </tr>
+                    <tr *ngIf="!isLast" (click)="apply(row)">
+                        <ng-container *ngTemplateOutlet="content; context: {row}"></ng-container>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="all_data && all_data.length == 0">
+                    <td [attr.colspan]="header_data.length" class="text-center">
+                        No Record Found
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>  
+</div>
+
+
+<ng-template #content let-row='row'>
+    <td [title]="row?.companyName">
+        <img class="card-img me-1" [src]="commonService.convertTOBAse64Format(row.companyLogo)" alt="">
+        {{commonService.trimText(row?.companyName)}}
+    </td>
+    <td [title]="row?.title">{{commonService.trimText(row?.title,10)}}</td>
+    <td>{{ row?.duration}} Months</td>
+    <td [title]="row?.tags">{{commonService.trimText(row?.tags,10)}}</td>
+    <td>{{row?.teamSize}}</td>
+    <td>{{ row?.endDate | date:'dd/MM/yyyy'}}</td>
+    <td *ngIf="userInfo.role == 'Admin'">
+        <span class="application-count">
+            <span class="span-click" (click)="openModal(row,'',row?.total); $event.stopPropagation()">{{row?.total}}</span>
+            <span> (</span>
+            <span class="accept span-click" (click)="openModal(row,'Accepted',row?.selectedCount); $event.stopPropagation()">{{row?.selectedCount}}</span>
+            <span>/</span>
+            <span class="reject span-click" (click)="openModal(row,'Rejected',row?.rejectedCount); $event.stopPropagation()">{{row?.rejectedCount}}</span>
+            <span>/</span>
+            <span class="pending span-click" (click)="openModal(row,'Applied',row?.appliedCount); $event.stopPropagation()">{{row?.appliedCount}}</span>
+            <span>)</span>
+        </span>
+    </td>
+    <td *ngIf="userInfo.role == 'Admin'" [ngClass]="row?.status == 'Active' ? 'active-text-color':'Inactive-text-color'">{{row?.status}}</td>
+    <td *ngIf="userInfo.role == 'Student'">
+        <ng-container *ngIf="showOnlyApplied; else statusTpl2">
+            <span class="review-status fw-bold" [ngClass]="{
+              'status-accepted': row?.reviewStatus === 'ACCEPTED',
+              'status-rejected': row?.reviewStatus === 'REJECTED'
+            }">{{ row?.reviewStatus || 'PENDING' }}</span>
+        </ng-container>
+        <ng-template #statusTpl2>
+            <span [ngClass]="row?.applied ? 'active-text-color' : 'Inactive-text-color'">{{ row?.applied ? 'Applied' : 'Apply' }}</span>
+        </ng-template>
+    </td>
+    <td style="position: relative" *ngIf="userInfo.role == 'Admin'">
+        <button 
+            mat-icon-button
+            class="action-btn"
+            [ngbTooltip]="actionContent"
+            [tooltipContext]="{row: row, tooltip: t}"
+            triggers="manual"
+            #t="ngbTooltip"
+            (click)="toggleAction(row); toggleTooltip(t); $event.stopPropagation()">
+            <img src="../../../../assets/svg/action-icon.svg" alt="action" class="action-icon" />
+        </button>
+    </td>
+</ng-template>
+
+<ng-template #actionContent let-row="row" let-tooltip="tooltip">
+    <div class="action-tooltip">
+        <div class="action-item" (click)="updateInternshipStatus('Active', row); tooltip.close()" *ngIf="row?.status != 'Active'">
+            Activate
+            </div>
+        <div class="action-item" (click)="updateInternshipStatus('InActive', row); tooltip.close()" *ngIf="row?.status == 'Active'">
+            InActivate
+            </div>
+        <div class="action-item" (click)="updateInternshipStatus('Delete', row); tooltip.close()">
+            Delete
+        </div>
+    </div>
+</ng-template>

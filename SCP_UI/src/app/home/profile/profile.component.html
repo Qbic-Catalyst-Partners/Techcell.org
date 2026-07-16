@@ -1,0 +1,167 @@
+<div class="text-center">
+  <img
+    [src]="profilePhoto"
+    class="profile-img"
+    onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+  />
+</div>
+<div class="text-center">
+  <h3 class="profile-name">
+    {{ userInfo?.firstName }}&nbsp;{{ userInfo?.lastName }}
+  </h3>
+  <div class="profile-edu-info">
+    <div>{{ userInfo?.stream }}</div>
+    <div>{{ clgName }}</div>
+  </div>
+</div>
+<div class="profile-noti-cards-wrapper">
+  <article class="profile-noti-card" (click)="cardClick('community')">
+    <div class="profile-noti-card__number">
+      {{ counts?.communityCount || 0 }}
+    </div>
+    <div class="profile-noti-card__img-wrapper">
+      <img
+        src="assets/svg/community_blue.svg"
+        alt="Community icon"
+        class="profile-noti-card__img"
+      />
+    </div>
+    <div class="profile-noti-card__title">Communities</div>
+  </article>
+  <article class="profile-noti-card" (click)="cardClick('certification')">
+    <div class="profile-noti-card__number">
+      {{ counts?.contentsCount || 0 }}
+    </div>
+    <div class="profile-noti-card__img-wrapper">
+      <img
+        src="assets/svg/certification.svg"
+        alt="Community icon"
+        class="profile-noti-card__img"
+      />
+    </div>
+    <div class="profile-noti-card__title">Contents</div>
+  </article>
+  <article class="profile-noti-card" (click)="cardClick('courses')">
+    <div class="profile-noti-card__number">
+      {{ counts?.careersCount || 0 }}
+    </div>
+    <div class="profile-noti-card__img-wrapper">
+      <img
+        src="../../../assets/svg/courses.svg"
+        alt="Community icon"
+        class="profile-noti-card__img"
+      />
+    </div>
+    <div class="profile-noti-card__title">Careers</div>
+  </article>
+</div>
+<!-- Hide this for Admin role -->
+<div class="profile-nav" *ngIf="userInfo?.role !== 'Admin'">
+  <div class="profile-nav__header">
+    <div class="profile-nav__title">My Communities</div>
+    <span class="profile-nav__view-more" (click)="viewMore('Community')"
+      >View More</span
+    >
+  </div>
+  <ul class="profile-nav__list">
+    <ng-container *ngFor="let comm of communityList">
+      <li class="profile-nav__list-item">
+        <img
+          src="assets/svg/community-black.svg"
+          alt=""
+          class="profile-nav__list-img"
+        />
+        <div class="profile-nav__list-title c-btn-link" (click)="openCommunity(comm)">
+          {{
+            commonService.trimText(comm?.postCommunityResponseDTO?.title, 20)
+          }}
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+
+<!-- Hide this for Admin role -->
+<div class="profile-nav" *ngIf="userInfo?.role !== 'Admin'">
+  <div class="profile-nav__header">
+    <div class="profile-nav__title">Careers</div>
+    <span class="profile-nav__view-more" (click)="viewMore('Careers')"
+      >View More</span
+    >
+  </div>
+  <ul class="profile-nav__list">
+    <ng-container *ngFor="let course of appliedCarrierList">
+      <li class="profile-nav__list-item">
+        <img
+          src="../../../assets/svg/courses-black.svg"
+          alt=""
+          class="profile-nav__list-img"
+        />
+        <div class="profile-nav__list-title c-btn-link" (click)="openCareer(course)">
+          {{
+            course?.internshipResponseDTO?.title ||
+              course?.jobResponseDTO?.designation ||
+              course?.projectResponseDTO?.title ||
+              course?.certificationResponseDTO?.title
+          }}
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+
+<div class="profile-nav">
+  <div class="profile-nav__header">
+    <div class="profile-nav__title">My Contents</div>
+    <span class="profile-nav__view-more" (click)="viewMore('Contents')"
+      >View More</span
+    >
+  </div>
+  <ul class="profile-nav__list">
+    <ng-container *ngFor="let certificate of contentList">
+      <li class="profile-nav__list-item">
+        <img
+          src="assets/svg/certification-black.svg"
+          alt=""
+          class="profile-nav__list-img"
+        />
+        <div class="profile-nav__list-title c-btn-link" (click)="openContent(certificate)">
+          {{ commonService.trimText(certificate.title, 30) }}
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+
+<div class="profile-nav">
+  <div class="profile-nav__header">
+    <div class="profile-nav__title">Content Tagging</div>
+  </div>
+  <ul class="profile-nav__tag-list">
+    <ng-container *ngFor="let favorite of favouriteList">
+      <li class="profile-nav__tag-list-item favorite-tag">
+        {{ favorite.text }}
+      </li>
+    </ng-container>
+  </ul>
+</div>
+
+<div class="profile-footer">
+  <ul class="profile-footer__list">
+    <li class="profile-footer__item">
+      <a (click)="navigateTo('tnc')" class="profile-footer__link"
+        >Terms & Conditions</a
+      >
+    </li>
+    <li class="profile-footer__item">
+      <a (click)="navigateTo('privacy')" class="profile-footer__link"
+        >Privacy policy</a
+      >
+    </li>
+    <li class="profile-footer__item">
+      <a (click)="this.commonService.cookieModal()" class="profile-footer__link"
+        >Cookie Policy</a
+      >
+    </li>
+  </ul>
+</div>

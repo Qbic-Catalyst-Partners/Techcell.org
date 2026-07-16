@@ -1,0 +1,221 @@
+<div class="card p-1">
+  <div class="modal-h-ctrl" #modalContent>
+    <div class="d-flex justify-content-end mb-1">
+      <img
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="cur-p add-blog-close"
+        (click)="close()"
+      />
+    </div>
+    <div class="mb-3 pe-1 position-relative">
+      <img
+        [src]="commonService.convertTOBAse64Format(viewData?.companyLogo)"
+        class="logo-img"
+        alt="community AI"
+        onError="this.src='../../../../assets/images/logo.png'"
+      />
+      <img
+        [src]="commonService.convertTOBAse64Format(viewData?.coverPage)"
+        class="bg-img"
+        alt="community AI"
+        onError="this.src='../../../assets/images/community-AI.png'"
+      />
+    </div>
+    <div class="pe-1">
+      <div class="px-1 px-lg-3">
+        <div
+          class="mb-1 d-flex flex-column-reverse flex-lg-row justify-content-lg-between align-items-lg-baseline"
+        >
+          <h5 class="content-color-1 m-0 fw-semibold c-text-primary">
+            {{ viewData?.companyName }}
+          </h5>
+          <span class="fs-tn c-text-secondary"
+            >Posted on {{ viewData?.createdDate | date : "dd/MM/yyyy" }}</span
+          >
+        </div>
+        <div class="fs-sm">
+          {{ viewData?.companyDesc }}
+        </div>
+        <div class="career-line"></div>
+        <div class="fs-sm d-flex flex-column gap-2">
+          <div>
+            <div class="fw-semibold c-text-primary">Designation</div>
+            <div class="c-text-secondary">{{ viewData?.designation }}</div>
+          </div>
+          <div>
+            <div class="fw-semibold c-text-primary">Description</div>
+            <div class="c-text-secondary">{{ viewData?.desc }}</div>
+          </div>
+          <div>
+            <div class="fw-semibold c-text-primary">Skill requirement</div>
+            <div class="c-text-secondary">{{ viewData?.skills }}</div>
+          </div>
+          <div class="my-2"></div>
+          <div>
+            <span class="fw-semibold c-text-primary">Contact Number</span>
+            <span class="mx-2 fw-semibold c-text-primary">:</span>
+            <span class="c-text-secondary">{{ viewData?.contactNo }}</span>
+          </div>
+          <div>
+            <span class="fw-semibold c-text-primary">Contact Email</span>
+            <span class="mx-2 fw-semibold c-text-primary">:</span>
+            <span class="c-text-secondary">{{ viewData?.email }}</span>
+          </div>
+          <div>
+            <span class="fw-semibold c-text-primary">Work Location</span>
+            <span class="mx-2 fw-semibold c-text-primary">:</span>
+            <span class="c-text-secondary">{{ viewData?.location }}</span>
+          </div>
+          <div>
+            <span class="fw-semibold c-text-primary"
+              >Qualification Required</span
+            >
+            <span class="mx-2 fw-semibold c-text-primary">:</span>
+            <span class="c-text-secondary">{{ viewData?.qualification }}</span>
+          </div>
+          <div>
+            <span class="fw-semibold c-text-primary"
+              >Minimum Experience Required</span
+            >
+            <span class="mx-2 fw-semibold c-text-primary">:</span>
+            <span class="c-text-secondary">{{ viewData?.experiance }} {{ viewData?.experianceUnit }}</span>
+          </div>
+          <div>
+            <span class="fw-semibold c-text-primary">Start Date</span>
+            <span class="mx-2 fw-semibold c-text-primary">:</span>
+            <span class="c-text-secondary">{{
+              viewData?.startDate | date : "dd/MM/yyyy"
+            }}</span>
+          </div>
+          <div>
+            <span class="fw-semibold c-text-primary">Job Type</span>
+            <span class="mx-2 fw-semibold c-text-primary">:</span>
+            <span class="c-text-secondary">{{ viewData?.jobType }}</span>
+          </div>
+          <div>
+            <span class="fw-semibold c-text-primary">CTC</span>
+            <span class="mx-2 fw-semibold c-text-primary">:</span>
+            <span class="c-text-secondary">
+              {{ viewData?.ctcTo ? (viewData?.ctc + ' - ' + viewData?.ctcTo + ' Lakhs per Annum') : (viewData?.ctc + ' Lakhs per Annum') }}
+            </span>
+          </div>
+
+          <div>
+            <span class="fw-semibold c-text-primary">Apply by Date</span>
+            <span class="mx-2 fw-semibold c-text-primary">:</span>
+            <span class="c-text-secondary">{{
+              viewData?.endDate | date : "dd/MM/yyyy"
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-3 pb-3 d-flex flex-column align-items-center flex-md-row justify-content-md-center gap-3"
+    >
+      <button class="btn c-pop-btn-outline" (click)="close()">Cancel</button>
+      <button
+        class="btn c-pop-btn-primary"
+        (click)="apply()"
+        *ngIf="!viewData?.applied && viewData?.status == 'Active' && role"
+      >
+        Apply
+      </button>
+      <button class="btn c-pop-btn-primary" *ngIf="viewData?.applied && role" (click)="showAlreadyAppliedMessage()">
+        Applied
+      </button>
+    </div>
+    <!-- <div class="d-flex justify-content-between mb-2">
+      <p class="fs-5 fw-semibold">Add Internship</p>
+      <img
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="cur-p close-icon"
+        (click)="close()"
+      />
+    </div> -->
+  </div>
+</div>
+
+<!-- <div class="row">
+    <div class="col-12 member-container">
+      <div style="position: relative;padding: 4px;">
+        <img
+          [src]="commonService.convertTOBAse64Format(viewData?.coverPage)"
+          class="w-100 cover-img" height="210px"
+          alt="community AI"
+          onError="this.src='../../../assets/images/community-AI.png'"
+        />
+        <div class="members">
+            <img
+            [src]="commonService.convertTOBAse64Format(viewData?.companyLogo)"
+            class="w-100 cover-img" height="100%"
+            alt="community AI"
+            onError="this.src='../../../../assets/images/logo.png'"
+          />
+        </div>
+      </div>
+      <div class="col-12 px-4">
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <h5 class="content-color-1">{{viewData?.companyName}}</h5>
+                <p class="content-color">Posted on  {{viewData?.createdDate | date:'dd/MM/yyyy'}}</p>
+            </div>
+            <div class="content-color-2 pb-3 text-break">
+                {{viewData?.companyDesc}}
+            </div>
+            <hr width="35%">
+            <div class="pt-3">
+                <div class="content-header">Position Offered</div>
+                <div class="content-body">{{viewData?.title}}</div>
+            </div>
+            <div class="pt-3">
+                <div class="content-header">About this Position</div>
+                <div class="content-body">{{viewData?.desc}}</div>
+            </div>
+            <div class="pt-3 pb-2">
+                <div class="content-header">Skill Requirements :</div>
+                <div class="content-body">{{viewData?.skills}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="content-header">Work Location :</div>
+                <div class="content-body">{{viewData?.location}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="content-header">Qualification Required :</div>
+                <div class="content-body">{{viewData?.qualification}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="content-header">Start Date :</div>
+                <div class="content-body">{{viewData?.startDate | date:'dd/MM/yyyy'}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="content-header">Duration :</div>
+                <div class="content-body">{{viewData?.duration}} Months</div>
+            </div>
+            <div class="d-flex">
+                <div class="content-header">Stipend Amount :</div>
+                <div class="content-body">{{viewData?.stipend}}/- per month</div>
+            </div>
+            <div class="d-flex">
+                <div class="content-header">Last Date to Apply :</div>
+                <div class="content-body">{{viewData?.endDate | date:'dd/MM/yyyy'}}</div>
+            </div>
+            <div class="col-12 text-center pb-3">
+              <button class="btn rounded-4 w-25 mt-3 mx-4 btn-border" (click)="close()">
+                  Cancel
+              </button>
+              <button class="btn rounded-4 w-25 mt-3 mx-4 btn-border" (click)="apply()" *ngIf="!viewData?.applied && viewData?.status =='Active' && role">
+                  APPLY
+              </button>
+              <button class="btn rounded-4 w-25 mt-3 mx-4 btn-border" *ngIf="viewData?.applied && role">
+                APPLIED
+              </button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->

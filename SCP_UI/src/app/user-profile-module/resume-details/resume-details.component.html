@@ -1,0 +1,543 @@
+<!-- My Info -->
+<div class="profile-box">
+  <div class="my-info-card card mx-auto my-3">
+    <div
+      class="card-header d-flex justify-content-between align-items-center py-1"
+    >
+      <div class="card-info-title">My Info</div>
+      <div class="d-flex">
+        <button class="btn edit-btn me-2" (click)="viewResume()">
+          View & Download
+          <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15"
+          stroke="#ffffff"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M7 10L12 15L17 10"
+          stroke="#ffffff"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M12 15V3"
+          stroke="#ffffff"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+        </button>
+        <button
+          *ngIf="!isInfoEdit"
+          (click)="enableEdit('edit', true)"
+          class="btn edit-btn"
+        >
+          Edit
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <button
+          *ngIf="isInfoEdit"
+          (click)="enableEdit('edit', false)"
+          class="btn edit-btn"
+        >
+          Discard Changes
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="resumeForm" (ngSubmit)="submitData()">
+        <div class="row mb-3 mt-lg-3 mt-md-3 mt-sm-3">
+          <div class="col-12 col-lg-2 col-md-2 col-sm-2">
+            <label for="firstname" class="col-form-label">First Name</label>
+          </div>
+          <div class="col-12 col-lg-4 col-md-4 col-sm-4">
+            <input
+              type="text"
+              formControlName="firstName"
+              class="form-control"
+              id="firstname"
+              placeholder="First Name"
+              maxlength="50"
+            />
+          </div>
+          <div class="col-12 col-lg-2 col-md-2 col-sm-2">
+            <label for="lastname" class="col-form-label">Last Name</label>
+          </div>
+          <div class="col-12 col-lg-4 col-md-4 col-sm-4 pe-4">
+            <input
+              type="text"
+              formControlName="lastName"
+              class="form-control"
+              id="lastname"
+              placeholder="Last Name"
+              maxlength="50"
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12">
+            <label for="" class="col-form-label">Contact Info</label>
+            <a
+              class="ms-5 email-text fs-sm"
+              (click)="openModal('contactInfo', contactInfo.length ? contactInfo[0] : null)"
+              [ngClass]="{ disabledText: !isInfoEdit }"
+            >
+              Edit Contact info
+            </a>
+            <span class="gray-text ms-2 fs-sm"
+              >( Email, Mobile Number, State, LinkedIn )</span
+            >
+          </div>
+          <div class="col-10 offset-2" *ngIf="contactInfo.length">
+            <div class="px-3 py-1 text-box" *ngFor="let contact of contactInfo">
+              <p>{{ contact?.mobileNumber }}</p>
+              <p>{{ contact?.emailId }}</p>
+              <p>{{ contact?.linkedIn }}</p>
+              <p>{{ contact?.state }}</p>
+              <div class="icons" [ngClass]="{ disabledText: !isInfoEdit }" [style.pointer-events]="isInfoEdit ? 'auto' : 'none'">
+                <img
+                  src="../../../assets/temp-img/edit.svg"
+                  alt=""
+                  class="cur-p icon"
+                  (click)="openModal('contactInfo', contact)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3 me-0">
+          <div class="col-12 col-lg-2 col-md-2 col-sm-2">
+            <label for="" class="col-form-label">Objective</label>
+          </div>
+          <div class="col-12 col-lg-10 col-md-10 col-sm-10">
+            <textarea
+              formControlName="objective"
+              placeholder="  A few words about myself"
+              class="w-100 text-area form-control"
+              [ngClass]="{ 'form-control-active': isInfoEdit }"
+              [maxlength]="descriptionMaxChars"
+            ></textarea>
+            <div
+              class="remaining-character d-flex justify-content-end c-text-secondary"
+            >
+              {{ fieldName["objective"].value?.length }}/{{
+                descriptionMaxChars
+              }}
+              Characters left
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 d-flex justify-content-between">
+            <label for="" class="col-form-label">Education</label>
+            <a
+              class="mx-2 email-text fs-sm"
+              (click)="openModal('edcuation')"
+              [ngClass]="{ disabledText: !isInfoEdit }"
+            >
+              + Add New Education
+            </a>
+          </div>
+          <div class="col-10 offset-2" *ngIf="addEducationList.length">
+            <div
+              class="px-3 py-1 text-box"
+              *ngFor="let edu of addEducationList"
+            >
+              <p class="mb-1">{{ edu?.schoolName }}</p>
+              <p class="mb-1">{{ edu?.degree }}</p>
+              <p class="mb-1">GPA:&nbsp;&nbsp;{{ edu?.grade }}</p>
+              <p>
+                {{ edu?.startDate | date : "yyyy" }}-{{
+                  edu.endDate | date : "yyyy"
+                }}
+              </p>
+              <div class="icons" [ngClass]="{ disabledText: !isInfoEdit }">
+                <img
+                  src="../../../assets/temp-img/edit.svg"
+                  alt=""
+                  (click)="openModal('edcuation', edu)"
+                  class="cur-p icon"
+                />
+                <span class="vr-line"></span>
+                <img
+                  src="../../../assets/temp-img/delete.svg"
+                  alt=""
+                  (click)="deleteResumeList('edcuation', edu)"
+                  class="cur-p icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 d-flex justify-content-between">
+            <label for="" class="col-form-label">Certification</label>
+            <a
+              class="mx-2 email-text fs-sm"
+              (click)="openModal('certification')"
+              [ngClass]="{ disabledText: !isInfoEdit }"
+            >
+              + Add New Certification
+            </a>
+          </div>
+          <div class="col-10 offset-2" *ngIf="addCertificationList.length">
+            <div
+              class="px-3 py-1 text-box"
+              *ngFor="let cer of addCertificationList"
+            >
+              <p class="mb-1">{{ cer?.certifyingEntity }}</p>
+              <p class="mb-1">{{ cer?.field }}</p>
+              <p class="mb-1">{{ cer?.description }}</p>
+              <p>
+                {{ cer?.startDate | date : "yyyy" }}-{{
+                  cer.endDate | date : "yyyy"
+                }}
+              </p>
+              <div class="icons" [ngClass]="{ disabledText: !isInfoEdit }">
+                <img
+                  src="../../../assets/temp-img/edit.svg"
+                  alt=""
+                  (click)="openModal('certification', cer)"
+                  class="cur-p icon"
+                />
+                <span class="vr-line"></span>
+                <img
+                  src="../../../assets/temp-img/delete.svg"
+                  alt=""
+                  (click)="deleteResumeList('certification', cer)"
+                  class="cur-p icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 d-flex justify-content-between">
+            <label for="" class="col-form-label">Project</label>
+            <a
+              class="mx-2 email-text fs-sm"
+              (click)="openModal('project')"
+              [ngClass]="{ disabledText: !isInfoEdit }"
+            >
+              + Add New Projects
+            </a>
+          </div>
+          <div class="col-10 offset-2" *ngIf="addProjectList.length">
+            <div
+              class="px-3 py-1 text-box"
+              *ngFor="let project of addProjectList"
+            >
+              <p class="mb-1">{{ project?.projectTitle }}</p>
+              <p class="mb-1">{{ project?.field }}</p>
+              <p class="mb-1">{{ project?.description }}</p>
+              <p class="mb-1">{{ project?.projectUrl }}</p>
+              <p>
+                {{ project?.startDate | date : "yyyy" }}-{{
+                  project.endDate | date : "yyyy"
+                }}
+              </p>
+              <div class="icons" [ngClass]="{ disabledText: !isInfoEdit }">
+                <img
+                  src="../../../assets/temp-img/edit.svg"
+                  alt=""
+                  class="cur-p icon"
+                  (click)="openModal('project', project)"
+                />
+                <span class="vr-line"></span>
+                <img
+                  src="../../../assets/temp-img/delete.svg"
+                  alt=""
+                  class="cur-p icon"
+                  (click)="deleteResumeList('project', project)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 d-flex justify-content-between">
+            <label for="" class="col-form-label">Achievement's</label>
+            <a
+              class="mx-2 email-text fs-sm"
+              (click)="openModal('achievement')"
+              [ngClass]="{ disabledText: !isInfoEdit }"
+            >
+              + Add New Achievements
+            </a>
+          </div>
+          <div class="col-10 offset-2" *ngIf="addAchievementList.length">
+            <div
+              class="px-3 py-1 text-box"
+              *ngFor="let achive of addAchievementList"
+            >
+              <p>{{ achive?.description }}</p>
+              <div class="icons" [ngClass]="{ disabledText: !isInfoEdit }">
+                <img
+                  src="../../../assets/temp-img/edit.svg"
+                  alt=""
+                  class="cur-p icon"
+                  (click)="openModal('achievement', achive)"
+                />
+                <span class="vr-line"></span>
+                <img
+                  src="../../../assets/temp-img/delete.svg"
+                  alt=""
+                  class="cur-p icon"
+                  (click)="deleteResumeList('achievement', achive)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 d-flex justify-content-between">
+            <label for="" class="col-form-label">Experience</label>
+            <a
+              class="mx-2 email-text fs-sm"
+              (click)="openModal('expernice')"
+              [ngClass]="{ disabledText: !isInfoEdit }"
+            >
+              + Add New Experience
+            </a>
+          </div>
+          <div class="col-10 offset-2" *ngIf="addExperienceList.length">
+            <div
+              class="px-3 py-1 text-box"
+              *ngFor="let exp of addExperienceList"
+            >
+              <p class="mb-1">{{ exp?.title }}</p>
+              <p class="mb-1">{{ exp?.employmentType }}</p>
+              <p class="mb-1">{{ exp?.companyName }}</p>
+              <p class="mb-1">{{ exp?.description }}</p>
+              <p>
+                {{ exp?.startDate | date : "yyyy" }}-{{
+                  exp.endDate | date : "yyyy"
+                }}
+              </p>
+              <div class="icons" [ngClass]="{ disabledText: !isInfoEdit }">
+                <img
+                  src="../../../assets/temp-img/edit.svg"
+                  alt=""
+                  class="cur-p icon"
+                  (click)="openModal('expernice', exp)"
+                />
+                <span class="vr-line"></span>
+                <img
+                  src="../../../assets/temp-img/delete.svg"
+                  alt=""
+                  class="cur-p icon"
+                  (click)="deleteResumeList('expernice', exp)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 d-flex justify-content-between">
+            <label for="" class="col-form-label">Skills</label>
+          </div>
+          <div
+            class="col-12 offset-lg-2 offset-md-2 offset-sm-2 col-lg-10 col-md-10 col-sm-10"
+          >
+            <div
+              class="px-3 py-1 skill-box"
+              [ngClass]="{ 'form-control-active': isInfoEdit }"
+            >
+              <div class="mb-3 chip-container flex-wrap gap-2 justify-content-center">
+                <div
+                  class="chip"
+                  *ngFor="let list of skillList"
+                  [ngClass]="{ disabledText: !isInfoEdit }"
+                >
+                  <div class="chip-content">{{ list.text }}</div>
+                  <div class="chip-close">
+                    <img
+                      src="../../../assets/images/Close_round.png"
+                      height="20px"
+                      class="mx-2 cur-p"
+                      (click)="skillRemoved(list)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-1 d-flex justify-content-center"
+                [ngClass]="{ disabledText: !isInfoEdit }"
+              >
+                <input
+                  type="text"
+                  class="form-control w-75"
+                  placeholder="Add skill"
+                  #skills
+                  [ngClass]="{ 'form-control-active': isInfoEdit }"
+                />
+              </div>
+              <div
+                class="d-flex justify-content-center"
+                [ngClass]="{ disabledText: !isInfoEdit }"
+              >
+                <button
+                  class="btn c-pop-btn-outline c-btn-sm fs-sm"
+                  type="button"
+                  (click)="skillAdded(skills.value); skills.value = ''"
+                >
+                  Add New Skill
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 d-flex justify-content-between">
+            <label for="" class="col-form-label">Tools</label>
+          </div>
+          <div
+            class="col-12 offset-lg-2 offset-md-2 offset-sm-2 col-lg-10 col-md-10 col-sm-10"
+          >
+            <div
+              class="px-3 py-1 skill-box"
+              [ngClass]="{ 'form-control-active': isInfoEdit }"
+            >
+              <div class="mb-3 chip-container flex-wrap gap-2 justify-content-center">
+                <div
+                  class="chip"
+                  *ngFor="let list of toolList"
+                  [ngClass]="{ disabledText: !isInfoEdit }"
+                >
+                  <div class="chip-content">{{ list.text }}</div>
+                  <div class="chip-close">
+                    <img
+                      src="../../../assets/images/Close_round.png"
+                      height="20px"
+                      class="mx-2 cur-p"
+                      (click)="toolRemoved(list)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-1 d-flex justify-content-center"
+                [ngClass]="{ disabledText: !isInfoEdit }"
+              >
+                <input
+                  type="text"
+                  class="form-control w-75"
+                  placeholder="Enter Tools"
+                  [ngClass]="{ 'form-control-active': isInfoEdit }"
+                  #tools
+                />
+              </div>
+              <div
+                class="d-flex justify-content-center"
+                [ngClass]="{ disabledText: !isInfoEdit }"
+              >
+                <button
+                  class="btn c-pop-btn-outline c-btn-sm fs-sm"
+                  type="button"
+                  (click)="toolsAdded(tools.value); tools.value = ''"
+                >
+                  Add New Tool
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div
+            class="col-12 d-flex justify-content-between col-lg-2 col-md-2 col-sm-2"
+          >
+            <label for="" class="col-form-label">Profile Photo</label>
+          </div>
+          <div class="col-12 col-lg-10 col-md-10 col-sm-10">
+            <div class="align-items-center d-flex gap-1 px-3 py-1">
+              <div class="upload-btn-wrapper">
+                <button
+                  class="upload-btn"
+                  type="button"
+                  [class.disabledBtn]="!isInfoEdit"
+                >
+                  Upload
+                </button>
+                <input
+                  type="file"
+                  id="upload"
+                  name="profilePhoto"
+                  [accept]="imageType"
+                  (change)="upload($event)"
+                  formControlName="Photo"
+                  [class.disabledBtn]="!isInfoEdit"
+                />
+              </div>
+
+              <div class="tooltip-wrapper">
+                <div class="file-info">
+                  <img
+                    class="info-icon-img cur-p ms-2"
+                    (mouseenter)="profilePhotoTooltip = true"
+                    (mouseleave)="profilePhotoTooltip = false"
+                    src="../../../../assets/svg/info.svg"
+                    alt="Info Icon"
+                  />
+                </div>
+                <div class="file-tooltip" *ngIf="profilePhotoTooltip">
+                  (.jpg, .png, .jpeg) Max size 1 mb
+                </div>
+              </div>
+
+              <div
+                class="file-name d-inline-block"
+                *ngIf="fieldName['Photo'].valid"
+              >
+                {{ profilePhotoName }}
+              </div>
+              <div
+                *ngIf="fieldName['Photo'].touched && fieldName['Photo'].errors"
+                class="mx-2"
+              >
+                <div
+                  *ngIf="fieldName['Photo'].errors?.['fileSize'] && !fieldName['Photo'].errors?.['fileType']"
+                  class="text-danger d-inline-block mt-1"
+                >
+                  File size exceeds the limit (1 MB).
+                </div>
+              </div>
+              <div
+                *ngIf="fieldName['Photo'].errors?.['fileType']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Invalid File Type
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <button
+                class="btn c-pop-btn-primary"
+                type="submit"
+                [disabled]="!isInfoEdit"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

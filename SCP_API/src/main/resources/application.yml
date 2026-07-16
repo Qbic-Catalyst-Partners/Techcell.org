@@ -1,0 +1,81 @@
+spring:
+  #  data:
+  #    mongodb:
+  #      host: localhost
+  #      port: 27017
+  #      database: education
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/scp} # Replace with your database URL
+    username: ${DB_USERNAME:root} # Replace with your database username
+    password: ${DB_PASSWORD:} # Replace with your database password
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+
+  hikari:
+    connectionTimeout: 30000 # Connection timeout in milliseconds
+    maximumPoolSize: 5 # Maximum number of database connections in the pool
+  jpa:
+    hibernate:
+      ddl-auto: update # Auto-generate and update the database schema
+    show-sql: false # Disable SQL statements in the console
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+  batch:
+    initialize-schema: ALWAYS
+    job:
+      enable: false
+
+  mail:
+    host: smtppro.zoho.in
+    port: 465
+    username: ${MAIL_USERNAME:your-email@example.com}
+    password: ${MAIL_PASSWORD:your-mail-password}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+
+razorpay:
+  #key-id: rzp_live_your-live-key-id # Production id
+  #key-secret: your-live-key-secret # Production secret
+  key-id: ${RAZORPAY_KEY_ID:rzp_test_your-test-key-id} # Test id
+  key-secret: ${RAZORPAY_KEY_SECRET:your-test-key-secret} # Test secret
+  callback-url: http://localhost:8081/api/public/razorpay/callback
+
+twofactor:
+  api-key: ${TWOFACTOR_API_KEY:your-2factor-api-key}
+  sender-id: TCHCEL
+  template-name: OTP Verification
+
+jwt:
+  auth-required: true
+otpless:
+  App-ID: ${OTPLESS_APP_ID:your-otpless-app-id}
+  Client-ID: ${OTPLESS_CLIENT_ID:your-otpless-client-id}
+  Client-Secret: ${OTPLESS_CLIENT_SECRET:your-otpless-client-secret}
+server:
+  port: 8081
+  # ssl:
+  #   key-store: classpath:keystore.p12
+  #   key-store-password: 12345678
+  #   key-store-type: PKCS12
+  #   key-alias: techcellSpringCert
+
+  #protocol: TLS
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

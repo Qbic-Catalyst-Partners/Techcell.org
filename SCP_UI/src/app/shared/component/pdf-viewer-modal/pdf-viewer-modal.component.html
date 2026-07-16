@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h5 class="modal-title">Resume Preview</h5>
+  <button type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
+</div>
+
+<div class="modal-body p-0" style="height:70vh;" *ngIf="pdfUrl; else loadingTpl">
+  <embed [src]="pdfUrl" type="application/pdf" width="100%" style="height:100%;"/>
+</div>
+<ng-template #loadingTpl>
+  <div class="d-flex justify-content-center align-items-center" style="height:300px">
+    Loading PDF...
+  </div>
+</ng-template>
+
+<div class="modal-footer">
+  <button class="c-pop-btn-primary btn-download" (click)="download()">Download</button>
+</div> 

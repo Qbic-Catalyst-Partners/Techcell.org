@@ -1,0 +1,62 @@
+<div class="main-section">
+  <img
+  src="../../../assets/images/Close_round.png"
+  alt=""
+  class="modal-close-icon modal-close-icon-abs"
+  (click)="close()"
+/>
+  <div class="row d-flex justify-content-center main-container py-2">
+    <div class="col-12 w-100">
+      <div class="">
+        <form [formGroup]="loginForm" #triggerForm="ngForm" (keydown.enter)="submitForm()" (ngSubmit)="submitForm()"
+          autocomplete="off">
+          <div class="text-center">
+            <img src="../../../assets/images/logout-icon.png" class="lock" alt="Locked icon">
+            <p class="title-text">Login</p>
+            <p class="sub-title-text my-3">
+              Check your Email for verification code to a secure authentication
+            </p>
+          </div>
+          <div class="">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 mb-3">
+                  <label for="emailId">Email ID</label>
+                  <input formControlName="emailId" type="email" class="form-control" id="emailId"
+                    placeholder="Enter your Email id" required />
+
+                  <div *ngIf="(f['emailId'].touched || isSubmitted) && f['emailId'].errors">
+                    <div *ngIf="f['emailId'].errors?.['required']" class="text-danger d-inline-block mt-1">
+                      Please enter email
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12 mb-3">
+                  <label for="Verification-Code">Verification Code</label>
+                  <input formControlName="otp" type="text" class="form-control" id="Verification-Code" maxlength="6"
+                    placeholder="Enter 6 digit code" required appNumberOnly />
+                  <div *ngIf="(f['otp'].touched || isSubmitted) && f['otp'].errors">
+                    <div *ngIf="f['otp'].errors?.['required']" class="text-danger d-inline-block mt-1">
+                      Please enter OTP
+                    </div>
+                    <div *ngIf="f['otp'].errors?.['maxlength']" class="text-danger d-inline-block mt-1">
+                      Max length can't be more then 6
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12 mb-3">
+                  <span class="resend-text d-inline-block mx-2" *ngIf="this.counter !== 0">in {{counter}} seconds</span>
+                  <span *ngIf="this.counter === 0">Didn’t get a code? <a type="button" class="link-btn"
+                      (click)="reSend()">Click to resend.</a></span>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12 d-flex justify-content-center">
+                  <button type="submit" class="c-pop-btn-primary">Login</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="about">
+  <div class="about__desc c-text-secondary">
+    {{ aboutDetails?.community?.description }}
+  </div>
+  <div class="about__divider"></div>
+  <div class="text-center about__footer">
+    <div>
+      <span class="c-text-secondary">Community Moderator - </span>
+      <span class="c-text-primary"
+        >{{ aboutDetails?.moderator?.firstName }}&nbsp;{{
+          aboutDetails?.moderator?.lastName
+        }}</span
+      >
+    </div>
+    <div>
+      <span class="c-text-secondary">Community Created on - </span>
+      <span class="c-text-primary">{{
+        aboutDetails?.createdDate | date : "MM/dd/yyyy"
+      }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="container-fluid mb-2">
+    <div class="row bg-white p-4 rounded-1">
+        <div class="col-12 header p-1 px-3">
+            About Community
+        </div>
+        <div class="col-12  p-1 px-3 my-3">
+           <p class="text-desc">{{aboutDetails?.community?.description}}</p>
+        </div>
+        <div class=" offset-2 col-8 offset-2 p-1 px-3 my-3 border-top text-center border-2 border-black py-4">
+            <p><span class="text-title">Community Moderator is - </span> <strong class="text-desc">{{aboutDetails?.moderator?.firstName}}&nbsp;{{aboutDetails?.moderator?.lastName}}</strong></p>
+            <p><span class="text-title">Community Created on    -  </span> <strong class="text-desc">{{aboutDetails?.createdDate | date:"MM/dd/yyyy"}}</strong></p>
+           </div>
+    </div>
+</div> -->

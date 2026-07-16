@@ -1,0 +1,55 @@
+main {
+  position: relative;
+  font-size: 14px;
+
+  h5 {
+    font-size: 16px;
+  }
+}
+
+.modal-border {
+  border: 2px solid #b1b1b1;
+  border-radius: 10px;
+}
+
+p {
+  text-align: justify;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+}
+table,
+th,
+td {
+  font: 96% Helvetica;
+  color: black;
+  text-align: left;
+  border: thin solid #ccc;
+  border-collapse: collapse;
+  font-weight: 500;
+  padding: 10px;
+  height: 37px;
+  font-size: 14px !important;
+}
+
+.text-body-secondary {
+  font-style: italic;
+}
+
+h5 {
+  margin-top: 1rem;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.c-btn-close {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}

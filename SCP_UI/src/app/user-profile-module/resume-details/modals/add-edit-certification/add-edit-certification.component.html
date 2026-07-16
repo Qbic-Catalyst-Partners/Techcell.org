@@ -1,0 +1,193 @@
+<div class="card modal-h-ctrl">
+  <div class="p-3">
+    <div class="d-flex justify-content-lg-between">
+      <div class="title mx-2">
+        {{ !!formValue ? "Edit Certification" : "Add New Certification" }}
+      </div>
+      <img
+        _ngcontent-ng-c419591362=""
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="cur-p modal-close"
+        (click)="close()"
+      />
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <form
+          [formGroup]="CertificationForm"
+          (ngSubmit)="submitData()"
+          ngbAutofocus
+        >
+          <div class="form-group mt-2">
+            <label for="certifyingEntity">Certifying Entity*</label>
+            <input
+              formControlName="certifyingEntity"
+              type="text"
+              class="form-control"
+              id="certifyingEntity"
+              placeholder="Ex: Entity providing the certificate"
+              [maxlength]="maxChars"
+            />
+            <span class="remaining-character d-flex justify-content-end">
+              {{ fieldName["certifyingEntity"].value?.length }}/{{ maxChars }}
+              Characters left
+            </span>
+            <div
+              *ngIf="
+                (fieldName['certifyingEntity'].touched || isSubmitted) &&
+                fieldName['certifyingEntity'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['certifyingEntity'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Certifying Entity
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="Field">Field*</label>
+            <input
+              formControlName="field"
+              type="text"
+              class="form-control"
+              id="Field1"
+              placeholder="Ex: Domain or Subject area"
+              [maxlength]="maxChars"
+            />
+            <span class="remaining-character d-flex justify-content-end">
+              {{ fieldName["field"].value?.length }}/{{ maxChars }} Characters
+              left
+            </span>
+            <div
+              *ngIf="
+                (fieldName['field'].touched || isSubmitted) &&
+                fieldName['field'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['field'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Field
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="description">Description*</label>
+            <textarea
+              formControlName="description"
+              placeholder="Ex: Detail description about the certification"
+              class="w-100 text-area form-control"
+              [maxlength]="maxCharsText"
+            ></textarea>
+            <span class="remaining-character d-flex justify-content-end">
+              {{ fieldName["description"].value?.length }}/{{ maxCharsText }}
+              Characters left
+            </span>
+            <div
+              *ngIf="
+                (fieldName['description'].touched || isSubmitted) &&
+                fieldName['description'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['description'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Description
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mt-2 clear-float">
+            <div class="col">
+              <label for="startdate">Start Date*</label>
+              <div class="mat-datepicker" appCustomDateFormate>
+                <div class="position-relative">
+                  <input
+                    class="form-control"
+                    [matDatepicker]="startDate"
+                    placeholder="YYYY/MM"
+                    formControlName="startDate"
+                    id="startDate"
+                    autocomplete="off"
+                  />
+                  <mat-datepicker
+                    #startDate
+                    startView="multi-year"
+                    (monthSelected)="
+                      setMonthAndYear($event, startDate, 'start')
+                    "
+                  ></mat-datepicker>
+                  <img
+                    class="calendar-icon"
+                    (click)="startDate.open()"
+                    src="../../../../../assets/lucide-icons/calender.svg"
+                    alt="calendar"
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    (fieldName['startDate'].touched || isSubmitted) &&
+                    fieldName['startDate'].errors
+                  "
+                >
+                  <div
+                    *ngIf="fieldName['startDate'].errors?.['required']"
+                    class="text-danger d-inline-block mt-1"
+                  >
+                    Please enter Start Date
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <label for="duration">End Date*</label>
+              <div class="mat-datepicker" appCustomDateFormate>
+                <div class="position-relative">
+                  <input
+                    class="form-control"
+                    [matDatepicker]="endDate"
+                    placeholder="YYYY/MM"
+                    formControlName="endDate"
+                    id="endDate"
+                    autocomplete="off"
+                  />
+                  <mat-datepicker
+                    #endDate
+                    startView="multi-year"
+                    (monthSelected)="setMonthAndYear($event, endDate, 'end')"
+                  ></mat-datepicker>
+                  <img
+                    class="calendar-icon"
+                    (click)="endDate.open()"
+                    src="../../../../../assets/lucide-icons/calender.svg"
+                    alt="calendar"
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    (fieldName['endDate'].touched || isSubmitted) &&
+                    fieldName['endDate'].errors
+                  "
+                >
+                  <div
+                    *ngIf="fieldName['endDate'].errors?.['required']"
+                    class="text-danger d-inline-block mt-1"
+                  >
+                    Please enter end Date
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center mt-2">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

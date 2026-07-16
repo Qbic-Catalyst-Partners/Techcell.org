@@ -1,0 +1,137 @@
+<div class="width-controller">
+  <div class="pt-4 content-wrapper">
+    <nav class="sidebar card py-2 d-none d-lg-block left-section">
+      <ul class="side-nav flex-column pt-3">
+        <li class="nav_item" *ngIf="userInfo.role == 'Student'">
+          <ng-container *ngFor="let menu of studentMenu">
+            <div
+              class="nav_link mt-3"
+              (click)="toggleChilder(menu)"
+              [routerLink]="menu.routing"
+              [ngClass]="{
+                'nav-link-active': headerName === menu.menuName
+              }"
+            >
+              {{ menu.menuName }}
+            </div>
+            <ng-container *ngIf="menu.visible">
+              <ng-container *ngIf="menu.subMenu.length">
+                <div
+                  class="sub-menu-item nav_link"
+                  *ngFor="let submenu of menu.subMenu; let i = index"
+                  [ngClass]="{
+                    'sub-menu-item-active':
+                      headerName === menu.menuName && selectedSubmenu === i
+                  }"
+                  [routerLink]="submenu.routing"
+                  routerLinkActive="sub-menu-item-active"
+                  (click)="selectedSubmenu = i"
+                >
+                  {{ submenu.subMenuName }}
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </li>
+
+        <li class="nav_item" *ngIf="userInfo.role === 'Moderator'">
+          <ng-container *ngFor="let menu of moderatorMenu">
+            <div
+              class="nav_link mt-3"
+              (click)="toggleChilder(menu)"
+              [routerLink]="menu.routing"
+              [ngClass]="{
+                'nav-link-active': headerName === menu.menuName
+              }"
+            >
+              {{ menu.menuName }}
+            </div>
+            <ng-container *ngIf="menu.visible">
+              <ng-container *ngIf="menu.subMenu.length">
+                <div
+                  class="sub-menu-item nav_link"
+                  *ngFor="let submenu of menu.subMenu; let i = index"
+                  [ngClass]="{
+                    'sub-menu-item-active':
+                      headerName === menu.menuName && selectedSubmenu === i
+                  }"
+                  [routerLink]="submenu.routing"
+                  routerLinkActive="sub-menu-item-active"
+                  (click)="selectedSubmenu = i"
+                >
+                  {{ submenu.subMenuName }}
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </li>
+        <li class="nav_item" *ngIf="userInfo.role === 'Admin'">
+          <ng-container *ngFor="let menu of adminMenu">
+            <div
+              class="nav_link mt-3"
+              (click)="toggleChilder(menu)"
+              [routerLink]="menu.routing"
+              [ngClass]="{
+                'nav-link-active': headerName === menu.menuName
+              }"
+            >
+              {{ menu.menuName }}
+            </div>
+            <ng-container *ngIf="menu.visible">
+              <ng-container *ngIf="menu.subMenu.length">
+                <div
+                  class="sub-menu-item nav_link"
+                  *ngFor="let submenu of menu.subMenu; let i = index"
+                  [ngClass]="{
+                    'sub-menu-item-active':
+                      headerName === menu.menuName && selectedSubmenu === i
+                  }"
+                  [routerLink]="submenu.routing"
+                  routerLinkActive="sub-menu-item-active"
+                  (click)="selectedSubmenu = i"
+                >
+                  {{ submenu.subMenuName }}
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </li>
+        <li class="nav_item" *ngIf="userInfo.role == 'Faculty'">
+          <ng-container *ngFor="let menu of facultyMenu">
+            <div
+              class="nav_link mt-3"
+              (click)="toggleChilder(menu)"
+              [routerLink]="menu.routing"
+              [ngClass]="{
+                'nav-link-active': headerName === menu.menuName
+              }"
+            >
+              {{ menu.menuName }}
+            </div>
+            <ng-container *ngIf="menu.visible">
+              <ng-container *ngIf="menu.subMenu.length">
+                <div
+                  class="sub-menu-item nav_link"
+                  *ngFor="let submenu of menu.subMenu; let i = index"
+                  [ngClass]="{
+                    'sub-menu-item-active':
+                      headerName === menu.menuName && selectedSubmenu === i
+                  }"
+                  [routerLink]="submenu.routing"
+                  routerLinkActive="sub-menu-item-active"
+                  (click)="selectedSubmenu = i"
+                >
+                  {{ submenu.subMenuName }}
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="card right-section" [ngClass]="{'career-padding': isCareerRoute}">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

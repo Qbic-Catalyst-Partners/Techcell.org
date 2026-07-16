@@ -1,0 +1,251 @@
+.container-fluid {
+  background-color: #d9d9d9;
+  padding: 10px 20px;
+  border-radius: 0.5rem;
+}
+
+.textarea {
+  height: 75px;
+  max-width: 500px;
+}
+.img-sub-avt {
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  border: 1px solid #b4b4b4;
+}
+.img-title {
+  //   width: 118.72px;\
+  height: 20px;
+  top: 24px;
+  left: 106.33px;
+  gap: 0px;
+  opacity: 0px;
+  color: #414141;
+  font-size: 14px;
+  line-height: 170%;
+}
+.img-title-time {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  color: var(--c-text-secondary);
+  line-height: 100%;
+
+  @media (min-width: 768px) {
+    font-size: 12px;
+  }
+}
+.comment-desc {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  color: #696969;
+}
+.comment-title {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: left;
+  color: #030000;
+}
+.profile-img {
+  border-radius: 50%;
+  height: 62px;
+  width: 62px;
+}
+
+.search-box {
+  position: relative;
+  .search-status {
+    position: absolute;
+    top: 8px;
+    right: 0;
+  }
+  input {
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(150, 147, 147, 1);
+    border-radius: 30px;
+    height: 45px;
+    padding: 10px;
+
+    &::placeholder {
+      color: rgba(153, 153, 153, 1);
+      font-size: 15px;
+      font-weight: 500;
+    }
+  }
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+}
+
+.communityHeader {
+  color: #3f7385;
+  font-family: Livvic;
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.community-body {
+  color: #000000;
+  font-family: Livvic;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: justify;
+  line-height: 14px;
+}
+
+.comment-tooltip {
+  position: absolute;
+  background: #ffffff;
+  padding: 5px 10px;
+  right: 10px;
+  top: 25px;
+  z-index: 1;
+  // filter: drop-shadow(2px 2px 2px #ECECEC);
+  box-shadow: 0 5px 7px -6px;
+}
+.textarea-container {
+  width: 65%;
+}
+@media (max-width: 575.98px) {
+  .profile-img {
+    height: 32px;
+    width: 32px;
+  }
+  .textarea {
+    height: 35px;
+  }
+  .btn-primary {
+    font-size: 12px;
+    min-height: unset;
+    min-width: unset;
+  }
+}
+
+.add-feed {
+  display: flex;
+
+  align-items: center;
+  padding: 8px;
+  background-color: #fff;
+  gap: 10px;
+  border-radius: 5px;
+
+  @media (min-width: 768px) {
+    padding: 8px 36px;
+  }
+
+  &__img {
+    width: 38px;
+    flex: 0 0 38px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #b4b4b4;
+
+    @media (min-width: 768px) {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  &__input {
+    flex: 1;
+
+    textarea {
+      max-width: 100%;
+      height: 46px;
+      font-size: 12px;
+
+      &::placeholder {
+        font-size: 12px;
+        color: #b3b3b3;
+      }
+    }
+  }
+
+  &__btn {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 2px 10px;
+    min-height: auto;
+    min-width: auto;
+
+    span {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.feed-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-bottom: 2px solid #f5f5f5;
+
+  @media (min-width: 768px) {
+    padding: 4px 36px;
+  }
+}
+
+.feed-body {
+  padding: 8px;
+  font-size: 12px;
+  border-bottom: 2px solid #f5f5f5;
+  color: var(--c-text-secondary);
+
+  @media (min-width: 768px) {
+    padding: 4px 84px;
+  }
+}
+
+.feed-footer {
+  font-size: 12px;
+  padding: 8px;
+
+  @media (min-width: 768px) {
+    padding: 4px 36px;
+  }
+
+  .mb-3px {
+    margin-bottom: 3px;
+  }
+
+  img {
+    width: 18px;
+    height: auto;
+    display: inline-block;
+  }
+
+  .share-icon {
+    width: 22px;
+  }
+}
+
+.author-img {
+  outline: solid 1.5px transparent;
+  outline-offset: 2px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.author-img:hover {
+  outline: solid 1.5px #5399b2;
+  box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, 0.1);
+}

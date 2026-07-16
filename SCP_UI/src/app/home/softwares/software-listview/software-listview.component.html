@@ -1,0 +1,171 @@
+<div class="smooth-table-curve">
+  <div class="table-container px-2 scroll-design" id="scroll-design">
+    <table class="table table-hover m-0">
+      <thead>
+        <tr class="header-row">
+          <th
+            class="table-header"
+            scope="col"
+            *ngFor="let column of header_data"
+            (click)="sortHeader(column)"
+          >
+            {{ column?.fieldName }}
+            <span *ngIf="column?.isSort">
+              <svg
+                [class.list-down-arr]="!column.sort"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 5V19"
+                  stroke="#9da5b9"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M19 12L12 19L5 12"
+                  stroke="#9da5b9"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="scroll-section">
+        <!-- <tr class="table-mask"></tr> -->
+        <ng-container *ngFor="let row of all_data; let i = index">
+          <tr
+            appScroll
+            (elementVisible)="getData($event)"
+            [isTargetElement]="i + 1 === all_data.length"
+            *ngIf="i + 1 === all_data.length"
+          >
+            <ng-container
+              *ngTemplateOutlet="content; context: { row }"
+            ></ng-container>
+          </tr>
+          <tr *ngIf="i + 1 != all_data.length">
+            <ng-container
+              *ngTemplateOutlet="content; context: { row }"
+            ></ng-container>
+          </tr>
+        </ng-container>
+        <tr *ngIf="all_data && all_data.length == 0">
+          <td [attr.colspan]="header_data.length" class="text-center">
+            No Record Found
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #content let-row="row">
+  <td [title]="row?.softwareName">
+    <img class="card-img me-1" [src]="row.thumbnail" alt="" />
+    {{ commonService.trimText(row?.softwareName) }}
+  </td>
+  <td>{{ row.version | slice : 0 : 20 }}v</td>
+  <td>{{ row.releaseDate | date : "dd/MM/yyyy" }}</td>
+  <td>{{ row.osSupported }}</td>
+  <td [title]="row?.tags">{{ commonService.trimText(row?.tags, 10) }}</td>
+  <td [title]="row?.licenceType">
+    {{ commonService.trimText(row?.licenceType, 10) }}
+  </td>
+  <td>
+    <div
+      class="download-link"
+      (click)="downloadSoftware(row)"
+      [ngClass]="row?.status == 'Active' ? 'cur-p' : 'disable'"
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15"
+          stroke="#7E7E7F"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M7 10L12 15L17 10"
+          stroke="#7E7E7F"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M12 15V3"
+          stroke="#7E7E7F"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+  </td>
+  <td
+    *ngIf="userInfo.role == 'Admin'"
+    [ngClass]="
+      row?.status == 'Active' ? 'active-text-color' : 'Inactive-text-color'
+    "
+  >
+    {{ row?.status }}
+  </td>
+  <td style="position: relative" *ngIf="userInfo.role == 'Admin'">
+    <button
+      mat-icon-button
+      class="action-btn"
+      [ngbTooltip]="actionContent"
+      [tooltipContext]="{ row: row, tooltip: t }"
+      triggers="manual"
+      #t="ngbTooltip"
+      (click)="toggleAction(row); toggleTooltip(t); $event.stopPropagation()"
+    >
+      <img
+        src="../../../../assets/svg/action-icon.svg"
+        alt="action"
+        class="action-icon"
+      />
+    </button>
+  </td>
+</ng-template>
+
+<ng-template #actionContent let-row="row" let-tooltip="tooltip">
+  <div class="action-tooltip">
+    <div
+      class="action-item"
+      (click)="updateStatus('Active', row); tooltip.close()"
+      *ngIf="row?.status != 'Active'"
+    >
+      Activate
+    </div>
+    <div
+      class="action-item"
+      (click)="updateStatus('InActive', row); tooltip.close()"
+      *ngIf="row?.status == 'Active'"
+    >
+      InActivate
+    </div>
+    <div
+      class="action-item"
+      (click)="updateStatus('Delete', row); tooltip.close()"
+    >
+      Delete
+    </div>
+  </div>
+</ng-template>
+
+<!-- Inline "No content" modal removed. Standard newErrorModal now triggered in component logic -->

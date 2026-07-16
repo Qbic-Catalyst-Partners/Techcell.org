@@ -1,0 +1,23 @@
+<div class="pills-wrapper">
+  <ng-container *ngFor="let item of dataList">
+    <div class="capsule-container cur-p" (click)="joinCommunity(item)">
+      <img
+        [src]="
+          this.commonService.convertTOBAse64Format(
+            item?.community?.profilePhoto
+          )
+        "
+        onError="this.src='../../../assets/images/AI.png'"
+      />
+
+      <div class="">
+        <div class="title">
+          {{ this.commonService.trimText(item?.community?.title, 20) }}
+        </div>
+        <div class="created-on">
+          Created&nbsp;{{ item.createdDate | date : "dd/MM/yyyy" }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

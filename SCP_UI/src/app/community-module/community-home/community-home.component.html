@@ -1,0 +1,262 @@
+<div class="c-container">
+  <div class="cover-img-wrapper">
+    <img
+      [src]="
+        commonService.convertTOBAse64Format(
+          currentCommunity?.community?.coverPhoto
+        )
+      "
+      class="cover-img"
+      height="200px"
+      alt="community AI"
+      onError="this.src='../../../assets/images/community-AI.png'"
+    />
+    <div class="member-count-box">
+      <span class="member-count">{{
+        currentCommunity?.community?.activeMemberCount
+      }}</span>
+      <span class="member-text">Members</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="content">
+      <div class="community-overview">
+        <div class="community-overview-image">
+          <img
+            [src]="
+              commonService.convertTOBAse64Format(
+                currentCommunity?.community?.profilePhoto
+              )
+            "
+            alt=""
+            class="header-img profile-img"
+            onError="this.src='../../../assets/images/community-ellipse-avtar.png'"
+          />
+        </div>
+        <div class="community-overview-content">
+          <div class="community-overview-text">
+            <div class="community-overview-text__title">
+              {{ currentCommunity?.title }} Community
+            </div>
+            <div class="community-overview-text__moderator">
+              <span>{{ currentCommunity?.moderator?.firstName }}</span>
+
+              <span> {{ currentCommunity?.moderator?.lastName }}</span>
+              <!-- <span> - </span> -->
+              <!-- <span>Moderator</span> -->
+            </div>
+            <div class="community-overview-text__description d-none d-lg-block">
+              {{ currentCommunity?.community?.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a
+          class="nav-link"
+          routerLink="/community/home/{{ communityId }}"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="active"
+          ><span>Feed</span>
+          <span class="icon">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#1CB5EB"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        </a>
+        <a class="nav-link" [routerLink]="['blogs']" routerLinkActive="active">
+          <span>Blogs</span>
+          <span class="icon">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#1CB5EB"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        </a>
+        <a class="nav-link" [routerLink]="['videos']" routerLinkActive="active">
+          <span>Videos</span>
+          <span class="icon">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#1CB5EB"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        </a>
+        <a class="nav-link" [routerLink]="['about']" routerLinkActive="active">
+          <span>About</span>
+          <span class="icon">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#1CB5EB"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        </a>
+        <a
+          class="nav-link"
+          [routerLink]="['exit']"
+          routerLinkActive="active"
+          *ngIf="showExit"
+          ><span>Exit</span>
+
+          <span class="icon">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#1CB5EB"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg> </span
+        ></a>
+        <a class="nav-link" (click)="assignMod()" *ngIf="!role">
+          <span>Assign Moderator</span>
+          <span class="icon">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="#1CB5EB"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        </a>
+      </nav>
+
+      <div class="sub-pages-wrapper">
+        <div class="sub-pages">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar d-none d-xl-block">
+      <h5 class="sidebar__title">Members</h5>
+      <div class="sidebar__inner-wrapper">
+        <div class="sidebar__inner">
+          <div class="sidebar__form">
+            <input
+              type="text"
+              placeholder="Search members"
+              class="form-control sidebar__form-input"
+              [(ngModel)]="term"
+            />
+            <span class="sidebar__form-icon">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                  stroke="#7E7E7F"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M20.9984 21.0004L16.6484 16.6504"
+                  stroke="#7E7E7F"
+                  stroke-width="1.25"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </div>
+          <ng-container
+            *ngIf="
+              communityMembers
+                | searchFilter : term : 'name' as communityMembers
+            "
+          >
+            <div class="pills-wrapper">
+              <div
+                class="capsule-container cur-p"
+                *ngFor="let member of communityMembers"
+                (click)="viewProfile(member)"
+              >
+                <img
+                  [src]="member.profilePhoto"
+                  onError="this.src='./../../../assets/images/community-avt.png'"
+                  alt=""
+                />
+
+                <div class="">
+                  <div class="title" (click)="viewProfile(member)">
+                    {{ member.name }}
+                  </div>
+                  <div class="created-on">
+                    Joined &nbsp;{{ member.joinedDate | date : "dd/MM/yyyy" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,226 @@
+@import "../../../styles/variables";
+
+// Avatar image generator
+@mixin avatarWrapper($border: 4px, $size: 0px, $color: $banner-bg) {
+  $radius: ($size / 2) - $border;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+
+  img {
+    $offset: $radius - $border;
+    clip-path: circle($offset);
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  border: solid $border $color;
+  background: $color;
+  margin-left: 2rem;
+}
+
+.img-avatar {
+  @include avatarWrapper(2px, 125px);
+}
+
+.profile-box {
+  margin: 0 auto;
+}
+
+.user-info-box {
+  width: 50%;
+}
+
+.user-name {
+  color: rgba(3, 0, 0, 1);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.user-type {
+  color: rgba(121, 149, 159, 1);
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.user-level {
+  font-size: 22px;
+  font-weight: 400;
+  color: rgba(121, 149, 159, 1);
+}
+
+.user-experience {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(115, 115, 115, 1);
+  text-align: center;
+}
+
+.hr-line {
+  width: 60%;
+  text-align: left;
+  margin-left: 0;
+  color: black !important;
+  border: 0.8px solid black;
+  opacity: 1;
+}
+
+.my-info-card {
+  width: calc(100% - 116px);
+
+  .card-header {
+    background-color: rgba(77, 119, 135, 1);
+    color: $white;
+    font-weight: 700;
+    font-size: 29px;
+  }
+
+  .edit-btn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 94px;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 1) !important;
+    color: rgba(28, 181, 235, 1);
+    font-weight: 700;
+
+    &:hover {
+      color: rgba(28, 181, 235, 1);
+    }
+  }
+
+  .field-box {
+    width: 100%;
+    display: flex;
+
+    input,
+    select {
+      border: 1px solid rgba(28, 181, 235, 1);
+      padding: 0.575rem 0.75rem;
+    }
+
+    .col-form-label {
+      font-size: 18px;
+      font-weight: 500;
+      color: rgba(16, 21, 64, 1);
+    }
+  }
+}
+
+// Below Css is for upload button
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: auto;
+}
+
+.upload-btn {
+  color: $white;
+  background-color: $button-primary;
+  padding: 3px 15px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid rgba(143, 143, 143, 1);
+  text-shadow: $text-shadow;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.file-name {
+  color: $red;
+}
+
+.box-s {
+  box-shadow: 0 5px 7px -6px;
+}
+
+.content-tagging {
+  color: #4b4b4b;
+  font-weight: 700;
+  text-align: center;
+  line-height: 22px;
+}
+
+.chip {
+  display: inline-flex;
+  flex-direction: row;
+  border: 0.5px solid #144557;
+  cursor: default;
+  outline: none;
+  padding: 0;
+  font-size: 16px;
+  color: #333333;
+  font-family: "Open Sans", sans-serif;
+  white-space: nowrap;
+  align-items: center;
+  border-radius: 16px;
+  vertical-align: middle;
+  text-decoration: none;
+  justify-content: center;
+}
+
+.chip-content {
+  cursor: inherit;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding-left: 12px;
+  // padding-right: 12px;
+}
+
+.chip-svg {
+  color: #999999;
+  cursor: pointer;
+  height: auto;
+  margin: 4px 4px 0 -8px;
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  font-size: 24px;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: none !important;
+}
+
+.disabledBtn {
+  background-color: #bbbcbd;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+// Small Device Break point //
+@media (max-width: 575.98px) {
+  .user-info-box {
+    width: 100%;
+  }
+  .img-avatar {
+    margin: 0;
+  }
+}
+
+////////////////////////////////////////////
+// Simtech code
+
+.card-info-title {
+  font-size: 18px;
+}
+
+::ng-deep .ng2-tag-input__text-input {
+  width: 100%;
+}

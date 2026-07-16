@@ -1,0 +1,16 @@
+.content {
+  border: 5px solid rgba(177, 177, 177, 1);
+  border-radius: 5px;
+  padding: 2rem 5.5rem;
+  text-align: justify;
+}
+
+@media only screen and (max-width: 600px) {
+  .content{
+    padding: 5px;
+  }
+}
+
+.section-height{
+  height: 573px;
+}

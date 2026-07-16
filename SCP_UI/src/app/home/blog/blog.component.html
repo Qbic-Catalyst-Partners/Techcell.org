@@ -1,0 +1,764 @@
+<div class="secondary-header-wrapper">
+  <div class="bg-white c-shadow secondary-header">
+    <div class="row d-flex align-items-center py-2 flex-wrap">
+      <div class="carousel-box d-flex justify-content-between gap-2">
+        <div class="search-box flex-grow-1 d-none d-lg-block d-md-block">
+          <input
+            type="text"
+            placeholder="Search Hashtags"
+            [(ngModel)]="term"
+            (input)="getSearchText($event)"
+            class="form-control search-bar"
+          />
+          <svg
+            class="search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+              stroke="#a1a1a1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M20.9984 21.0004L16.6484 16.6504"
+              stroke="#a1a1a1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <div
+          class="d-flex flex-column position-relative"
+          *ngIf="viewType == 'list'"
+          (click)="openFilterSearch()"
+        >
+          <img
+            class="cur-p filter-icon"
+            src="../../../assets/svg/tabler_filter-search.svg"
+            alt="prev arrow"
+          />
+        </div>
+        <button
+          [disabled]="hasAsscessToAdd"
+          class="btn btn-primary btn-add"
+          (click)="addBlog()"
+        >
+          Add
+        </button>
+        <section class="custom-carousel-container" id="filter">
+          <div class="arrow-left" (click)="scrollTo(menu, -1)">
+            <svg
+              class="tag-slider-icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <ul class="carousel-container" #menu swiper-scroll>
+            <ng-container
+              *ngIf="hashTagList | searchFilter : term : 'text' as hashTagList"
+            >
+              <li
+                [attr.data-item]="hash.id"
+                *ngFor="let hash of hashTagList; let i = index"
+                [ngClass]="{ activeTag: selectedTag == hash.id }"
+              >
+                <div
+                  class="search__filter__title cur-p"
+                  (click)="getDynamicHashTagList(hash, null, true)"
+                >
+                  {{ hash.description }}
+                </div>
+                <span
+                  class="cur-p"
+                  *ngIf="selectedTag == hash.id"
+                  (click)="cancelTag()"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                      stroke="#fff"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M15 9L9 15"
+                      stroke="#fff"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M9 9L15 15"
+                      stroke="#fff"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+                <!-- <img
+                  class="cur-p"
+                  src="../../../assets/svg/x-circle-fill.svg"
+                  alt="cancel"
+                  *ngIf="selectedTag == hash.id"
+                  (click)="cancelTag()"
+                /> -->
+              </li>
+              <p *ngIf="hashTagList.length === 0">No Record found</p>
+            </ng-container>
+          </ul>
+          <div class="arrow-right" (click)="scrollTo(menu, 1)">
+            <svg
+              class="tag-slider-icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="blog-content" [ngClass]="{ 'pb-2': viewType === 'grid' }">
+  <div class="blog-content-inner">
+    <div class="d-flex justify-content-end content-view">
+      <div class="border rounded view d-none d-lg-block">
+        <img
+          class="gray-scale cur-p"
+          [ngClass]="{ 'active-scale': viewType == 'grid' }"
+          (click)="viewList('grid')"
+          src="../../../assets/svg/grid-view.svg"
+          alt="Grid View"
+        />
+        <img
+          class="gray-scale cur-p"
+          [ngClass]="{ 'active-scale': viewType == 'list' }"
+          (click)="viewList('list')"
+          src="../../../assets/svg/list-view.svg"
+          alt="List View"
+        />
+      </div>
+    </div>
+
+    <div>
+      <ng-container *ngIf="viewType == 'grid'">
+        <div class="category-card" *ngIf="dynamicBlogList.length">
+          <p class="header-title">
+            {{ dynamicBlogList[0]?.customDescription }}
+          </p>
+
+          <div class="d-flex align-items-center px-1-custom">
+            <div
+              (click)="dynamicBlogSlide.prev()"
+              class="d-none d-lg-flex arrow-left"
+            >
+              <svg
+                class="tag-slider-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="slide-container">
+              <div class="side-pad"></div>
+              <div class="d-flex flex-column flex-1">
+                <div class="py-1"></div>
+                <owl-carousel-o [options]="carouselOptions" #dynamicBlogSlide>
+                  <ng-container
+                    *ngFor="
+                      let obj of dynamicBlogList;
+                      let j = index;
+                      let last = last
+                    "
+                  >
+                    <ng-template
+                      carouselSlide
+                      [width]="236"
+                      [id]="obj.postingId"
+                    >
+                      <div
+                        class="article-wrapper flex-column d-flex"
+                        (click)="
+                          loadDetails(obj); navigateToDetails(obj.postingId)
+                        "
+                      >
+                        <div class="profile-img-container">
+                          <img
+                            [src]="
+                              commonService.convertTOBAse64Format(
+                                obj.blog.thumbnail
+                              )
+                            "
+                            alt="No preview available"
+                          />
+                          <div
+                            class="profile-info d-flex align-items-center gap-2"
+                          >
+                            <div class="avatar-round">
+                              <img
+                                height="20px"
+                                width="20px"
+                                [src]="
+                                  commonService.convertTOBAse64Format(
+                                    obj.postedUser.profilePhoto
+                                  )
+                                "
+                                alt="Profile Image"
+                              />
+                            </div>
+                            <div>{{ obj.postedUser.firstName }}</div>
+                          </div>
+                        </div>
+                        <div class="pb-2">
+                          <div class="pt-1">
+                            <p class="title text-center">
+                              <span> {{ obj?.title }} </span>
+                            </p>
+                          </div>
+                          <div class="description">
+                            <p class="description-group">
+                              <span class="description-text">
+                                {{
+                                  commonService.trimText(
+                                    obj.shortDescription,
+                                    22
+                                  )
+                                }}
+                              </span>
+                              <span class="date-time">{{
+                                obj.createdDate | date : "dd/MM/yyyy"
+                              }}</span>
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="read-more align-self-center"
+                          (click)="
+                            loadDetails(obj); navigateToDetails(obj.postingId)
+                          "
+                        >
+                          Read More
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </owl-carousel-o>
+                <div class="py-2"></div>
+              </div>
+              <div class="side-pad"></div>
+            </div>
+            <div
+              (click)="dynamicBlogSlide.next(); handleNext('dynamic')"
+              class="d-none d-lg-flex arrow-right"
+            >
+              <svg
+                class="tag-slider-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-card" *ngIf="favouriteBlogList.length">
+          <p class="header-title">My Favourite</p>
+          <div class="d-flex px-1-custom align-items-center">
+            <div
+              (click)="favouriteSlide.prev()"
+              class="d-none d-lg-flex arrow-left"
+            >
+              <svg
+                class="tag-slider-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="slide-container">
+              <div class="side-pad"></div>
+              <div class="d-flex flex-column flex-1">
+                <div class="py-1"></div>
+                <owl-carousel-o
+                  [options]="carouselOptions"
+                  #favouriteSlide
+                  (translated)="carouselTranslated($event)"
+                  (initialized)="carouselInitialized($event)"
+                >
+                  <ng-container
+                    *ngFor="let obj of favouriteBlogList; let i = index"
+                  >
+                    <ng-template carouselSlide [width]="236" [id]="obj.id">
+                      <div
+                        class="article-wrapper flex-column d-flex"
+                        (click)="
+                          loadDetails(obj); navigateToDetails(obj.postingId)
+                        "
+                      >
+                        <div class="profile-img-container">
+                          <img
+                            [src]="
+                              commonService.convertTOBAse64Format(
+                                obj.blog.thumbnail
+                              )
+                            "
+                            alt="No preview available"
+                          />
+                          <div
+                            class="profile-info d-flex align-items-center gap-2"
+                          >
+                            <div class="avatar-round">
+                              <img
+                                height="20px"
+                                width="20px"
+                                [src]="
+                                  commonService.convertTOBAse64Format(
+                                    obj.postedUser.profilePhoto
+                                  )
+                                "
+                                alt="Profile Image"
+                              />
+                            </div>
+                            <div>{{ obj.postedUser.firstName }}</div>
+                          </div>
+                        </div>
+                        <div class="pb-2">
+                          <div class="pt-1">
+                            <!-- {{ commonService.trimText(obj?.title) }} -->
+                            <p class="title">
+                              <span> {{ obj?.title }} </span>
+                              <!-- <span class="date-time">{{
+                            obj.createdDate | date : "dd/MM/yyyy"
+                          }}</span> -->
+                            </p>
+                          </div>
+                          <div class="description">
+                            <p class="description-group">
+                              <span class="description-text">
+                                {{
+                                  commonService.trimText(
+                                    obj.shortDescription,
+                                    22
+                                  )
+                                }}
+                              </span>
+                              <span class="date-time">{{
+                                obj.createdDate | date : "dd/MM/yyyy"
+                              }}</span>
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="read-more align-self-center"
+                          (click)="
+                            loadDetails(obj); navigateToDetails(obj.postingId)
+                          "
+                        >
+                          Read More
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </owl-carousel-o>
+                <div class="py-2"></div>
+              </div>
+              <div class="side-pad"></div>
+            </div>
+            <div
+              (click)="favouriteSlide.next(); handleNext('dynamic')"
+              class="d-none d-lg-flex arrow-right"
+            >
+              <svg
+                class="tag-slider-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Blogs -->
+        <div class="category-card mb-2" *ngIf="allBlogList.length">
+          <p class="header-title">My Blogs</p>
+
+          <div class="d-flex align-items-center px-1-custom">
+            <div
+              (click)="myBlogSlide.prev()"
+              class="d-none d-lg-flex arrow-left"
+            >
+              <svg
+                class="tag-slider-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+
+            <div class="slide-container">
+              <div class="side-pad"></div>
+              <div class="d-flex flex-column flex-1">
+                <div class="py-1"></div>
+                <owl-carousel-o [options]="carouselOptions" #myBlogSlide>
+                  <ng-container *ngFor="let obj of allBlogList; let i = index">
+                    <ng-template
+                      carouselSlide
+                      [width]="236"
+                      [id]="obj.postingId"
+                    >
+                      <div
+                        class="article-wrapper flex-column d-flex"
+                        (click)="
+                          loadDetails(obj); navigateToDetails(obj.postingId)
+                        "
+                      >
+                        <div class="profile-img-container">
+                          <img
+                            [src]="
+                              commonService.convertTOBAse64Format(
+                                obj.blog.thumbnail
+                              )
+                            "
+                            alt="No preview available"
+                          />
+                          <div
+                            class="profile-info d-flex align-items-center gap-2"
+                          >
+                            <div class="avatar-round">
+                              <img
+                                height="20px"
+                                width="20px"
+                                [src]="
+                                  commonService.convertTOBAse64Format(
+                                    obj.postedUser.profilePhoto
+                                  )
+                                "
+                                alt="Profile Image"
+                              />
+                            </div>
+                            <div>{{ obj.postedUser.firstName }}</div>
+                          </div>
+                        </div>
+                        <div class="pb-2">
+                          <div class="pt-1">
+                            <p class="title text-center">
+                              <span>{{ obj?.title }}</span>
+                            </p>
+                          </div>
+                          <div class="description">
+                            <p class="description-group">
+                              <span class="description-text">{{
+                                commonService.trimText(obj.shortDescription, 22)
+                              }}</span>
+                              <span class="date-time">{{
+                                obj.createdDate | date : "dd/MM/yyyy"
+                              }}</span>
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="read-more align-self-center"
+                          (click)="
+                            loadDetails(obj); navigateToDetails(obj.postingId)
+                          "
+                        >
+                          Read More
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </owl-carousel-o>
+                <div class="py-2"></div>
+              </div>
+              <div class="side-pad"></div>
+            </div>
+
+            <div
+              (click)="myBlogSlide.next()"
+              class="d-none d-lg-flex arrow-right"
+            >
+              <svg
+                class="tag-slider-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="category-card d-flex flex-column gap-2"
+          *ngIf="hashTagListItems.length"
+        >
+          <ng-container
+            *ngFor="let carouselData of hashTagListItems; let i = index"
+          >
+            <div>
+              <div class="header-title">
+                {{ carouselData?.data[0]?.customDescription }}
+              </div>
+              <div class="d-flex align-items-center px-1-custom">
+                <div (click)="prevSlide(i)" class="d-none d-lg-flex arrow-left">
+                  <svg
+                    class="tag-slider-icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 18L9 12L15 6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+
+                <div class="slide-container">
+                  <div class="side-pad"></div>
+                  <div class="d-flex flex-column flex-1">
+                    <div class="py-1"></div>
+                    <owl-carousel-o [options]="carouselOptions" #slides>
+                      <ng-container
+                        *ngFor="
+                          let obj of carouselData.data;
+                          let j = index;
+                          let last = last
+                        "
+                      >
+                        <ng-template
+                          carouselSlide
+                          [width]="236"
+                          [id]="obj.postingId"
+                        >
+                          <div
+                            class="article-wrapper flex-column d-flex"
+                            (click)="
+                              loadDetails(obj); navigateToDetails(obj.postingId)
+                            "
+                          >
+                            <div class="profile-img-container">
+                              <img
+                                [src]="
+                                  commonService.convertTOBAse64Format(
+                                    obj.blog.thumbnail
+                                  )
+                                "
+                                alt="No preview available"
+                              />
+                              <div
+                                class="profile-info d-flex align-items-center gap-2"
+                              >
+                                <div class="avatar-round">
+                                  <img
+                                    height="20px"
+                                    width="20px"
+                                    [src]="
+                                      commonService.convertTOBAse64Format(
+                                        obj.postedUser.profilePhoto
+                                      )
+                                    "
+                                    alt="Profile Image"
+                                  />
+                                </div>
+                                <div>{{ obj.postedUser.firstName }}</div>
+                              </div>
+                            </div>
+                            <div class="pb-2">
+                              <div class="pt-1">
+                                <!-- {{ commonService.trimText(obj?.title) }} -->
+                                <p class="title text-center">
+                                  <span>
+                                    {{ obj?.title }}
+                                  </span>
+                                  <!-- <span class="date-time">{{
+                                    obj.createdDate | date : "dd/MM/yyyy"
+                                  }}</span> -->
+                                </p>
+                              </div>
+                              <div class="description">
+                                <p class="description-group">
+                                  <span class="description-text">
+                                    {{
+                                      commonService.trimText(
+                                        obj.shortDescription,
+                                        22
+                                      )
+                                    }}
+                                  </span>
+                                  <span class="date-time">{{
+                                    obj.createdDate | date : "dd/MM/yyyy"
+                                  }}</span>
+                                </p>
+                              </div>
+                            </div>
+                            <div
+                              class="read-more align-self-center"
+                              (click)="
+                                loadDetails(obj);
+                                navigateToDetails(obj.postingId)
+                              "
+                            >
+                              Read More
+                            </div>
+                          </div>
+                        </ng-template>
+                      </ng-container>
+                    </owl-carousel-o>
+                    <div class="py-2"></div>
+                  </div>
+                  <div class="side-pad"></div>
+                </div>
+                <div
+                  (click)="nextSlide(i, carouselData)"
+                  class="d-none d-lg-flex arrow-right"
+                >
+                  <svg
+                    class="tag-slider-icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 18L15 12L9 6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <div
+          class="category-card p-4 mb-2"
+          *ngIf="
+            favouriteBlogList.length == 0 &&
+            dynamicBlogList.length == 0 &&
+            hashTagListItems.length == 0
+          "
+        >
+          <h3 class="text-center">No Record Found!</h3>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="viewType == 'list'">
+        <app-blog-list-view
+          [filterData]="filterData"
+          [tagId]="selectedTag"
+          [tagName]="selectedTagName"
+          (closeEvent)="close()"
+        ></app-blog-list-view>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- The "no content" message is now shown via newErrorModal in CommonService.dialog() -->

@@ -1,0 +1,82 @@
+<div class="newSuccessModal">
+  <div class="h-100 d-flex flex-column">
+    <div class="d-flex gap-3 align-items-start flex-column flex-md-row">
+      <img src="../../../assets/svg/exit.svg" alt="whatsapp" />
+      <div class="flex-1 text-center text-md-start">
+        <img
+          src="../../../assets/images/Close_round.png"
+          alt=""
+          class="cur-p modal-close-icon modal-close-mobile"
+          (click)="close()"
+        />
+        <div
+          class="mt-md-3 d-flex justify-content-center justify-content-md-between align-items-center"
+        >
+          <h5 class="modal-header-text">Exit Community</h5>
+        </div>
+        <div class="text-body">
+          Members, please note that all your posts and comments in this
+          community feed will not be removed after you exit the community.
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-auto d-flex justify-content-center gap-3">
+      <button
+        type="button"
+        (click)="close()"
+        class="btn c-pop-btn-outline fs-sm"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        (click)="exit()"
+        class="btn c-pop-btn-primary fs-sm"
+      >
+        Exit
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="container-fluid mb-2">
+  <div class="row bg-white p-4">
+    <div class="col-2">
+      <img src="../../../assets/svg/exit.svg" alt="whatsapp" />
+    </div>
+    <div class="col-10">
+      <div class="row">
+        <div class="d-flex justify-content-lg-between p-0 px-3">
+          <div class="header">Exit Community</div>
+          <img
+            src="../../../assets/images/Close_round.png"
+            width="20px"
+            height="20px"
+            alt=""
+            class="cur-p"
+            (click)="close()"
+          />
+        </div>
+        <div class="col-12">
+          <div class="title-desc px-1">
+            Members, please note that all your posts and comments in this
+            community feed will not be removed after you exit the community.
+          </div>
+          <button
+            class="btn rounded-4 w-25 mt-3 mx-4 btn-border"
+            (click)="close()"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn rounded-4 w-25 mt-3 mx-4 btn-border"
+            (click)="exit()"
+          >
+            Exit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

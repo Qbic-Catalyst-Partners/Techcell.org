@@ -1,0 +1,49 @@
+<div class="video-list">
+  <div class="video-card" *ngFor="let item of videoList">
+    <youtube-player
+      class="video-card__video"
+      style="pointer-events: none; border-radius: 5px; overflow: hidden"
+      (stateChange)="playerStateChange($event, item)"
+      [videoId]="getVideoId(item?.video?.videoLink)"
+      [playerVars]="playerConfig"
+      [height]="50"
+      [width]="100"
+    >
+    </youtube-player>
+    <div class="video-card__divider"></div>
+    <div class="video-card__content">
+      <div class="video-card__title c-text-primary">{{ item?.title }}</div>
+      <div class="video-card__desc c-text-secondary">
+        {{ item?.shortDescription }}
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="openVideo(item)">View</button>
+  </div>
+</div>
+
+<!-- <div class="container-fluid mb-3">
+  <div class="row rounded-1 mb-2 card-hover" *ngFor="let item of videoList">
+    <div class="col-2 col-md-2 col-lg-2 ps-0">
+      <youtube-player
+        (stateChange)="playerStateChange($event, item)"
+        [videoId]="getVideoId(item?.video?.videoLink)"
+        [playerVars]="playerConfig"
+        [height]="60"
+        [width]="120"
+      >
+      </youtube-player>
+    </div>
+    <div
+      class="col-10 col-md-10 col-lg-10 bg-white d-flex img-background rounded-1"
+      (click)="goTo(item)"
+    >
+      <div class="w-75 align-content-center">
+        <p class="blog-title">{{ item.title }}</p>
+        <p class="blog-desc">
+          {{ item.shortDescription }}
+        </p>
+      </div>
+      <button class="btn btn-primary mt-3" (click)="goTo(item)">View</button>
+    </div>
+  </div>
+</div> -->

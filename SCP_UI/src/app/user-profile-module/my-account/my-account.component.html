@@ -1,0 +1,17 @@
+<ng-container [ngSwitch]="accessTo">
+    <div *ngSwitchCase="'Student'">
+        <app-student-account />
+    </div>
+    <div *ngSwitchCase="'Moderator'">
+        <app-moderator-account />
+    </div>
+    <div *ngSwitchCase="'Admin'">
+        <app-moderator-account />
+    </div>
+    <div *ngSwitchCase="'Faculty'">
+        <app-faculty-account />
+    </div>
+    <div *ngSwitchDefault>
+        <app-access-denied />
+    </div>
+</ng-container>

@@ -1,0 +1,511 @@
+<div class="card p-3">
+  <div class="row modal-h-ctrl">
+    <div class="d-flex justify-content-between mb-2">
+      <p class="fs-5 fw-semibold">Add Certification</p>
+      <img
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="cur-p add-blog-close"
+        (click)="close()"
+      />
+    </div>
+
+    <form [formGroup]="headerForm" (ngSubmit)="submitData()" ngbAutofocus>
+      <div class="form-group mb-2">
+        <label for="Certifying">Certifying Entity*</label>
+        <input
+          formControlName="certificationName"
+          type="text"
+          class="form-control"
+          id="certificationName"
+          placeholder="Enter Certification Name"
+          [maxlength]="maxChars"
+        />
+        <div class="remaining-character d-flex justify-content-end">
+          {{ fieldName["certificationName"].value?.length }}/{{ maxChars }}
+          Characters left
+        </div>
+        <div
+          *ngIf="
+            (fieldName['certificationName'].touched || isSubmitted) &&
+            fieldName['certificationName'].errors
+          "
+        >
+          <div
+            *ngIf="fieldName['certificationName'].errors?.['required']"
+            class="text-danger d-inline-block mt-1"
+          >
+            Please enter Certification Name
+          </div>
+        </div>
+      </div>
+      <div class="form-group mb-2">
+        <label for="Description">Certification Description*</label>
+        <textarea
+          formControlName="description"
+          class="form-control"
+          id="Description"
+          rows="3"
+          placeholder="Program Description"
+          [maxlength]="descriptionMaxChars"
+        ></textarea>
+        <div class="remaining-character d-flex justify-content-end">
+          {{ fieldName["description"].value?.length }}/{{ descriptionMaxChars }}
+          Characters left
+        </div>
+        <div
+          *ngIf="
+            (fieldName['description'].touched || isSubmitted) &&
+            fieldName['description'].errors
+          "
+        >
+          <div
+            *ngIf="fieldName['description'].errors?.['required']"
+            class="text-danger d-inline-block mt-1"
+          >
+            Please enter Description
+          </div>
+        </div>
+      </div>
+      <div class="form-group mb-2">
+        <label for="Eligibility">Eligibility*</label>
+        <textarea
+          formControlName="eligibility"
+          class="form-control"
+          id="eligibility"
+          rows="3"
+          placeholder="Eligibility"
+          [maxlength]="descriptionMaxChars"
+        ></textarea>
+        <div class="remaining-character d-flex justify-content-end">
+          {{ fieldName["eligibility"].value?.length }}/{{ descriptionMaxChars }}
+          Characters left
+        </div>
+        <div
+          *ngIf="
+            (fieldName['eligibility'].touched || isSubmitted) &&
+            fieldName['eligibility'].errors
+          "
+        >
+          <div
+            *ngIf="fieldName['eligibility'].errors?.['required']"
+            class="text-danger d-inline-block mt-1"
+          >
+            Please enter Eligibility
+          </div>
+        </div>
+      </div>
+      <div class="form-group mb-2">
+        <label for="Field">Field*</label>
+        <input
+          formControlName="field"
+          type="text"
+          class="form-control"
+          id="field"
+          placeholder="Field"
+          [maxlength]="maxChars"
+        />
+        <div class="remaining-character d-flex justify-content-end">
+          {{ fieldName["field"].value?.length }}/{{ maxChars }} Characters left
+        </div>
+        <div
+          *ngIf="
+            (fieldName['field'].touched || isSubmitted) &&
+            fieldName['field'].errors
+          "
+        >
+          <div
+            *ngIf="fieldName['field'].errors?.['required']"
+            class="text-danger d-inline-block mt-1"
+          >
+            Please enter Field
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2 gy-2">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="ContactNumber">Contact Number*</label>
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon1">+91</span>
+              <input
+                formControlName="contactNumber"
+                type="text"
+                id="ContactNumber"
+                class="form-control"
+                placeholder=""
+                maxlength="10"
+                (keydown)="this.commonService.numberOnly($event)"
+              />
+            </div>
+            <div
+              *ngIf="
+                (fieldName['contactNumber'].touched || isSubmitted) &&
+                fieldName['contactNumber'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['contactNumber'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Contact Number
+              </div>
+              <div
+                *ngIf="fieldName.contactNumber?.errors?.['pattern']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please, Enter 10 digit Mobile Number.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="ContactEmail">Contact Email*</label>
+            <input
+              formControlName="contactEmail"
+              type="text"
+              id="ContactEmail"
+              class="form-control"
+              placeholder="Email Address"
+              maxlength="50"
+            />
+            <div
+              *ngIf="
+                (fieldName['contactEmail'].touched || isSubmitted) &&
+                fieldName['contactEmail'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['contactEmail'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Contact Email
+              </div>
+              <div
+                *ngIf="fieldName['contactEmail'].errors?.['pattern']"
+                class="text-danger"
+              >
+                Email is not Valid
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="Duration"
+              >Duration*
+              <small class="c-text-secondary" *ngIf="durationPreview">
+                Preview: {{ durationPreview }}
+              </small></label
+            >
+            <div class="d-flex gap-2">
+              <input
+                formControlName="duration"
+                type="text"
+                id="duration"
+                class="form-control"
+                placeholder="Duration"
+                maxlength="10"
+                (keydown)="this.commonService.numberOnly($event)"
+              />
+              <select
+                formControlName="durationUnit"
+                class="form-control flex-1"
+              >
+                <option value="Months">Months</option>
+                <option value="Weeks">Weeks</option>
+                <option value="Days">Days</option>
+                <option value="Hours">Hours</option>
+              </select>
+            </div>
+
+            <div
+              *ngIf="
+                (fieldName['duration'].touched || isSubmitted) &&
+                fieldName['duration'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['duration'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Duration
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="mode">Mode*</label>
+            <select
+              formControlName="mode"
+              id="mode"
+              class="form-control"
+            >
+              <option value="" disabled>Select Mode</option>
+              <option value="Online">Online</option>
+              <option value="Offline">Offline</option>
+            </select>
+            <div
+              *ngIf="
+                (fieldName['mode'].touched || isSubmitted) &&
+                fieldName['mode'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['mode'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Mode
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="certificationFee">Certification Fee* <small class="c-text-secondary" *ngIf="certFeePreview">Preview: {{ certFeePreview }}</small></label>
+            <input
+              formControlName="certificationFee"
+              type="text"
+              id="certificationFee"
+              class="form-control"
+              placeholder="Amount"
+              maxlength="50"
+              appNumberOnly
+            />
+            <div
+              *ngIf="
+                (fieldName['certificationFee'].touched || isSubmitted) &&
+                fieldName['certificationFee'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['certificationFee'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Certification Fee
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="applybydate">Apply by date*</label>
+            <div class="mat-datepicker">
+              <div class="position-relative">
+                <input
+                  class="form-control"
+                  [matDatepicker]="applybydate"
+                  placeholder="DD-MM-YYYY"
+                  formControlName="applyByDate"
+                  id="releaseDate"
+                  (keydown)="this.commonService.tabOnly($event)"
+                  [min]="today"
+                />
+                <img
+                  class="calendar-icon"
+                  (click)="applybydate.open()"
+                  src="/assets/lucide-icons/calender.svg"
+                  alt="calendar"
+                />
+              </div>
+              <mat-datepicker #applybydate></mat-datepicker>
+
+              <div
+                *ngIf="
+                  (fieldName['applyByDate'].touched || isSubmitted) &&
+                  fieldName['applyByDate'].errors
+                "
+              >
+                <div
+                  *ngIf="fieldName['applyByDate'].errors?.['required']"
+                  class="text-danger d-inline-block mt-1"
+                >
+                  Please enter Apply By Date
+                </div>
+                <div
+                  *ngIf="fieldName['applyByDate'].errors?.['pastDate']"
+                  class="text-danger d-inline-block mt-1"
+                >
+                  Past date not allowed
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="tagging">Tagging*</label>
+            <div class="tag-input">
+              <tag-input
+                formControlName="tagging"
+                [identifyBy]="'id'"
+                [displayBy]="'description'"
+                [onlyFromAutocomplete]="true"
+                (input)="getText($event)"
+                [onTextChangeDebounce]="1000"
+              >
+                <tag-input-dropdown
+                  [appendToBody]="true"
+                  [autocompleteItems]="tagItems"
+                  [identifyBy]="'id'"
+                  [displayBy]="'description'"
+                  [zIndex]="99999"
+                >
+                </tag-input-dropdown>
+              </tag-input>
+            </div>
+            <div
+              *ngIf="
+                (fieldName['tagging'].touched || isSubmitted) &&
+                fieldName['tagging'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['tagging'].errors?.['required']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Please enter Tagging
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div
+            class="d-flex align-items-center btn-container gap-2 fileUplod-mobile-screen info-container"
+          >
+            <label for="title" class="m-0 form-label">Company Logo*</label>
+            <div class="upload-btn-wrapper">
+              <button class="upload-btn">Upload</button>
+              <input
+                type="file"
+                id="upload"
+                name="companyLogo"
+                [accept]="imageType"
+                (change)="uploadCompanyLogo($event)"
+                formControlName="companyLogo"
+              />
+            </div>
+            <div class="tooltip-wrapper">
+              <div class="file-info">
+                <img
+                  class="info-icon-img cur-p"
+                  (mouseenter)="activeCompanyLogoToolTip = true"
+                  (mouseleave)="activeCompanyLogoToolTip = false"
+                  src="../../../../assets/svg/info.svg"
+                  alt="Info Icon"
+                />
+              </div>
+              <div class="file-tooltip" *ngIf="activeCompanyLogoToolTip">
+                (.jpg, .png, .jpeg) Max size 1 mb
+              </div>
+            </div>
+            <div class="file-name mx-3" *ngIf="fieldName['companyLogo'].valid">
+              {{ logoName }}
+            </div>
+          </div>
+          <div
+            *ngIf="
+              (fieldName['companyLogo'].touched || isSubmitted) &&
+              fieldName['companyLogo'].errors
+            "
+          >
+            <div
+              *ngIf="fieldName['companyLogo'].errors?.['required']"
+              class="text-danger d-inline-block mt-1"
+            >
+              Please add a Logo
+            </div>
+            <div
+              *ngIf="fieldName['companyLogo'].errors?.['fileSize']"
+              class="text-danger d-inline-block mt-1"
+            >
+              File size exceeds the limit (1 MB).
+            </div>
+            <div
+              *ngIf="fieldName['companyLogo'].errors?.['fileType']"
+              class="text-danger d-inline-block mt-1"
+            >
+              Invalid File Type
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div
+            class="d-flex align-items-center btn-container gap-2 fileUplod-mobile-screen info-container"
+          >
+            <label for="title" class="m-0 form-label">Cover Image*</label>
+            <div class="upload-btn-wrapper">
+              <button class="upload-btn">Upload</button>
+              <input
+                type="file"
+                id="upload1"
+                name="coverPhoto"
+                [accept]="imageType"
+                (change)="uploadCoverPhoto($event)"
+                formControlName="coverPhoto"
+              />
+            </div>
+            <div class="tooltip-wrapper">
+              <div class="file-info">
+                <img
+                  class="info-icon-img cur-p"
+                  (mouseenter)="activeCoverImageToolTip = true"
+                  (mouseleave)="activeCoverImageToolTip = false"
+                  src="../../../../assets/svg/info.svg"
+                  alt="Info Icon"
+                />
+              </div>
+              <div class="file-tooltip" *ngIf="activeCoverImageToolTip">
+                (.jpg, .png, .jpeg) Max size 1 mb
+              </div>
+            </div>
+            <div class="file-name mx-3" *ngIf="fieldName['coverPhoto'].valid">
+              {{ coverPhotoName }}
+            </div>
+          </div>
+          <div
+            *ngIf="
+              (fieldName['coverPhoto'].touched || isSubmitted) &&
+              fieldName['coverPhoto'].errors
+            "
+          >
+            <div
+              *ngIf="fieldName['coverPhoto'].errors?.['required']"
+              class="text-danger d-inline-block mt-1"
+            >
+              Please add a Cover Photo
+            </div>
+            <div
+              *ngIf="fieldName['coverPhoto'].errors?.['fileSize']"
+              class="text-danger d-inline-block mt-1"
+            >
+              File size exceeds the limit (1 MB).
+            </div>
+            <div
+              *ngIf="fieldName['coverPhoto'].errors?.['fileType']"
+              class="text-danger d-inline-block mt-1"
+            >
+              Invalid File Type
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="d-flex justify-content-center pt-3 gap-3">
+            <button
+              type="button"
+              (click)="close()"
+              class="btn c-pop-btn-outline"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn c-pop-btn-primary">Confirm</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3"></div>
+    </form>
+  </div>
+</div>

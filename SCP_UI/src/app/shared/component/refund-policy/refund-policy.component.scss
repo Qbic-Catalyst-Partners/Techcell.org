@@ -1,0 +1,33 @@
+main {
+  position: relative;
+  font-size: 14px;
+
+  h5 {
+    font-size: 16px;
+  }
+}
+
+.modal-border {
+  border: solid 2px #b1b1b1;
+  border-radius: 10px;
+}
+
+p {
+  text-align: justify;
+}
+
+.text-body-secondary {
+  font-style: italic;
+}
+
+h5 {
+  margin-top: 1rem;
+}
+
+.c-btn-close {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}

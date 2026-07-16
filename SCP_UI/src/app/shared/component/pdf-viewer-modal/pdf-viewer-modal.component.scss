@@ -1,0 +1,32 @@
+.modal-header {
+  padding: 10px;
+}
+
+.modal-title {
+  font-size: 14px;
+}
+
+.btn-close {
+  font-size: 14px;
+  padding: 0;
+  margin-right: 4px;
+  opacity: .5;
+  transition: all .3s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.modal-footer {
+  padding: 10px;
+}
+
+.btn-download {
+  font-size: 14px;
+  padding: 2px 12px !important;
+}

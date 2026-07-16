@@ -1,0 +1,26 @@
+<div class="container-fluid mb-2">
+    <div class="row bg-white p-4">
+    <div class="col-2">
+        <img src="../../../assets/svg/sucess.svg" alt="whatsapp" />
+    </div>
+    <div class="col-10">
+        <div class="row">
+            <div class="d-flex justify-content-lg-between p-0 px-3">
+                <div class="header">
+                    Approve Content
+                </div>
+                <img src="../../../assets/images/Close_round.png" width="20px" height="20px" alt="" class="cur-p" (click)="close()">
+               </div>
+            <div class="col-12">
+              <div class="title-desc px-1">All in order? By approving this, you confirm that you have verified the pre-requisites and guidelines to publish this content in the TechCell Portal.</div>
+            <button class="btn rounded-4 w-25 mt-3 mx-4 btn-border" (click)="close()">
+                Cancel
+            </button>
+            <button class="btn rounded-4 w-25 mt-3 mx-4 btn-border" (click)="approve()">
+                Approve
+            </button>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>

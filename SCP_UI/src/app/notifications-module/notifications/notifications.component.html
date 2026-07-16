@@ -1,0 +1,46 @@
+
+
+<!-- New html structure -->
+<div class="notification-wrapper">
+  <div class="width-controller">
+    <div class="content-wrapper">
+      <div class="sidebar card d-none d-lg-block left-section">
+        <span class="sidebar-email" href="#" *ngIf="userEmail">{{ userEmail }}</span>
+        <nav>
+          <ul>
+            <li>
+              <a href="#" class="nav-link active" (click)="$event.preventDefault()">
+                <span>Inbox</span>
+                </a>
+            </li>           
+          </ul>
+        </nav>
+      </div>
+      <div class="card right-section pt-2">
+        
+       <div class="d-flex align-items-center gap-4 pe-32">
+        <nav class="noti-nav">
+          <ul class="noti-nav-list">
+            <li class="noti-nav-list-item">
+              <a routerLink="/notifications" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="noti-nav-link"><span>All</span>
+
+                <span class="noti-nav-link-count">{{ unreadNormalCount }}</span>
+              </a>
+            </li>
+            <li class="noti-nav-list-item">
+              <a routerLink="/notifications/mentions" routerLinkActive="active" class="noti-nav-link">
+                <span>Mentions</span>
+                <span class="noti-nav-link-count">{{ unreadMentionCount }}</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <button class="btn c-btn-link ms-auto p-0" (click)="clearAll()">Clear all</button>
+        <button class="btn c-btn-link p-0" (click)="markAllAsRead()">Mark all as read</button>
+       </div>
+        <!-- Router outlet for child tabs -->
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

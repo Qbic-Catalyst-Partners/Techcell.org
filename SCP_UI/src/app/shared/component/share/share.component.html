@@ -1,0 +1,45 @@
+<div class="container py-2 px-3 relative">
+   
+        
+            <div class="title c-text-primary text-center mb-3">Share This Link</div>
+      
+      
+            <img class="close-icon" src="../../../assets/images/Close_round.png" alt="" class="close-icon cur-p" (click)="close()">
+   
+  
+    <div class="row mb-2">
+        <div class="d-flex flex-column flex-md-row align-items-center gap-2">
+          
+                <input type="text" class="form-control rounded-pill" [value]="msg" disabled>
+           
+        
+                <button class="c-pop-btn-primary" type="button" [autoClose]="false" triggers="manual"
+                    [ngbTooltip]="toolTipMsg" #t="ngbTooltip" (click)="notify(t, true)" (click)="t.open()"
+                    (mouseover)="t.open();toolTipMsg='Copy to clipboard'"
+                    (mouseout)="t.close();toolTipMsg='Copy to clipboard'">
+                    {{isCopied ? 'Copied' : 'Copy'}}
+                </button>
+         
+        </div>
+    </div>
+    <div class="social-img-container d-flex gap-4 align-items-center p-2 justify-content-center">
+        <a href="https://web.whatsapp.com/" target="_blank">
+            <img src="../../../assets/social-media/whatsapp.svg" alt="whatsapp" class="cur-p" />
+          </a>
+          <a href="https://www.instagram.com/accounts/login/" target="_blank">
+            <img src="../../../assets/social-media/instagram.svg" alt="whatsapp" class="cur-p" />
+          </a>
+          <a href="https://x.com/i/flow/login" target="_blank">
+            <img src="../../../assets/social-media/twitter.svg" alt="whatsapp" class="cur-p" />
+          </a>
+          <a href="https://www.linkedin.com/" target="_blank">
+            <img src="../../../assets/social-media/linkedin.svg" alt="whatsapp" class="cur-p" />
+          </a>
+          <a href="https://www.youtube.com/" target="_blank">
+            <img src="../../../assets/social-media/youtube.svg" alt="whatsapp" class="cur-p" />
+          </a>
+          <a href="https://www.facebook.com/" target="_blank">
+            <img src="../../../assets/social-media/facebook.svg" alt="whatsapp" class="cur-p" />
+          </a>
+      </div>
+</div>

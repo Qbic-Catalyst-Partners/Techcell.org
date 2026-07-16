@@ -1,0 +1,306 @@
+/* Fonts */
+
+/* Family */
+h1 {
+  font-family: 'arial-regular';
+}
+
+h6 {
+  /* Contact, Skills, Education, About me, Work Experience */
+  font-family: 'arial-regular';
+  color: #3d5269;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+h3 {
+  /* Accountant */
+  font-family: 'arial-bold';
+}
+
+.jobPosition span,
+.projectName span {
+  font-family: 'arial-regular';
+}
+
+.upperCase {
+  text-transform: uppercase;
+}
+
+.smallText,
+.smallText span,
+.smallText p,
+.smallText a {
+  font-family: 'arial-regular';
+  text-align: justify;
+}
+
+/* End Family */
+
+/* Colors */
+h1 {
+  color: #111;
+}
+
+.leftPanel,
+.leftPanel a {
+  color: #bebebe;
+  text-decoration: none;
+}
+
+.leftPanel h6 {
+  color: white;
+}
+
+/* End Colors */
+
+/* Sizes */
+h1 {
+  font-weight: 300;
+  font-size: 1.2cm;
+  transform: scale(1, 1.15);
+  margin-bottom: 1.5cm;
+  margin-top: 1.5cm;
+  text-transform: uppercase;
+}
+
+h6 {
+  margin-top: 0.1cm;
+  margin-bottom: 0.1cm;
+}
+
+.leftPanel,
+.leftPanel a {
+  font-size: 0.38cm;
+}
+
+.projectName span,
+.jobPosition span {
+  font-size: 0.35cm;
+}
+
+.smallText,
+.smallText span,
+.smallText p,
+.smallText a {
+  font-size: 0.35cm;
+}
+
+.leftPanel .smallText,
+.leftPanel .smallText,
+.leftPanel .smallText span,
+.leftPanel .smallText p,
+.smallText a {
+  font-size: 0.45cm;
+}
+
+.contactIcon {
+  width: 0.5cm;
+  text-align: center;
+}
+
+p {
+  margin-top: 0.05cm;
+  margin-bottom: 0.05cm;
+}
+
+/* End Sizes */
+
+.bolded {
+  font-weight: bold;
+}
+
+.white {
+  color: white;
+}
+
+/* End Fonts */
+
+/* Layout */
+body {
+  background: rgb(204, 204, 204);
+  width: 21cm;
+  height: 29.7cm;
+  margin: 0 auto;
+}
+
+/* Printing */
+page {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+}
+
+page[size="A4"] {
+  width: 21cm;
+  height: 29.7cm;
+}
+
+@page {
+  size: 21cm 29.7cm;
+  padding: 0;
+  margin: 0mm;
+  border: none;
+  border-collapse: collapse;
+}
+
+/* End Printing */
+
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  min-height: 29.7cm;
+}
+
+.leftPanel {
+  width: 30%;
+  background-color: #1d3752;
+  padding: 0.7cm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%;
+  min-height: 29.7cm;
+}
+
+.rightPanel {
+  width: 70%;
+  padding: 0.7cm;
+}
+
+.leftPanel img {
+  width: 4cm;
+  height: 4cm;
+  margin-bottom: 0.7cm;
+  border-radius: 50%;
+  border: 0.15cm solid white;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.leftPanel .details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.alignleft {
+  text-align: left !important;
+  width: 1cm;
+}
+
+.alignright {
+  text-align: right !important;
+  width: 0.6cm;
+  margin-right: 0.1cm
+}
+
+.workExperience>ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.workExperience>ul>li {
+  position: relative;
+  margin: 0;
+  padding-bottom: 0.1cm;
+  // padding-left: 0.2cm;
+  font-size: 0.35cm;
+}
+
+.jobPosition {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.item {
+  padding-bottom: 0.7cm;
+  padding-top: 0.7cm;
+}
+
+.item h6 {
+  margin-top: 0;
+}
+
+.workExperience>ul>li ul {
+  padding-left: 0.5cm;
+  list-style-type: disc;
+}
+
+hr {
+  border: 2px solid #3d5269;
+  /* Set the hr color */
+  color: #3d5269;
+  /* old IE */
+  background-color: #3d5269;
+  margin-top: 0;
+  margin-bottom: 5px;
+  opacity: 1;
+}
+
+.left-header-font {
+  font-size: 15px;
+}
+
+.container {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+
+  @mixin avatarWrapper($border: 4px,
+    $size: 84px,
+    $color: rgba(255, 255, 255, 1)) {
+    $radius: (
+      $size / 2) - $border;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+
+    .circle {
+      border: solid $border rgba(83, 153, 178, 1
+      );
+    width: $size - 5px;
+    height: $size - 5px;
+    border-radius: 50%;
+  }
+}
+}
+.column-count{
+  column-count: 2;
+}
+
+.download-resume{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.btn-primary{
+  background-color: #1d3752 !important;
+}
+
+.active-scale {
+  filter: invert(1);
+}
+
+/* Helper class toggled during PDF generation to remove shadow & rounded corners */
+#contentToConvert.no-shadow {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* Remove top/bottom padding when capturing PDF so blue fills entire edge */
+#contentToConvert.no-shadow .leftPanel {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.divider {
+  padding: 0.5rem 0;
+  &:not(:last-child) {
+    border-bottom: 1px solid #3d5269;
+  }
+}

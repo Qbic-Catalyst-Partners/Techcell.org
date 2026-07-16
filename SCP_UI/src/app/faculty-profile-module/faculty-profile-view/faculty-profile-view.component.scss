@@ -1,0 +1,92 @@
+// .container-fluid {
+//     background-color: #d9d9d9;
+//     padding: 10px 20px;
+//   }
+.header {
+  background-color: #144557;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 43.2px;
+  text-align: left;
+  color: #ffffff;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 26.4px;
+  text-align: left;
+  color: var(--c-text-primary);
+}
+.desc {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+  color: var(--c-text-secondary);
+}
+.profile {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 32.4px;
+  letter-spacing: -0.02em;
+  text-align: left;
+  color: #030000;
+}
+.profile-bw {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 32.4px;
+  letter-spacing: -0.02em;
+  text-align: left;
+  color: #79959f;
+  border-left: 2px solid;
+}
+img {
+  border-radius: 50%;
+}
+.rounded-img {
+  height: 128px;
+  width: 128px;
+  object-fit: cover;
+  border: 2px solid #144557;
+  padding: 2px;
+}
+
+.max-height {
+  height: 515px;
+}
+
+.m-top {
+  margin-top: 3.5rem !important;
+}
+
+.user-name {
+  font-size: 18px !important;
+  font-weight: 700;
+}
+
+.linkedin {
+  border-radius: 0 !important;
+}
+
+.height-controller {
+  height: calc(100vh - 100px);
+  overflow-y: scroll;
+}
+
+.height-controller::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.height-controller::-webkit-scrollbar {
+  width: 3px;
+  background-color: #f5f5f5;
+}
+
+.height-controller::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgba(20, 69, 87, 1);
+}

@@ -1,0 +1,59 @@
+<div class="modal-body">
+  <div class="welcome">
+    <div class="welcome__left">
+      <div class="welcome__content">
+        <div class="welcome__logo-wrapper">
+          <div class="text-center">
+            <img
+              class="welcome__logo mb-3"
+              src="../../../assets/images/techcell-logo-beta-5.png"
+              alt="Techcell beta logo"
+            />
+            <h6 class="fw-bold" style="color: #144557">Welcome to TechCell.</h6>
+          </div>
+        </div>
+        <div class="welcome__user">
+          <span>Hi</span>
+          <span class="fw-semibold"
+            >{{ userInfo?.firstName }}&nbsp;{{ userInfo?.lastName }}</span
+          >
+        </div>
+        <div class="px-1 ps-lg-3">
+          <p class="welcome__para">
+            We are thrilled to have you join our community. We believe in the
+            power of innovation and collaboration.
+          </p>
+          <p class="welcome__para">
+            TechCell is committed to empower students to reach their full
+            potential. Here, you'll find community of like-minded individuals,
+            resources, mentorship, projects, certifications and career
+            opportunities to help enhance your skills and advance your career.
+          </p>
+          <p class="welcome__para">
+            Your journey with us is just the beginning, and we are excited to
+            see incredible things you will learn and achieve as a
+            TechCellmember.
+          </p>
+          <p class="welcome__para">
+            Welcome aboard, and let's embark on this exciting journey together!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="welcome__right">
+      <span class="welcome__founder-img-wrapper">
+        <img
+          class="welcome__founder-img"
+          src="../../../assets/images/founder.png"
+          alt="Praveen Kumar Founder of Techcell"
+        />
+      </span>
+      <div class="welcome__founder-name-wrapper">
+        <span class="welcome__founder-name">Praveen Kumar</span>
+        <span class="welcome__founder-designation">Founder, TechCell.org</span>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" (click)="close()">Okay</button>
+</div>

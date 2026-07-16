@@ -1,0 +1,159 @@
+<article class="ads mb-3">
+  <div class="ads__header">
+    <h4 class="ads__title">Blogs</h4>
+    <span class="ads__view-more" (click)="viewMore('Blogs')">View More</span>
+  </div>
+  <div class="ads__body">
+    <article class="ads-card" *ngFor="let blogs of blogList; let i = index">
+      <div class="ads-card__header" (click)="viewProfile(blogs)">
+        <img
+          [src]="blogs.postedUser.profilePhoto"
+          onError="this.src='../../../assets/images/computer-security.png'"
+          class="ads-card__header-img"
+        />
+      </div>
+      <div class="ads-card__body" (click)="navigateTo(blogs)">
+        <div class="ads-card__primary-info">
+          <h5 class="ads-card__title d-13-none">
+            {{ commonService.trimText(blogs.title, 20) }}
+          </h5>
+          <h5 class="ads-card__title d-13-block d-none">
+            {{ commonService.trimText(blogs.title, 15) }}
+          </h5>
+          <span class="ads-card__time">{{ blogs.days }}</span>
+        </div>
+        <p class="ads-card__desc">
+          {{ commonService.trimText(blogs.shortDescription, 30) }}
+        </p>
+      </div>
+      <div class="ads-card__footer cur-p" (click)="navigateTo(blogs)" >
+        <img
+          [src]="blogs.blog.thumbnail"
+          onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+          class="ads-card__footer-img"
+        />
+      </div>
+    </article>
+  </div>
+</article>
+
+<article class="ads mb-3">
+  <div class="ads__header">
+    <h4 class="ads__title">Video</h4>
+    <span class="ads__view-more" (click)="viewMore('Videos')">View More</span>
+  </div>
+  <div class="ads__body">
+    <article class="ads-card" *ngFor="let video of videoList; let i = index">
+      <div class="ads-card__header" (click)="viewProfile(video)">
+        <img
+          [src]="video.postedUser.profilePhoto"
+          onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+          class="ads-card__header-img"
+        />
+      </div>
+      <!-- On click video popup should open -->
+      <div class="ads-card__body" (click)="handleVideoClick(video)">
+        <div class="ads-card__primary-info">
+          <h5 class="ads-card__title d-13-none">
+            {{ commonService.trimText(video.title, 20) }}
+          </h5>
+          <h5 class="ads-card__title d-13-block d-none">
+            {{ commonService.trimText(video.title, 15) }}
+          </h5>
+         
+          <span class="ads-card__time">{{ video.days }}</span>
+        </div>
+        <p class="ads-card__desc">
+          {{ commonService.trimText(video.shortDescription, 30) }}
+        </p>
+      </div>
+      <div
+        class="ads-card__footer ads-card__footer-video-wrapper"
+        (click)="handleVideoClick(video)"
+      >
+        <youtube-player
+          class="ads-card__footer-video"
+          (stateChange)="playerStateChange($event, video)"
+          [videoId]="getVideoId(video?.video?.videoLink)"
+          suggestedQuality="highres"
+          [playerVars]="video.playerConfig"
+          height="60"
+        >
+        </youtube-player>
+      </div>
+    </article>
+  </div>
+</article>
+
+
+
+<!-- This will be career -->
+<article class="ads mb-3">
+  <div class="ads__header">
+    <h4 class="ads__title">Careers</h4>
+    <span class="ads__view-more" (click)="viewMore('Careers')">View More</span>
+  </div>
+  <div class="ads__body">
+    <article class="ads-card cur-p" *ngFor="let career of careerList" (click)="openCareer(career)">
+      <div class="ads-card__header">
+        <img
+          [src]="commonService.convertTOBAse64Format(career.companyLogo)"
+          onError="this.src='../../../assets/images/computer-security.png'"
+          class="ads-card__header-img"
+        />
+      </div>
+      <div class="ads-card__body">
+        <div class="ads-card__primary-info">
+          <h5 class="ads-card__title d-13-none">
+            {{ commonService.trimText(career.title, 20) }}
+          </h5>
+          <h5 class="ads-card__title d-13-block d-none">
+            {{ commonService.trimText(career.title, 15) }}
+          </h5>
+        
+          <span class="ads-card__time">{{ career.days }}</span>
+        </div>
+        <p class="ads-card__desc">
+          {{ commonService.trimText(career.desc, 30) }}
+        </p>
+      </div>
+      <div class="ads-card__footer">
+        <img
+          [src]="commonService.convertTOBAse64Format(career.coverPage)"
+          onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710710711ec125?s=128'"
+          class="ads-card__footer-img"
+        />
+      </div>
+    </article>
+  </div>
+</article>
+
+<article class="ads">
+  <div class="ads__header">
+    <h4 class="ads__title">Software</h4>
+    <span class="ads__view-more" (click)="viewMore('Software')">View More</span>
+  </div>
+  <div class="ads__body">
+    <article class="ads-card" *ngFor="let soft of softwareList; let i = index">
+      <div class="ads-card__body ads-card__software-body">
+        <div class="ads-card__primary-info">
+          <h5 class="ads-card__title d-13-none">
+            {{ commonService.trimText(soft.softwareName, 20) }}
+          </h5>
+          <h5 class="ads-card__title d-13-block d-none">
+            {{ commonService.trimText(soft.softwareName, 15) }}
+          </h5>
+         
+          <span class="ads-card__time">{{ soft.days }}</span>
+        </div>
+      </div>
+      <div class="ads-card__footer">
+        <img
+          [src]="soft.thumbnail"
+          onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+          class="ads-card__footer-img"
+        />
+      </div>
+    </article>
+  </div>
+</article>

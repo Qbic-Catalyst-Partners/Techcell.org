@@ -1,0 +1,89 @@
+<div class="modal-content">
+  <!-- <div class="modal-header">
+    <h5 class="modal-title">Blog Preview</h5>
+   
+  </div> -->
+  <div class="p-2 d-flex justify-content-end">
+    <button type="button" class="btn-close" (click)="close()"></button>
+  </div>
+  <div class="modal-body p-0">
+    <div class="single-blog-content pb-3 px-2">
+      <h1 class="blog-title fw-bold d-none d-lg-block">{{ viewData?.title }}</h1>
+      <div class="px-2">
+       
+    
+        <div class="mt-3 clearfix">
+          <div class="thumbnail-container">
+            <div class="short-description mb-3 d-none d-lg-block">"{{ viewData?.shortDescription }}"</div>
+    
+            <div class="blog-thumbnail">
+              <div class="mobile-posted-date d-lg-none">
+                <span>Posted on: </span>
+                <span>{{ viewData?.createdDate | date : "dd/MM/yyyy" }}</span>
+              </div>
+              <h1 class="mobile-title blog-title fw-bold d-lg-none">{{ viewData?.title }}</h1>
+              <img
+                *ngIf="
+                  !viewData?.blog?.thumbnail.includes(
+                    'viewData:image/jpeg;charset=utf-8;base64,'
+                  )
+                "
+                [src]="commonService.convertTOBAse64Format(viewData?.blog.thumbnail)"
+                onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+              />
+            </div>
+          </div>
+          <div>
+            <div class="author-card d-flex align-items-center mb-2 mx-auto ms-lg-0 me-lg-0" (click)="viewProfile(viewData)">
+              <img
+                *ngIf="
+                  !viewData?.postedUser?.profilePhoto.includes(
+                    'data:image/jpeg;charset=utf-8;base64,'
+                  )
+                "
+                [src]="
+                  commonService.convertTOBAse64Format(viewData?.postedUser.profilePhoto)
+                "
+                onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+              />
+              <div class="ms-2">
+                <div >
+                  by
+                  <span class="author-name">{{
+                    viewData?.postedUser?.firstName
+                  }}</span>
+                  <span class="author-name">
+                    {{ viewData?.postedUser?.lastName }}</span
+                  >
+                </div>
+                <div class="ms-auto">
+                  <span class="c-text-secondary role fw-bold">
+                    {{ viewData?.postedUser?.role }}
+                  </span>
+                </div> 
+              </div> 
+            </div>
+           
+            <div class="short-description my-3 d-lg-none">"{{ viewData?.shortDescription }}"</div>
+    
+            <p class="mb-3 fw-bold">
+              {{ viewData?.blog?.description }}
+            </p>
+            <div class="contents" [innerHTML]="viewData?.blog?.blogContent"></div>
+          </div>
+          
+        </div>
+    
+     
+    
+       
+    
+        
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer p-2">
+    <button type="button" class="btn btn-sm reject" (click)="reject()">Reject</button>
+    <button type="button" class="btn btn-sm approve" (click)="approve()">Approve</button>
+  </div>
+</div> 

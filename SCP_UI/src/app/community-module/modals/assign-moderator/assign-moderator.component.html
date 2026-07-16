@@ -1,0 +1,64 @@
+<div class="container p-2 relative">
+  <div class="d-flex justify-content-end align-items-center">
+    <img
+      src="../../../assets/images/Close_round.png"
+      alt=""
+      class="cur-p modal-close-icon modal-close-mobile"
+      (click)="close()"
+    />
+  </div>
+
+  <form
+    class="p-2"
+    [formGroup]="assignForm"
+    (ngSubmit)="submitForm()"
+    autocomplete="off"
+    ngbAutofocus
+  >
+    <div class="card border-0">
+      <div class="card-body p-0">
+        <div class="row">
+          <div class="mb-3">
+            <label class="c-text-secondary" for="assignModerator"
+              >Assign Moderator</label
+            >
+            <select
+              formControlName="assignModerator"
+              class="form-select mt-1 form-control"
+              aria-label="Default select example"
+              id="assignModerator"
+              name="assignModerator"
+            >
+              <option value="" disabled>Select Moderator</option>
+              <option
+                *ngFor="let user of moderatorUserList"
+                [value]="user.userId"
+              >
+                {{ user.firstName }}&nbsp;{{ user.lastName }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                (fieldName['assignModerator'].touched || isSubmitted) &&
+                fieldName['assignModerator'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['assignModerator'].errors?.['required']"
+                class="text-danger d-inline-block mt-1 error"
+              >
+                Please select a Moderator
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-center mt-2 gap-3">
+      <button type="button" (click)="close()" class="c-pop-btn-outline btn-sm">
+        Cancel
+      </button>
+      <button type="submit" class="c-pop-btn-primary">Confirm</button>
+    </div>
+  </form>
+</div>

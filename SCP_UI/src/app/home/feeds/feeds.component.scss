@@ -1,0 +1,277 @@
+.feeds-list {
+  display: grid;
+  gap: 10px;
+}
+
+.ng-star-inserted {
+  margin-bottom: 10px;
+}
+
+.feed-card {
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25);
+
+  @media (min-width: 768px) {
+    padding: 12px 32px;
+  }
+
+  &__header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 13px;
+  }
+
+  &__author-img {
+    width: 53px;
+    height: 53px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #b4b4b4;
+    transition: all 0.3s ease;
+    outline: solid 3px transparent;
+    outline-offset: 3px;
+    cursor: pointer;
+
+    &:hover {
+      outline: solid 3px #5399b2;
+      box-shadow: 0px 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__header-text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+  }
+
+  &__author-details {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__author-name {
+    color: #414141;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 0;
+    line-height: 100%;
+    // flex-basis: 20%;
+
+    &:hover {
+      text-decoration: underline;
+      color: rgb(4, 107, 236);
+    }
+  }
+
+  &__posted-date {
+    font-size: 12px;
+    color: #b6b6b6;
+    line-height: 100%;
+  }
+
+  &__type-icon {
+    width: 20px;
+    height: auto;
+    margin-left: auto;
+  }
+
+  &__body-text {
+    font-size: 12px;
+    color: #404040;
+  }
+
+  &__desc {
+    font-size: 12px;
+  }
+
+  &__body {
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #b4b4b4;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25);
+
+    &--community,
+    &--blog {
+      height: 200px;
+
+      @media (min-width: 992px) {
+        height: 293px;
+      }
+    }
+  }
+
+  .video-wrapper {
+    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+
+    ::ng-deep {
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    }
+  }
+
+  &__thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__footer {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__like-icons,
+  &__share {
+    img {
+      width: 21px;
+      cursor: pointer;
+    }
+
+    .ng-star-inserted {
+      margin-bottom: 0;
+    }
+  }
+
+  &__share {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+  }
+
+  &__likes,
+  &__views,
+  &__comments {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 14px;
+    margin-top: 7px;
+
+    span {
+      line-height: 100%;
+    }
+  }
+
+  &__comments {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+      border-bottom: 1px solid #046bec;
+    }
+  }
+
+  &__like-count {
+    color: #000;
+  }
+
+  &__like-text {
+    color: #767676;
+  }
+
+  &__view-count {
+    color: #000;
+  }
+
+  &__view-text {
+    color: #767676;
+  }
+
+  &__comment-count {
+    color: #046bec;
+  }
+
+  &__comment-text {
+    color: #046bec;
+  }
+
+  &__community {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 100%;
+
+    @media (min-width: 992px) {
+      grid-template-columns: 30% 70%;
+    }
+  }
+
+  &__community-left {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 75%;
+    }
+  }
+
+  &__community-right {
+    background-color: #e6e5e5;
+    padding-left: 12px;
+    padding-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+
+    @media (min-width: 992px) {
+      gap: 12px;
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+  }
+
+  &__community-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+
+    @media (min-width: 992px) {
+      width: 75px;
+      height: 75px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__community-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #144557;
+  }
+
+  &__community-desc {
+    font-size: 10px;
+    color: #030000;
+  }
+}

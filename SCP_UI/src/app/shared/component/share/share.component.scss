@@ -1,0 +1,50 @@
+.close-icon {
+  height: 24px;
+}
+
+.title {
+  color: #101828;
+}
+
+.btn-border {
+  color: #ffffff;
+  background-color: #1cb5eb;
+}
+
+.form-control {
+  background: #f0f0f0 !important;
+}
+
+.social-img-container {
+  // background-color: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+  img {
+    height: 24px;
+    width: 24px;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }:hover{
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.close-icon {
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out;
+  width: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+button {
+  &:focus {
+    outline: none !important;
+  }
+}

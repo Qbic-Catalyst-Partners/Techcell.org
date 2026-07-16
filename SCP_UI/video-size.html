@@ -1,0 +1,92 @@
+<div class="category-card d-flex flex-column gap-2">
+  <ng-container *ngFor="let carouselData of hashTagListItems; let i = index">
+    <div>
+      <p class="header-title">{{ carouselData?.text }}</p>
+      <div class="d-flex align-items-center px-1-custom">
+        <div (click)="prevSlide(i)" class="d-none d-lg-flex arrow-left">
+          <svg
+            class="tag-slider-icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+
+        <div class="slide-container">
+          <div class="side-pad"></div>
+          <div class="d-flex flex-column flex-1">
+            <div class="py-1"></div>
+            <owl-carousel-o [options]="carouselOptions" #slides>
+              <ng-container
+                *ngFor="
+                          let obj of carouselData.data;
+                          let j = index;
+                          let last = last
+                        "
+              >
+                <ng-template carouselSlide [id]="obj.id">
+                  <div class="video position-relative">
+                    <!-- Add clickable overlay div that sits on top of the YouTube player -->
+                    <div
+                      class="video-overlay position-absolute w-100 h-100"
+                      style="z-index: 10; cursor: pointer"
+                      (click)="handleVideoClick(obj)"
+                    ></div>
+
+                    <youtube-player
+                      (Action)="playPauseVideo($event, i)"
+                      (ready)="onPlayerReady($event)"
+                      (stateChange)="previewVideo($event, obj, j)"
+                      [playerVars]="obj?.playerConfig"
+                      showBeforeIframeApiLoads
+                      [videoId]="getVideoId(obj?.video?.videoLink)"
+                      [height]="getPlayerDimensions(obj, j).height"
+                      [width]="getPlayerDimensions(obj, j).width"
+                      suggestedQuality="highres"
+                      #video
+                    >
+                    </youtube-player>
+                  </div>
+                </ng-template>
+              </ng-container>
+            </owl-carousel-o>
+            <div class="py-1"></div>
+          </div>
+          <div class="side-pad"></div>
+        </div>
+
+        <div
+          (click)="nextSlide(i, carouselData)"
+          class="d-none d-lg-flex arrow-right"
+        >
+          <svg
+            class="tag-slider-icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 18L15 12L9 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

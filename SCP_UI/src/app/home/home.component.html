@@ -1,0 +1,17 @@
+<div class="c-container-wrapper">
+  <div class="c-container">
+    <div class="profile-container d-none d-md-block">
+      <app-profile></app-profile>
+    </div>
+    <div class="feeds-container">
+      <app-feeds
+        [data]="this.postingList"
+        [api1]="api1called"
+        [api2]="api2called"
+      ></app-feeds>
+    </div>
+    <div class="ads-container d-none d-md-block">
+      <app-ads></app-ads>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+.application-count {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  align-items: baseline;
+
+  .span-click {
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border-radius: 2px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+} 

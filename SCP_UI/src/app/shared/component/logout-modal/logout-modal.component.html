@@ -1,0 +1,56 @@
+<div class="newErrorModal">
+  <div class="h-100 d-flex flex-column">
+    <div class="d-flex gap-3 align-items-start flex-column flex-md-row">
+      <img
+        class="modal-icon mx-auto mx-lg-0 mt-md-2"
+        src="../../../../assets/images/error-icon.png"
+        alt="whatsapp"
+      />
+      <div class="flex-1 text-center text-md-start mx-auto mx-lg-0">
+        <img
+          src="../../../assets/images/Close_round.png"
+          alt=""
+          class="cur-p modal-close-icon modal-close-mobile"
+          (click)="close()"
+        />
+        <div
+          class="mt-md-3 d-flex justify-content-center justify-content-md-between align-items-center"
+        >
+          <h5 class="modal-header-text">Logout</h5>
+        </div>
+        <div class="text-body">Are you sure you want to log out?</div>
+      </div>
+    </div>
+
+    <div class="text-center mt-auto d-flex justify-content-center gap-3">
+      <button
+        type="button"
+        (click)="close()"
+        class="btn c-pop-btn-outline fs-sm"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        (click)="logout()"
+        class="btn c-pop-btn-primary fs-sm"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal-body row">
+  <div
+    class="col-12 d-flex justify-content-center mt-lg-4 mt-md-4 mt-sm-4 mb-lg-4 mb-sm-4 mb-md-4"
+  >
+    <h4 class="mobile-font">Are you sure you want to log out?</h4>
+  </div>
+</div>
+<div
+  class="border-0 d-flex justify-content-around modal-footer mb-lg-4 mb-md-4 mb-sm-4"
+>
+  <button class="btn logout-btn border-1" (click)="logout()">OK</button>
+  <button class="btn logout-btn border-1" (click)="close()">Cancel</button>
+</div> -->

@@ -1,0 +1,236 @@
+<div>
+  <div class="add-feed">
+    <img
+      [src]="profilePhoto"
+      alt=""
+      onError="this.src='./../../../assets/images/community-avt.png'"
+      class="add-feed__img"
+    />
+    <div class="add-feed__input">
+      <textarea
+        class="form-control textarea"
+        placeholder="Post Feed or URL here"
+        id=""
+        rows="4"
+        height="56"
+        #inputComment
+        (input)="checkInputLength(inputComment.value)"
+      ></textarea>
+    </div>
+
+    <button
+      class="btn btn-primary add-feed__btn"
+      [ngClass]="{ disabled: !inputValid }"
+      (click)="addFeed(inputComment.value)"
+    >
+      <span class="d-none d-sm-block">Post</span>
+      <img src="../../../assets/images/lets-icons_send-fill.png" alt="" />
+    </button>
+  </div>
+
+  <ng-container *ngFor="let item of feedList; let i = index">
+    <ng-container [ngSwitch]="item?.feed?.postingResponseDTO?.postType">
+      <ng-container *ngSwitchCase="null">
+        <div class="mt-2 bg-white rounded-1">
+          <ng-container
+            *ngTemplateOutlet="header; context: { item }"
+          ></ng-container>
+          <div class="feed-body">
+            <p class="">{{ item?.feed?.description }}</p>
+          </div>
+          <ng-container
+            *ngTemplateOutlet="comment; context: { item }"
+          ></ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Community'">
+        <div class="row mt-2 bg-white rounded-1">
+          <ng-container
+            *ngTemplateOutlet="header; context: { item }"
+          ></ng-container>
+          <div class="col-12 col-md-5 col-lg-5">
+            <img
+              [src]="
+                commonService.convertTOBAse64Format(
+                  item?.feed?.postingResponseDTO?.community?.profilePhoto
+                )
+              "
+              alt=""
+              onError="this.src='../../../assets/images/AI.png'"
+              height="200"
+              width="100%"
+            />
+          </div>
+          <div class="col-12 col-md-7 col-lg-7">
+            <p class="my-3 comment-desc">{{ item?.feed?.description }}</p>
+          </div>
+          <ng-container
+            *ngTemplateOutlet="comment; context: { item }"
+          ></ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Videos'">
+        <div class="row mt-2 bg-white rounded-1">
+          <ng-container
+            *ngTemplateOutlet="header; context: { item }"
+          ></ng-container>
+          <div class="col-12 col-md-5 col-lg-5">
+            <youtube-player
+              [videoId]="
+                getVideoId(item?.feed?.postingResponseDTO?.video?.videoLink)
+              "
+              [playerVars]="playerConfig"
+              [height]="200"
+            >
+            </youtube-player>
+          </div>
+          <div class="col-12 col-md-7 col-lg-7">
+            <p class="my-3 comment-desc">{{ item?.feed?.description }}</p>
+          </div>
+          <ng-container
+            *ngTemplateOutlet="comment; context: { item }"
+          ></ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Blogs'">
+        <div class="row mt-2 bg-white rounded-1">
+          <ng-container
+            *ngTemplateOutlet="header; context: { item }"
+          ></ng-container>
+          <div class="col-12 col-md-5 col-lg-5">
+            <img
+              [src]="
+                commonService.convertTOBAse64Format(
+                  item?.feed?.postingResponseDTO?.blog?.thumbnail
+                )
+              "
+              alt=""
+              onError="this.src='../../../assets/images/AI.png'"
+              height="200"
+              width="100%"
+            />
+          </div>
+          <div class="col-12 col-md-7 col-lg-7">
+            <p class="my-3 comment-desc">{{ item?.feed?.description }}</p>
+          </div>
+          <ng-container
+            *ngTemplateOutlet="comment; context: { item }"
+          ></ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #header let-item="item">
+    <div class="feed-header">
+      <img
+        [src]="item.postedUser.profilePhoto"
+        onError="this.src='./../../../assets/images/community-avt.png'"
+        class="img-sub-avt author-img"
+        (click)="viewProfile(item)"
+        alt=""
+      />
+      <h5 class="m-0 img-title c-text-link" (click)="viewProfile(item)">
+        <span> {{ item?.postedUser?.firstName }} </span>
+        <span class="d-none d-md-inline-block">{{
+          item?.postedUser?.lastName
+        }}</span>
+      </h5>
+      <p class="img-title-time">
+        posted on {{ item.createdDate | date : "d MMM yyyy 'at' hh:mm a" }}
+      </p>
+    </div>
+  </ng-template>
+
+  <ng-template #comment let-item="item">
+    <div class="feed-footer">
+      <img
+        src="../../../assets/svg/like.svg"
+        alt=""
+        class="mb-3px cur-p"
+        *ngIf="!item.liked"
+        (click)="handleLike(item)"
+      />
+      <img
+        src="../../../assets/svg/like_fill.svg"
+        alt=""
+        class="mb-3px cur-p"
+        *ngIf="item.liked"
+        (click)="handleLike(item)"
+      />
+      <span class="align-bottom d-inline-block mx-1">
+        {{ item?.likes }} <span> Likes</span></span
+      >
+      <span class="mx-1"></span>
+      <a class="align-bottom d-inline-block mx-1" (click)="toggelComment(item)">
+        <span>{{ item?.comments }} Comments</span></a
+      >
+      <span class="mx-1"></span>
+      <img
+        class="align-bottom share-icon"
+        src="../../../assets/svg/mdi_share.svg"
+        alt=""
+        (click)="openShare(item)"
+      />
+    </div>
+    <div class="mt-2 mb-2" *ngIf="item.postingId == activeCommentId">
+      <!-- <div class="avatar-round" style="margin-right: 5px;">
+            <img height="40px" width="40px" 
+                style="border-radius: 50%"
+                [src]="item.postedUser.profilePhoto"
+                onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'">
+        </div>
+        <div class="search-box flex-fill d-none d-lg-block d-md-block">
+            <input type="text" placeholder="Add a Comment......" class="form-control" #inputComment (keydown)="keyDown($event,item,inputComment.value)">
+            <img src="../../../assets/svg/lets-icons_send-fill.svg" alt="search-status" class="search-status px-3 cur-p" (click)="addComment(item,inputComment.value)">
+        </div> -->
+      <app-comment [item]="currentItem"></app-comment>
+    </div>
+    <!-- <ng-container *ngIf="item.postingId == activeCommentId && item.commentsArr && item.commentsArr.length > 0">
+        <div class="d-flex mt-3" *ngFor="let comm of item.commentsArr">
+            <div class="avatar-round d-flex flex-column justify-content-around" style="margin-right: 5px;">
+                <img height="40px" width="40px"
+                    style="border-radius: 50%"
+                    [src]="comm.commentedUser.profilePhoto"
+                    onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'">
+            </div>
+            <div class="flex-fill comment" style="position: relative;">
+                <div class="d-flex justify-content-between">
+                    <p class="comment-header">{{comm.commentedUser.firstName}}&nbsp;{{comm.commentedUser.lastName}}<span class="sub-comment">({{comm.commentedUser.role}})</span></p>
+                    <div class="comment-header d-flex">
+                        <p style="color: #5B4F4F;">{{comm.commentTime || 'just now'}}</p>
+                        <span class="px-1 cur-p" style="color: #000000;" (click)="toggleTooltip(comm)" *ngIf="userInfo == item.postedUser.userId">...</span>
+                    </div>
+                </div>
+                <div class="comment-body mb-2">
+                    <ng-container *ngIf="editCommentId != comm.commentId">
+                        {{comm.content}}
+                    </ng-container>
+                    <div class="d-flex" *ngIf="editCommentId == comm.commentId">
+                        <textarea class="form-control" rows="1" [value]="comm.content" #userComment></textarea>
+                        <img src="../../../assets/svg/lets-icons_send-fill.svg" (click)="updateComment(comm,userComment.value,item)">
+                    </div>
+                </div>
+                <div class="comment-tooltip" *ngIf="comm.commentId == activeTooltipId">
+                    <div class="d-flex mt-1 cur-p" (click)="editComment(comm)">
+                        <img src="../../../assets/svg/edit.svg">
+                        <p class="sub-comment mx-2" style="color: #000000;">Edit</p>
+                    </div>
+                    <div class="d-flex mb-1 cur-p" (click)="deleteComment(item,comm)">
+                        <img src="../../../assets/svg/trash.svg">
+                        <p class="sub-comment mx-2" style="color: #000000;">Delete</p>
+                    </div>
+                    <div class="d-flex mb-1 cur-p" (click)="cancelToolTip()">
+                        <img src="../../../assets/images/Close_round.png" height="20px">
+                        <p class="sub-comment mx-2" style="color: #000000;">Cancel</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <div class="mt-3 mb-2" *ngIf="item.postingId == activeCommentId && item.commentsArr && item.commentsArr.length > 0">
+        <p style="color: #046BEC;" class="text-center sub-comment">View More</p>
+        <img src="../../../assets/svg/down.svg" class="m-auto pt-1 d-flex cur-p" (click)="viewMoreComment(item)">
+    </div> -->
+  </ng-template>
+</div>

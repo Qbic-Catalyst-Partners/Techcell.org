@@ -1,0 +1,45 @@
+.capsule-container {
+  // background-color: rgba(255, 255, 255, 1);
+  background-color: #f3f3f3;
+  border-radius: 300px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  // align-items: center;
+  padding: 4px;
+
+  &:not(:last-child) {
+    margin-bottom: 5px;
+  }
+
+  &:hover {
+    background-color: #dbe7f7;
+  }
+
+  img {
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #b4b4b4;
+  }
+
+  .title {
+    color: rgba(0, 0, 0, 1);
+    font-size: 12px;
+    
+    line-height: 100%;
+    margin-bottom: 4px;
+  }
+  .created-on {
+    color: rgba(129, 129, 129, 1);
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 100%;
+  }
+}
+
+.pill-wrapper {
+  display: grid;
+  gap: 5px;
+}

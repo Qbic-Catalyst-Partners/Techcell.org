@@ -1,0 +1,307 @@
+::ng-deep .modal-content {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .modal-dialog {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  min-height: calc(100% - 1rem);
+}
+
+.main-container {
+  min-height: 200px;
+  background-color: white;
+  position: relative;
+  margin: 50px auto;
+  display: flex;
+  border-radius: 8px;
+  flex-direction: column;
+  overflow: visible;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 320px;
+  font-size: 14px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 90%;
+    height: 10px;
+    background-color: #fff;
+   transform: translateX(-50%);
+  }
+}
+
+.half-behind-button {
+  position: absolute;
+  top: calc(100% + 30px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  bottom: -20px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px #0003;
+  padding: 20px 72px;
+  border-radius: 100px;
+  pointer-events: auto;
+  font-size: 20px;
+  font-weight: 700;
+  transition: all 0.3s ease-in-out;
+
+  @media (min-width: 992px) {
+    font-size: 24px;
+  }
+
+  &:hover {
+    background-color: #1691bc;
+    border-color: #1691bc;
+  }
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  z-index: -2;
+}
+
+// *******************
+
+.section-one {
+  background-color: #144557;
+  position: relative;
+}
+.section-one-img {
+  width: 220px;
+  height: 140px;
+  position: absolute;
+  bottom: 0px;
+  left: 1px;
+}
+.section-two-img {
+  width: 200px;
+  height: 130px;
+  position: absolute;
+  top: -31px;
+  right: -746px;
+}
+.section-two {
+  background-color: #ffffff;
+  position: relative;
+}
+.user-avt {
+  height: 60px;
+  width: 60px;
+  background-color: #ffffff;
+}
+.login-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 43.7px;
+  text-align: left;
+  color: #414141;
+  line-height: 100%;
+  margin-top: 0px !important;
+}
+.input-group {
+  position: relative;
+}
+
+.own-input {
+  height: 48px;
+  font-size: 14px;
+  border-top: 0px;
+  border-top-right-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
+  // box-shadow: 0px 4px 10px -4px rgba(0, 0, 0, 0.75);
+}
+
+.input-group-text {
+  // box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  background-color: #1cb5eb;
+  flex-basis: 48px;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  height: 48px;
+  border: 0px;
+  border-radius: 4px;
+}
+.input-group-logo {
+  height: 28px;
+  width: 28px;
+}
+.input-group-eye {
+  height: 22px;
+  width: 22px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  z-index: 1000;
+  cursor: pointer;
+}
+.card-container {
+  position: absolute;
+  top: 335px;
+  left: -235px;
+  width: calc(100% - -240px);
+}
+.card-box {
+  position: relative;
+}
+
+.card-box-img {
+  position: absolute;
+  top: -67px;
+  left: 40%;
+  z-index: 9;
+  border-radius: 50%;
+  background-color: #ffffff;
+  height: 110px;
+  width: 110px;
+  padding: 6%;
+  border: 1px solid #000;
+}
+
+// .login-box {
+//   // min-height: 318px;
+// }
+
+.ml-15 {
+  margin-left: 30px;
+}
+
+.border-left {
+  border-left: 2px solid #000;
+}
+
+.login-bottom {
+  position: absolute;
+  bottom: -25px;
+  height: 50px;
+  width: 248px;
+  border-radius: 40px;
+}
+
+.whats-new {
+  max-height: 560px;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 2%;
+  background-color: #dadada;
+  border-radius: 5px;
+}
+
+.video-section {
+  min-height: 100px;
+  font-size: 10px;
+  border-radius: 0px;
+}
+
+.whats-new::-webkit-scrollbar {
+  width: 3px;
+}
+
+.whats-new::-webkit-scrollbar-track {
+  border-radius: px;
+  background: #c9cacc;
+}
+
+.whats-new::-webkit-scrollbar-track:hover {
+  background: #78797a;
+}
+
+.whats-new::-webkit-scrollbar-thumb {
+  background: #3d5585;
+  border-radius: 50%;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb:hover {
+  background: #01143b;
+}
+
+.fs-10 {
+  font-size: 10px;
+}
+
+.disabledIcon {
+  pointer-events: none;
+  opacity: 0.4;
+}
+.carousel-section {
+  position: absolute;
+  top: -335px;
+  left: 235px;
+  height: 106px;
+  width: 1614px;
+}
+.whats-inside {
+  position: absolute;
+  right: 13px;
+  top: -68px;
+}
+.video-img {
+  height: 130px;
+  width: 195px;
+}
+.inside {
+  font-size: 28px;
+  font-weight: 400;
+  color: #144557;
+}
+.text-eclipse {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 95%;
+}
+.inside-title {
+  font-size: 15px;
+  font-weight: 500 !important;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #000000;
+}
+.inside-desc {
+  font-size: 13px;
+  font-weight: 500 !important;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #625858;
+}
+// .carouselItem{
+//   width: 246px;
+//   height: 100px;
+// }
+
+// input[type="text"],
+// input[type="password"] {
+//   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75) !important;
+// }
+
+.do-not-acc {
+  font-weight: 400;
+  line-height: 20.7px;
+  text-align: left;
+  color: #303030;
+}
+
+.modal-title-header {
+  padding: 4px 16px !important;
+}
+
+::ng-deep.mat-mdc-dialog-container .mdc-dialog__surface {
+  overflow: hidden !important;
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}

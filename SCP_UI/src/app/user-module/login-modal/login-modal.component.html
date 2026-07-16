@@ -1,0 +1,147 @@
+<div class="main-container p-3">
+  <div class="d-flex justify-content-between mb-3">
+    <div class="login-title">Login</div>
+
+    <div>
+      <img
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="cur-p modal-close-icon"
+        (click)="close()"
+      />
+    </div>
+  </div>
+
+  <div class="col-12 col-md-12 col-lg-12 card-box">
+    <form [formGroup]="loginForm" (ngSubmit)="submitForm()" ngbAutofocus>
+      <div class="login-box" mat-dialog-content>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+              <div class="input-group flex-nowrap">
+                <span class="input-group-text" id="addon-wrapping">
+                  <img
+                    src="assets/images/profile-circle.png"
+                    class="input-group-logo"
+                    alt=""
+                  />
+                </span>
+                <input
+                  type="text"
+                  class="form-control own-input"
+                  placeholder="Username"
+                  aria-label="Username"
+                  aria-describedby="addon-wrapping"
+                  placeholder="Enter your Email id"
+                  formControlName="emailId"
+                />
+              </div>
+              <div
+                *ngIf="
+                  (fieldName['emailId'].touched || isSubmitted) &&
+                  fieldName['emailId'].errors
+                "
+              >
+                <div
+                  *ngIf="fieldName['emailId'].errors?.['required']"
+                  class="text-danger d-inline-block mt-1"
+                >
+                  Please enter email
+                </div>
+                <div
+                  *ngIf="fieldName['emailId'].errors?.['pattern']"
+                  class="text-danger d-inline-block mt-1"
+                >
+                  Email is not Valid
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-12 col-md-12 col-lg-12 mb-1 mb-lg-4 mb-md-4 mb-sm-4 mt-2"
+            >
+              <a
+                class="float-end text-primary c-btn-link"
+                (click)="forgetPassword()"
+                [class.disabledIcon]="!isEmail"
+                >Forgot Password?</a
+              >
+              <!-- <a class="float-end text-primary"(click)="resetPassword()">Reset Password?</a> -->
+            </div>
+            <div class="col-12 col-md-12 col-lg-12 mt-3 mt-lg-0">
+              <div class="input-group flex-nowrap">
+                <span class="input-group-text" id="addon-wrapping">
+                  <img
+                    src="./../../../assets/images/key.png"
+                    class="input-group-logo"
+                    alt=""
+                  />
+                </span>
+                <input
+                  [type]="isPwd ? 'text' : 'password'"
+                  class="form-control own-input"
+                  placeholder="Username"
+                  aria-label="Username"
+                  aria-describedby="addon-wrapping"
+                  placeholder="Minimum 8 Characters"
+                  formControlName="password"
+                />
+                <div>
+                  <img
+                    *ngIf="!isPwd"
+                    src="./../../../assets/svg/HidePassword.svg"
+                    class="input-group-eye"
+                    alt=""
+                    (click)="togglePwd()"
+                  />
+                  <img
+                    *ngIf="isPwd"
+                    src="./../../../assets/svg/PasswordVisible.svg"
+                    class="input-group-eye"
+                    alt=""
+                    (click)="togglePwd()"
+                  />
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  !fieldName.password.valid &&
+                  (fieldName.password.dirty ||
+                    fieldName.password.touched ||
+                    isSubmitted)
+                "
+              >
+                <span
+                  class="text-danger d-inline-block mt-1"
+                  [hidden]="!fieldName.password.errors?.['required']"
+                >
+                  Password is required
+                </span>
+              </div>
+            </div>
+            <div
+              class="col-12 col-md-12 col-lg-12 mt-2 d-flex justify-content-end"
+            >
+              <a
+                class="float-end text-primary c-btn-link"
+                (click)="loginWithOtp()"
+                [class.disabledIcon]="!isEmail"
+                >Login with OTP</a
+              >
+            </div>
+
+            <p class="do-not-acc text-center mt-3">
+              Don't have an account?
+              <a class="text-primary c-btn-link" (click)="navigateTo()"
+                >Pre-Register</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary half-behind-button" type="submit">
+        login
+      </button>
+    </form>
+  </div>
+</div>

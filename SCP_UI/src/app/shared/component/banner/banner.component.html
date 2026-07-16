@@ -1,0 +1,91 @@
+<header class="header" id="header">
+  <nav class="navbar container-fluid px-3">
+    <a class="brand" (click)="navigateToHome()">
+      <img src="../../../assets/images/techcell-logo-beta-5.png" alt="" />
+    </a>
+    <div class="search d-none d-lg-block d-md-block">
+      <form class="search-form">
+        <!-- <input type="text" name="search" class="search-input" placeholder="Search" autofocus>
+        <button type="submit" class="search-submit" disabled>
+          <i class="bx bx-search"></i>
+          <img src="../../../assets/svg/search-status.svg" alt="search-status" class="search-icon" />
+        </button> -->
+      </form>
+    </div>
+    <div class="menu" id="menu">
+      <ul class="menu-inner">
+        <li
+          *ngFor="let item of filteredRoutingList"
+          class="menu-item"
+          [routerLink]="item.url"
+          title="{{ item.routingName }}"
+          (click)="closeMenu()"
+          [class.active-menu]="activeMenu == item.url"
+         
+        >
+          <div class="d-flex flex-column align-items-center menu-icon-wrapper">
+            <span class="notification-count" *ngIf="item.routingName === 'Notifications' && notificationCount>0">{{notificationCount}}</span>
+            <img
+              class="menu-icon"
+              
+              src="../../../assets/svg/{{ item.icon }}.svg"
+              [alt]="item.routingName"
+            />
+            <a class="menu-link">{{ item.routingName }}</a>
+          </div>
+          <div class="active-border"></div>
+        </li>
+        <li class="">
+          <div class="img-avatar">
+            <!-- <div class="dropdown-center" (mousehover)="hovered = true" (mouseout)="hovered = false"> -->
+            <div
+              class="dropdown-center"
+              (mousehover)="hovered = true"
+              (mouseout)="hovered = false"
+            >
+              <img
+                class="dropdown-toggle rounded-circle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                [src]="profilePhoto"
+                onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+                alt="Profile Image"
+              />
+              <div
+                class="dropdown-menu text-center logout-dropdown"
+                [ngClass]="{ show: hovered }"
+              >
+                <li class="">
+                  <button
+                    class="logout-button"
+                    (click)="closeMenu()"
+                    [routerLink]="['user-profile/my-account']"
+                  >
+                    My Profile
+                  </button>
+                </li>
+                <li (click)="openLogoutModal()">
+                  <button class="logout-button">
+                    <span class="icon"
+                      ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 21L5 21C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19L3 5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3L9 3" stroke="#7E7E7F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 17L21 12L16 7" stroke="#7E7E7F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 12L9 12" stroke="#7E7E7F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        </span>
+                    Logout
+                  </button>
+                </li>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="burger" id="burger" (click)="toggleMenu()">
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+    </div>
+  </nav>
+</header>

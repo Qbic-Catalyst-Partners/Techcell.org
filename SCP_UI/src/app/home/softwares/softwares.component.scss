@@ -1,0 +1,250 @@
+.container-fluid {
+  width: calc(100% - 40px);
+}
+
+.search-box {
+  position: relative;
+  .search-status {
+    position: absolute;
+    left: 200px;
+    top: 5px;
+  }
+
+  input {
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(150, 147, 147, 1);
+    border-radius: 30px;
+    width: 234px;
+    height: 33px;
+    padding: 10px;
+    &::placeholder {
+      color: rgba(153, 153, 153, 1);
+      font-size: 19px;
+      font-weight: 500;
+    }
+  }
+}
+
+.header {
+  background-color: rgb(20, 69, 87);
+  color: rgb(255, 255, 255);
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  font-size: 36px;
+  margin-top: 2rem;
+}
+
+.gray-scale {
+  filter: contrast(0.5);
+}
+
+.active-scale {
+  filter: invert(1);
+}
+.software-search {
+  width: 94%;
+  top: 73px;
+  @media (max-width: 575.98px) {
+    width: 100%;
+  }
+}
+
+.btn-add {
+  font-size: 14px;
+  padding: 0 !important;
+}
+
+.custom-modal-bg {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+}
+
+.custom-modal-bg .modal-content {
+  background-color: #fff;
+  max-width: 480px;
+}
+
+//////////////////////////////////////////////////////
+// Secondary navbar specific code
+.secondary-header-wrapper {
+  position: fixed;
+  top: 80px;
+  display: flex;
+  justify-content: center;
+  padding-left: 12px;
+  padding-right: 12px;
+  width: 100%;
+  z-index: 10;
+
+  @media (min-width: 992px) {
+    top: 72px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.secondary-header {
+  width: 100%;
+  max-width: 1480px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.search-box {
+  position: relative;
+  .search-status {
+    position: absolute;
+    left: 200px;
+    top: 5px;
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  input {
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(150, 147, 147, 1);
+    border-radius: 30px;
+    width: 234px;
+    height: 33px;
+    padding: 10px;
+    &::placeholder {
+      color: rgba(153, 153, 153, 1);
+      font-size: 19px;
+      font-weight: 500;
+    }
+  }
+}
+
+.c-shadow {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.search-bar,
+.search-bar::placeholder {
+  font-size: 14px !important;
+  line-height: 100%;
+}
+
+.tag-slider-icon {
+  color: #a1a1a1; /* Default stroke color */
+  transition: color 0.3s ease;
+}
+
+.arrow-left,
+.arrow-right {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: rgb(28, 181, 235);
+
+    .tag-slider-icon {
+      color: #fff;
+    }
+  }
+}
+
+.carousel-container {
+  li {
+    color: #c0c0c0;
+    border: solid 1px #ebebeb;
+    background-color: transparent;
+
+    &:hover {
+      color: #fff;
+      border: solid 1px #1cb5eb;
+      transform: scale(1) !important;
+      background-color: #1cb5eb;
+    }
+
+    &.activeTag {
+      border: solid 1px #1cb5eb;
+      color: #fff !important;
+      background-color: #1cb5eb !important;
+    }
+
+    span {
+     
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+.btn-add {
+  font-size: 14px;
+  padding: 0 !important;
+}
+
+.scale-down-container {
+  transform: scale(0.95);
+  transform-origin: top center;
+}
+
+.negative-margin {
+  margin-bottom: -10vw;
+}
+
+.content-view {
+  padding: 8px 0;
+
+  div {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-bottom: 1px;
+  }
+}
+
+.software-content {
+  position: relative;
+  margin-top: 136px;
+  margin-left: auto;
+  margin-right: auto;
+
+  background-color: #fff;
+  overflow: hidden;
+
+  @media (min-width: 600px) {
+    border-radius: 6px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(100vw - 112px);
+  }
+  &__inner {
+    background-color: #fff;
+    padding-bottom: 8px;
+  }
+}

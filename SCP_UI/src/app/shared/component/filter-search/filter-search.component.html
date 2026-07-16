@@ -1,0 +1,124 @@
+<div class="card px-3 pt-1 pb-3 bg-trans">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <div class="title">Advanced Search</div>
+    <img
+      src="../../../assets/images/Close_round.png"
+      alt=""
+      class="cur-p modal-close"
+      (click)="close()"
+    />
+  </div>
+  <div class="container-fluid" ngbAutofocus>
+    <ng-container *ngIf="filterSetting && filterSetting.length > 0">
+      <div *ngFor="let item of filterSetting">
+        <ng-container [ngSwitch]="item?.fieldType">
+          <ng-container *ngSwitchCase="'input'">
+            <div class="row mb-2">
+              <div class="col-6 d-flex">
+                <div class="filter-text" style="flex: 2">
+                  {{ item?.displayName }}
+                </div>
+                <div class="" style="flex: 1">
+                  <div class="">
+                    <select (change)="onChange($event, item)">
+                      <option>Select</option>
+                      <option
+                        *ngFor="let list of this.dataList; let i = index"
+                        value="{{ list.code }}"
+                        [selected]="getSelectedId(list, item)"
+                      >
+                        {{ list.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <input
+                  type="text"
+                  #inputVal
+                  (blur)="patchFilter(item, inputVal.value)"
+                  [value]="item?.value"
+                />
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'date'">
+            <div class="row mb-2">
+              <div class="col-6 d-flex">
+                <div class="filter-text" style="flex: 2">
+                  {{ item?.displayName }}
+                </div>
+                <div class="" style="flex: 1">
+                  <div class="">
+                    <select (change)="onChange($event, item)">
+                      <option>Select</option>
+                      <option
+                        *ngFor="let list of this.dataList; let i = index"
+                        value="{{ list.code }}"
+                        [selected]="getSelectedId(list, item)"
+                      >
+                        {{ list.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="row">
+                  <div class="mat-datepicker col-6">
+                    <input
+                      class="form-control"
+                      [matDatepicker]="from"
+                      placeholder="from"
+                      [value]="item?.value?.from"
+                      id="from"
+                      (keydown)="this.commonService.tabOnly($event)"
+                      (dateChange)="patchFilterDate($event, 'from', item)"
+                    />
+                    <mat-datepicker #from></mat-datepicker>
+                    <img
+                      class="calendar-icon"
+                      (click)="from.open()"
+                      src="../../../../../assets/lucide-icons/calender.svg"
+                      alt="calendar"
+                    />
+                  </div>
+                  <div class="mat-datepicker col-6">
+                    <input
+                      class="form-control"
+                      [matDatepicker]="to"
+                      placeholder="to"
+                      [value]="item?.value?.to"
+                      id="to"
+                      (keydown)="this.commonService.tabOnly($event)"
+                      (dateChange)="patchFilterDate($event, 'to', item)"
+                    />
+                    <mat-datepicker #to></mat-datepicker>
+                    <img
+                      class="calendar-icon"
+                      (click)="to.open()"
+                      src="../../../../../assets/lucide-icons/calender.svg"
+                      alt="calendar"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <div class="mt-2 d-flex justify-content-end">
+      <button
+        class="btn btn-primary filter-btn"
+        (click)="search()"
+        type="button"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</div>

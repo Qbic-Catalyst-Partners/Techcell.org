@@ -1,0 +1,367 @@
+<div class="d-flex mt-2 align-items-center gap-2 comment-input-container">
+  <div class="avatar-round comment-author" style="margin-right: 5px">
+    <img
+      [src]="commonService.convertTOBAse64Format(currentUserProfile)"
+      onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+    />
+  </div>
+  <div class="search-box flex-fill">
+    <input
+      type="text"
+      placeholder="Add a Comment..."
+      class="form-control"
+      #inputComment
+      (keydown)="keyDown($event, item, inputComment.value)"
+      (input)="onInputChange($event)"
+    />
+    <img
+      src="../../../assets/svg/lets-icons_send-fill.svg"
+      alt="search-status"
+      class="search-status px-3 cur-p"
+      (click)="addComment(item, inputComment.value)"
+    />
+   
+  </div>
+  
+</div>
+<ul class="suggested-emails" *ngIf="nameSuggestions.length" style="z-index:1050">
+  <li class="list-group-item suggest-email cur-p" *ngFor="let sug of nameSuggestions" (click)="selectNameSuggestion(sug, inputComment)">
+    {{ sug.fullName }}
+  </li>
+</ul>
+<ng-container *ngIf="item?.commentsArr && item?.commentsArr.length > 0">
+  <div class="d-flex flex-column mt-1" *ngFor="let comm of item?.commentsArr">
+    <div class="d-flex flex-fill gap-2 position-relative align-items-center">
+      <div
+        class="avatar-round d-flex flex-column justify-content-around comment-author"
+        style="margin-right: 5px"
+        (click)="viewProfile(comm?.commentedUser?.userId)"
+      >
+        <img
+          [src]="comm?.commentedUser?.profilePhoto"
+          onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+        />
+      </div>
+      <div class="comment flex-fill">
+        <div class="d-flex justify-content-between mb-1">
+          <p class="comment-header">
+            <span
+              class="c-btn-link hover-link-blue c-text-primary"
+              (click)="viewProfile(comm?.commentedUser?.userId)"
+            >
+              <span>{{ comm?.commentedUser?.firstName }}</span>
+              <span class="d-none d-xl-inline"
+                >&nbsp;{{ comm?.commentedUser?.lastName }}</span
+              > </span
+            ><span class="sub-comment c-text-secondary ms-1 ms-md-2"
+              >({{ comm?.commentedUser?.role }})</span
+            >
+          </p>
+          <div class="comment-header d-flex align-items-center">
+            <p class="pe-2 comment-post-time c-text-secondary">
+              {{ comm?.commentTime || "just now" }}
+            </p>
+            <div
+              (click)="toggleTooltip(comm)"
+              *ngIf="userInfo == comm?.commentedUser?.userId"
+              class="cur-p comment-actions-icon"
+            >
+              <svg
+                class="icon"
+                width="10"
+                height="3"
+                viewBox="0 0 10 3"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.77783 1.91421C7.77783 1.77763 7.80147 1.64893 7.84875 1.52811C7.90128 1.40729 7.96957 1.30223 8.05362 1.21293C8.14292 1.12363 8.24798 1.05271 8.3688 1.00018C8.48962 0.947652 8.61832 0.921387 8.7549 0.921387C8.89148 0.921387 9.02018 0.947652 9.141 1.00018C9.26182 1.05271 9.36688 1.12363 9.45618 1.21293C9.54548 1.30223 9.6164 1.40729 9.66893 1.52811C9.72146 1.64893 9.74772 1.77763 9.74772 1.91421C9.74772 2.05604 9.72146 2.18737 9.66893 2.30819C9.6164 2.42376 9.54548 2.52619 9.45618 2.61549C9.36688 2.70479 9.26182 2.77308 9.141 2.82036C9.02018 2.87289 8.89148 2.89915 8.7549 2.89915C8.61832 2.89915 8.48962 2.87289 8.3688 2.82036C8.24798 2.77308 8.14292 2.70479 8.05362 2.61549C7.96957 2.52619 7.90128 2.42376 7.84875 2.30819C7.80147 2.18737 7.77783 2.05604 7.77783 1.91421Z"
+                  fill="#a3a3a3"
+                />
+                <path
+                  d="M4.05347 1.91421C4.05347 1.77763 4.07711 1.64893 4.12438 1.52811C4.17691 1.40729 4.2452 1.30223 4.32925 1.21293C4.41855 1.12363 4.52361 1.05271 4.64443 1.00018C4.76525 0.947652 4.89395 0.921387 5.03053 0.921387C5.16711 0.921387 5.29581 0.947652 5.41663 1.00018C5.53745 1.05271 5.64251 1.12363 5.73181 1.21293C5.82111 1.30223 5.89203 1.40729 5.94456 1.52811C5.99709 1.64893 6.02336 1.77763 6.02336 1.91421C6.02336 2.05604 5.99709 2.18737 5.94456 2.30819C5.89203 2.42376 5.82111 2.52619 5.73181 2.61549C5.64251 2.70479 5.53745 2.77308 5.41663 2.82036C5.29581 2.87289 5.16711 2.89915 5.03053 2.89915C4.89395 2.89915 4.76525 2.87289 4.64443 2.82036C4.52361 2.77308 4.41855 2.70479 4.32925 2.61549C4.2452 2.52619 4.17691 2.42376 4.12438 2.30819C4.07711 2.18737 4.05347 2.05604 4.05347 1.91421Z"
+                  fill="#a3a3a3"
+                />
+                <path
+                  d="M0.329102 1.91421C0.329102 1.77763 0.35274 1.64893 0.400017 1.52811C0.452548 1.40729 0.520837 1.30223 0.604886 1.21293C0.694188 1.12363 0.799248 1.05271 0.920068 1.00018C1.04089 0.947652 1.16959 0.921387 1.30617 0.921387C1.44275 0.921387 1.57145 0.947652 1.69227 1.00018C1.81308 1.05271 1.91815 1.12363 2.00745 1.21293C2.09675 1.30223 2.16766 1.40729 2.2202 1.52811C2.27273 1.64893 2.29899 1.77763 2.29899 1.91421C2.29899 2.05604 2.27273 2.18737 2.2202 2.30819C2.16766 2.42376 2.09675 2.52619 2.00745 2.61549C1.91815 2.70479 1.81308 2.77308 1.69227 2.82036C1.57145 2.87289 1.44275 2.89915 1.30617 2.89915C1.16959 2.89915 1.04089 2.87289 0.920068 2.82036C0.799248 2.77308 0.694188 2.70479 0.604886 2.61549C0.520837 2.52619 0.452548 2.42376 0.400017 2.30819C0.35274 2.18737 0.329102 2.05604 0.329102 1.91421Z"
+                  fill="#a3a3a3"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="comment-body c-text-primary">
+          <ng-container *ngIf="editCommentId != comm?.commentId">
+            {{ comm?.content }}
+          </ng-container>
+          <div class="d-flex" *ngIf="editCommentId == comm?.commentId">
+            <textarea
+              class="form-control"
+              rows="1"
+              [value]="comm?.content"
+              #userComment
+              (keydown)="editDown($event, comm, userComment.value, item)"
+            ></textarea>
+            <img
+              src="../../../assets/svg/lets-icons_send-fill.svg"
+              (click)="updateComment(comm, userComment.value, item)"
+            />
+          </div>
+        </div>
+        <ng-container
+          *ngTemplateOutlet="commentTooltip; context: { item, child: comm }"
+        ></ng-container>
+      </div>
+    </div>
+    <div class="replay-text mt-1">
+      <span (click)="replay(comm)" class="cur-p c-btn-link c-text-link-blue"
+        >Reply</span
+      >
+    </div>
+    <ng-container
+      *ngIf="comm?.replayCommentArr && comm?.replayCommentArr.length > 0"
+    >
+      <div
+        class="d-flex flex-fill gap-2 position-relative margin-left mb-2 align-items-center"
+        *ngFor="let replayComm of comm?.replayCommentArr"
+      >
+        <div
+          (click)="viewProfile(replayComm?.commentedUser?.userId)"
+          class="avatar-round d-flex flex-column justify-content-around ms-1 comment-author"
+        >
+          <img
+            class="comment-author"
+            [src]="replayComm?.commentedUser?.profilePhoto"
+            onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+          />
+        </div>
+        <div class="comment flex-fill ms-lg-3 ms-md-3 ms-sm-3">
+          <div class="d-flex justify-content-between mb-1">
+            <p class="comment-header">
+              <span
+                class="c-btn-link hover-link-blue c-text-primary"
+                (click)="viewProfile(replayComm?.commentedUser?.userId)"
+              >
+                <span>{{ replayComm?.commentedUser?.firstName }}</span>
+                <span class="d-none d-xl-inline"
+                  >&nbsp;{{ replayComm?.commentedUser?.lastName }}</span
+                > </span
+              ><span
+                class="sub-comment c-text-secondary ms-1 ms-md-2 c-text-secondary"
+                >({{ comm?.commentedUser?.role }})</span
+              >
+            </p>
+            <div class="comment-header d-flex">
+              <p class="pe-2 c-text-secondary comment-post-time">
+                {{ replayComm?.commentTime || "just now" }}
+              </p>
+              <div
+                (click)="toggleTooltip(replayComm)"
+                *ngIf="userInfo == replayComm?.commentedUser?.userId"
+                class="cur-p comment-actions-icon"
+              >
+                <svg
+                  class="icon"
+                  width="10"
+                  height="3"
+                  viewBox="0 0 10 3"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.77783 1.91421C7.77783 1.77763 7.80147 1.64893 7.84875 1.52811C7.90128 1.40729 7.96957 1.30223 8.05362 1.21293C8.14292 1.12363 8.24798 1.05271 8.3688 1.00018C8.48962 0.947652 8.61832 0.921387 8.7549 0.921387C8.89148 0.921387 9.02018 0.947652 9.141 1.00018C9.26182 1.05271 9.36688 1.12363 9.45618 1.21293C9.54548 1.30223 9.6164 1.40729 9.66893 1.52811C9.72146 1.64893 9.74772 1.77763 9.74772 1.91421C9.74772 2.05604 9.72146 2.18737 9.66893 2.30819C9.6164 2.42376 9.54548 2.52619 9.45618 2.61549C9.36688 2.70479 9.26182 2.77308 9.141 2.82036C9.02018 2.87289 8.89148 2.89915 8.7549 2.89915C8.61832 2.89915 8.48962 2.87289 8.3688 2.82036C8.24798 2.77308 8.14292 2.70479 8.05362 2.61549C7.96957 2.52619 7.90128 2.42376 7.84875 2.30819C7.80147 2.18737 7.77783 2.05604 7.77783 1.91421Z"
+                    fill="#a3a3a3"
+                  />
+                  <path
+                    d="M4.05347 1.91421C4.05347 1.77763 4.07711 1.64893 4.12438 1.52811C4.17691 1.40729 4.2452 1.30223 4.32925 1.21293C4.41855 1.12363 4.52361 1.05271 4.64443 1.00018C4.76525 0.947652 4.89395 0.921387 5.03053 0.921387C5.16711 0.921387 5.29581 0.947652 5.41663 1.00018C5.53745 1.05271 5.64251 1.12363 5.73181 1.21293C5.82111 1.30223 5.89203 1.40729 5.94456 1.52811C5.99709 1.64893 6.02336 1.77763 6.02336 1.91421C6.02336 2.05604 5.99709 2.18737 5.94456 2.30819C5.89203 2.42376 5.82111 2.52619 5.73181 2.61549C5.64251 2.70479 5.53745 2.77308 5.41663 2.82036C5.29581 2.87289 5.16711 2.89915 5.03053 2.89915C4.89395 2.89915 4.76525 2.87289 4.64443 2.82036C4.52361 2.77308 4.41855 2.70479 4.32925 2.61549C4.2452 2.52619 4.17691 2.42376 4.12438 2.30819C4.07711 2.18737 4.05347 2.05604 4.05347 1.91421Z"
+                    fill="#a3a3a3"
+                  />
+                  <path
+                    d="M0.329102 1.91421C0.329102 1.77763 0.35274 1.64893 0.400017 1.52811C0.452548 1.40729 0.520837 1.30223 0.604886 1.21293C0.694188 1.12363 0.799248 1.05271 0.920068 1.00018C1.04089 0.947652 1.16959 0.921387 1.30617 0.921387C1.44275 0.921387 1.57145 0.947652 1.69227 1.00018C1.81308 1.05271 1.91815 1.12363 2.00745 1.21293C2.09675 1.30223 2.16766 1.40729 2.2202 1.52811C2.27273 1.64893 2.29899 1.77763 2.29899 1.91421C2.29899 2.05604 2.27273 2.18737 2.2202 2.30819C2.16766 2.42376 2.09675 2.52619 2.00745 2.61549C1.91815 2.70479 1.81308 2.77308 1.69227 2.82036C1.57145 2.87289 1.44275 2.89915 1.30617 2.89915C1.16959 2.89915 1.04089 2.87289 0.920068 2.82036C0.799248 2.77308 0.694188 2.70479 0.604886 2.61549C0.520837 2.52619 0.452548 2.42376 0.400017 2.30819C0.35274 2.18737 0.329102 2.05604 0.329102 1.91421Z"
+                    fill="#a3a3a3"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="comment-body">
+            <ng-container *ngIf="editCommentId != replayComm?.commentId">
+              {{ replayComm?.content }}
+            </ng-container>
+            <div class="d-flex" *ngIf="editCommentId == replayComm?.commentId">
+              <textarea
+                class="form-control"
+                rows="1"
+                [value]="replayComm?.content"
+                #userComment
+                (keydown)="
+                  editDown($event, replayComm, userComment.value, item)
+                "
+              ></textarea>
+              <img
+                src="../../../assets/svg/lets-icons_send-fill.svg"
+                (click)="updateComment(replayComm, userComment.value, item)"
+              />
+            </div>
+          </div>
+          <ng-container
+            *ngTemplateOutlet="
+              commentTooltip;
+              context: { item, child: replayComm }
+            "
+          ></ng-container>
+        </div>
+      </div>
+    </ng-container>
+    <div class="d-flex margin-left" *ngIf="comm?.commentId == activeReplayId">
+      <div class="avatar-round ms-1 comment-author">
+        <img
+          [src]="commonService.convertTOBAse64Format(currentUserProfile)"
+          onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+        />
+      </div>
+      <div class="search-box flex-fill ms-1 ms-lg-4 ms-md-4 ms-sm-4">
+        <input
+          type="text"
+          placeholder="Add a Reply..."
+          class="form-control"
+          #replayComment
+          (keydown)="keyDown($event, item, replayComment.value, comm)"
+        />
+        <img
+          src="../../../assets/svg/lets-icons_send-fill.svg"
+          alt="search-status"
+          class="search-status px-3 cur-p"
+          (click)="addComment(item, replayComment.value, comm)"
+        />
+      </div>
+    </div>
+  </div>
+</ng-container>
+<div
+  class="mt-1"
+  *ngIf="item?.commentsArr && item?.commentsArr.length > 0"
+  (click)="viewMoreComment(item)"
+>
+  <p style="color: #046bec" class="text-center sub-comment cur-p">View More</p>
+  <img src="../../../assets/svg/down.svg" class="m-auto pt-1 d-flex cur-p" />
+</div>
+
+<ng-template #commentTooltip let-item="item" let-comm="child">
+  <div
+    class="comment-tooltip rounded-2"
+    *ngIf="comm?.commentId == activeTooltipId"
+  >
+    <div
+      class="d-flex align-items-center cur-p gap-1 action-wrapper"
+      (click)="editComment(comm)"
+    >
+      <svg
+        class="icon"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+
+      <p class="sub-comment fw-semibold">Edit</p>
+    </div>
+    <div
+      class="d-flex align-items-center cur-p gap-1 action-wrapper"
+      (click)="deleteComment(item, comm)"
+    >
+      <svg
+        class="icon"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 6H21"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M19 6V20C19 21 18 22 17 22H7C6 22 5 21 5 20V6"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M8 6V4C8 3 9 2 10 2H14C15 2 16 3 16 4V6"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M10 11V17"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M14 11V17"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+
+      <p class="sub-comment fw-semibold">Delete</p>
+    </div>
+    <div
+      class="d-flex align-items-center cur-p gap-1 action-wrapper"
+      (click)="cancelToolTip()"
+    >
+      <svg
+        class="icon"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18 6L6 18"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M6 6L18 18"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+
+      <p class="sub-comment fw-semibold">Cancel</p>
+    </div>
+  </div>
+</ng-template>

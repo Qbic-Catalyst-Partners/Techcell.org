@@ -1,0 +1,343 @@
+<div class="container p-3">
+  <div class="row modal-h-ctrl">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <p class="fs-5 fw-semibold">Upload Software</p>
+      <img
+        src="../../../assets/images/Close_round.png"
+        alt=""
+        class="close-icon cur-p"
+        (click)="close()"
+      />
+    </div>
+    <div class="col-12">
+      <form
+        [formGroup]="addSoftwareForm"
+        (ngSubmit)="submitForm()"
+        autocomplete="off"
+        ngbAutofocus
+      >
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-12 mb-2">
+            <label for="softwareName">Software Name<span class="text-danger">*</span></label>
+            <input
+              formControlName="softwareName"
+              type="text"
+              class="form-control"
+              id="softwareName"
+              [maxlength]="maxChars"
+              placeholder="Enter Software name"
+              required
+            />
+            <div class="remaining-character d-flex justify-content-end">
+              {{ fieldName["softwareName"].value?.length }}/{{ maxChars }}
+              Characters left
+            </div>
+            <div
+              *ngIf="
+                (fieldName['softwareName'].touched || isSubmitted) &&
+                fieldName['softwareName'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['softwareName'].errors?.['required']"
+                class="text-danger c-text-danger d-inline-block mt-1"
+              >
+                Please enter Software Name
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-6 mb-2">
+            <label for="version">Version<span class="text-danger">*</span></label>
+            <input
+              formControlName="version"
+              type="text"
+              class="form-control"
+              id="version"
+              placeholder="Version"
+              required
+            />
+            <div
+              *ngIf="
+                (fieldName['version'].touched || isSubmitted) &&
+                fieldName['version'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['version'].errors?.['required']"
+                class="text-danger c-text-danger d-inline-block mt-1"
+              >
+                Please enter Version
+              </div>
+              <div
+                *ngIf="fieldName['version'].errors?.['maxlength']"
+                class="text-danger c-text-danger d-inline-block mt-1"
+              >
+                Max Character can't be more then 50
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-6 mb-2">
+            <label for="osSupported">OS Supported<span class="text-danger">*</span></label>
+            <select
+              formControlName="osSupported"
+              class="form-control flex-1"
+              id="osSupported"
+              name="osSupported"
+            >
+              <option value="" selected>Select OS</option>
+              <option value="Windows">Windows</option>
+              <option value="MacOS">MacOS</option>
+              <option value="All">All</option>
+            </select>
+            <div
+              *ngIf="
+                (fieldName['osSupported'].touched || isSubmitted) &&
+                fieldName['osSupported'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['osSupported'].errors?.['required']"
+                class="text-danger c-text-danger d-inline-block mt-1"
+              >
+                Please select OS Supported
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-6 mb-2">
+            <label for="title">Licence Type<span class="text-danger">*</span></label>
+            <select
+              formControlName="licenceType"
+              class="form-control"
+              aria-label="Default select example"
+              id="licenceType"
+              name="licenceType"
+            >
+              <option value="" selected>Select Licence</option>
+              <option value="Licenced">Licenced</option>
+              <option value="Free and Open Source">Free and Open Source</option>
+            </select>
+            <div
+              *ngIf="
+                (fieldName['licenceType'].touched || isSubmitted) &&
+                fieldName['licenceType'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['licenceType'].errors?.['required']"
+                class="text-danger c-text-danger d-inline-block mt-1"
+              >
+                Please enter Licence Type
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-6 mb-2">
+            <label for="releaseDate">Release Date<span class="text-danger">*</span></label>
+            <div class="row">
+              <div class="mat-datepicker">
+                <input
+                  class="form-control"
+                  [matDatepicker]="picker"
+                  [max]="commonService.todayDate"
+                  placeholder="DD-MM-YYYY"
+                  formControlName="releaseDate"
+                  id="releaseDate"
+                  (keydown)="$event.preventDefault()"
+                />
+                <mat-datepicker #picker></mat-datepicker>
+                <img
+                  class="calendar-icon"
+                  (click)="picker.open()"
+                  src="/assets/lucide-icons/calender.svg"
+                  alt="calendar"
+                />
+              </div>
+            </div>
+            <div
+              *ngIf="
+                (fieldName['releaseDate'].touched || isSubmitted) &&
+                fieldName['releaseDate'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['releaseDate'].errors?.['required']"
+                class="text-danger c-text-danger d-inline-block mt-1"
+              >
+                Please enter Release Date
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-6 mb-2">
+            <label for="PrimaryTag">Primary Tag<span class="text-danger">*</span></label>
+            <div class="tag-input">
+              <tag-input
+                formControlName="primaryTag"
+                [identifyBy]="'id'"
+                [displayBy]="'description'"
+                [onlyFromAutocomplete]="true"
+                (input)="getText($event)"
+                [onTextChangeDebounce]="1000"
+                [maxItems]="1"
+              >
+                <tag-input-dropdown
+                  [appendToBody]="true"
+                  [autocompleteItems]="tagItems"
+                  [identifyBy]="'id'"
+                  [displayBy]="'description'"
+                  [zIndex]="99999"
+                >
+                </tag-input-dropdown>
+              </tag-input>
+            </div>
+            <div
+              *ngIf="
+                (fieldName['primaryTag'].touched || isSubmitted) &&
+                fieldName['primaryTag'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['primaryTag'].errors?.['required']"
+                class="text-danger c-text-danger d-inline-block mt-1"
+              >
+                Please enter Primary Tag
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-6 mb-2">
+            <label for="title">Application URL<span class="text-danger">*</span></label>
+            <input
+              formControlName="applicationURL"
+              type="text"
+              class="form-control"
+              id="secondaryTag"
+              placeholder="Application URL"
+              required
+            />
+            <div
+              *ngIf="
+                (fieldName['applicationURL'].touched || isSubmitted) &&
+                fieldName['applicationURL'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['applicationURL'].errors?.['required']"
+                class="text-danger c-text-danger d-inline-block mt-1"
+              >
+                Please enter Application URL
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="col-12 col-md-12 col-lg-12 mb-3">
+            <label for="title">Application URL*</label>
+            <input
+              formControlName="applicationURL"
+              type="text"
+              class="form-control"
+              id="secondaryTag"
+              placeholder="Application URL"
+              required
+            />
+            <div
+              *ngIf="
+                (fieldName['applicationURL'].touched || isSubmitted) &&
+                fieldName['applicationURL'].errors
+              "
+            >
+              <div
+                *ngIf="fieldName['applicationURL'].errors?.['required']"
+                class="text-danger c-text-danger d-inline-block mt-1"
+              >
+                Please enter Application URL
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div
+          class="d-lg-flex align-items-center gap-2 col-12 col-md-12 col-lg-12 col-sm-6 mb-3 d-md-flex d-sm-flex"
+        >
+          <label class="mb-0" for="title">Display Image<span class="text-danger">*</span></label>
+          <div class="d-flex align-items-center btn-container gap-2 fileUplod-mobile-screen info-container">
+            <div class="upload-btn-wrapper">
+              <button class="upload-btn">Upload</button>
+              <input
+                type="file"
+                id="upload"
+                name="displayImageFile"
+                [accept]="imageType"
+                (change)="uploadDisplayImage($event)"
+                formControlName="displayImageFile"
+              />
+            </div>
+
+            <div class="tooltip-wrapper">
+              <div class="file-info">
+                <img
+                  class="info-icon-img"
+                  (mouseenter)="activeDisplayImageTooltip = true"
+                  (mouseleave)="activeDisplayImageTooltip = false"
+                  src="../../../../assets/svg/info.svg"
+                  alt="Info Icon"
+                />
+              </div>
+
+              <div class="file-tooltip" *ngIf="activeDisplayImageTooltip">
+                (.jpg, .png, .jpeg) Max size 1 mb
+              </div>
+            </div>
+
+            <div class="file-name mx-3" *ngIf="fieldName['displayImageFile'].valid">
+              {{ displayImageName }}
+            </div>
+          </div>
+          <div
+            *ngIf="
+              (fieldName['displayImageFile'].touched || isSubmitted) &&
+              fieldName['displayImageFile'].errors
+            "
+          >
+            <div
+              *ngIf="fieldName['displayImageFile'].errors?.['required']"
+              class="text-danger c-text-danger d-inline-block mt-1"
+            >
+              Please add Display Image File
+            </div>
+            <div
+              *ngIf="fieldName['displayImageFile'].errors?.['fileSize'] && !fieldName['displayImageFile'].errors?.['fileType']"
+              class="text-danger c-text-danger d-inline-block mt-1"
+            >
+              File size exceeds the limit (1 MB).
+            </div>
+            <div
+              *ngIf="fieldName['displayImageFile'].errors?.['fileType']"
+              class="text-danger c-text-danger d-inline-block mt-1"
+            >
+              Invalid File Type
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 d-flex justify-content-center mt-2 gap-3">
+          <div class="d-flex justify-content-center align-items-center gap-3">
+            <button
+              type="button"
+              (click)="close()"
+              class="btn c-pop-btn-outline"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn c-pop-btn-primary register-button">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

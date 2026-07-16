@@ -1,0 +1,119 @@
+@import "../../../styles/_variables.scss";
+@import "@angular/cdk/overlay-prebuilt.css";
+
+.main-section {
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 12px;
+}
+
+.w-40 {
+  width: 40% !important;
+}
+
+.main-container {
+  padding: 0px 27px;
+  font-size: 14px;
+}
+
+.login-box {
+  z-index: 1;
+  .card {
+    border-radius: 20px;
+    width: 100%;
+    padding: 2rem 1rem;
+    z-index: 1;
+    border: none;
+    box-shadow: 0px 4px 4px 0px #00000040 !important;
+    border-top: 0.2px solid #000000;
+  }
+  .verify-button {
+    width: 150px;
+    // position: absolute;
+    // left: 30%;
+    // bottom: -30px;
+    border-radius: 8px;
+    background-color: $button-primary;
+  }
+}
+.title-text {
+  color: #101828;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 28px;
+  text-align: center;
+}
+.sub-title-text {
+  color: #475467;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+}
+input:not([type="checkbox"]) {
+  background-color: $light-gray;
+  box-shadow: $common-box-shadow;
+  border: 1px solid $input-box-border;
+  padding: 15px 10px 15px 10px;
+  border-radius: 5px;
+  height: 44px;
+  &::placeholder {
+    font-size: 15px;
+  }
+}
+.resend {
+  width: 98px !important;
+  height: 28px !important;
+  border-radius: 31px !important;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0em;
+}
+
+.resend-text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.verify-button {
+  width: 20%;
+  height: 44px;
+  padding: 10px 18px 10px 18px;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.modal-header {
+  z-index: 1;
+  position: relative;
+}
+.link-btn {
+  text-decoration: underline;
+}
+
+
+.modal-close-icon-abs {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+label {
+  font-size: 14px;
+}
+
+.form-control {
+  font-size: 14px;
+
+  &::placeholder {
+    font-size: 14px;
+  }
+}
+

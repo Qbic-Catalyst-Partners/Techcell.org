@@ -1,0 +1,130 @@
+<div class="download-resume">
+  <button class="btn btn-primary" (click)="generatePDF()">
+    Download <img src="../../../../assets/svg/download-icon.svg" alt="download icon" height="30" width="30" class="active-scale">
+  </button>
+</div>
+<div class="container p-0" id="contentToConvert">
+      <div class="leftPanel">
+        <div class="img-avatar">
+          <div class="circle">
+                  <img [src]="commonService.convertTOBAse64Format(resumePhoto)" height="128" width="128" onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'" />
+          </div>
+      </div>
+        <div class="text-white details">
+          <div class="flex flex-col items-center mb-6">
+            <h6 class="text-lg font-bold left-header-font">CONTACT INFORMATION</h6>
+            <ng-container *ngIf="resumeData?.['Contact Info'] && resumeData?.['Contact Info'].length">
+              <p class="mt-2">{{resumeData?.['Contact Info'][0].mobileNumber}}</p>
+              <p class="mt-2">{{resumeData?.['Contact Info'][0].emailId}}</p>
+              <p class="mt-2">{{resumeData?.['Contact Info'][0].linkedIn}}</p>
+              <p class="mt-2">{{resumeData?.['Contact Info'][0].state | titlecase }}</p>
+            </ng-container>
+          </div>
+          <div class="mb-6 mt-4">
+            <h6 class="text-lg font-bold left-header-font">EDUCATION</h6>
+            <ng-container *ngIf="resumeData?.Edcuation && resumeData?.Edcuation.length">
+              <div class="divider" *ngFor="let edu of resumeData?.Edcuation">
+                <p class="left-header-font">{{edu.startDate | date:'yyyy'}} - {{edu.endDate | date:'yyyy'}}</p>
+                <p class="left-header-font">{{edu.schoolName | titlecase }}</p>
+                <p>{{edu?.degree | titlecase }}</p>
+                <p>{{edu?.fieldOfStudy | titlecase }}</p>
+                <p>GPA: {{edu?.grade}}</p>
+              </div>
+            </ng-container>
+          </div>
+          <div class="mb-6 mt-4 workExperience">
+            <h6 class="text-lg font-bold left-header-font">SKILLS</h6>
+            <ul class="space-y-2">
+              <ng-container *ngIf="resumeData?.skills && resumeData?.skills.length">
+                <li *ngFor="let skil of resumeData?.skills"> <span class="me-2">➤</span> <span>{{skil.text}}</span></li>
+              </ng-container>
+            </ul>
+          </div>
+          <div class="mb-6 workExperience">
+            <h6 class="text-lg font-bold left-header-font">TOOLS</h6>
+            <ul class="space-y-2">
+              <ng-container *ngIf="resumeData?.Tools && resumeData?.Tools.length">
+                <li *ngFor="let tool of resumeData?.Tools"> <span class="me-2">➤</span> <span>{{tool.text}}</span></li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="rightPanel">
+        <div>
+          <h1>
+            {{resumeData?.firstName}}&nbsp;{{resumeData?.lastName}}
+          </h1>
+        </div>
+        <div>
+          <h6>
+            OBJECTIVE
+          </h6>
+          <hr>
+          <div class="smallText">
+            <p>
+              {{resumeData?.objective}} 
+            </p>
+          </div>
+        </div>
+        <div class="workExperience mt-4">
+          <h6>
+            EXPERIENCE
+          </h6>
+          <hr>
+          <ul>
+            <ng-container *ngIf="resumeData?.Experience && resumeData?.Experience.length">
+              <li *ngFor="let exp of resumeData?.Experience">
+                
+               <div class="d-flex justify-content-between">
+                <div class="projectName bolded">
+                  <span>
+                    {{exp.title | titlecase }} | {{exp.companyName | titlecase }}
+                  </span>
+                </div>
+                <div class="jobPosition">
+                  <span>
+                    {{exp.startDate | date:'MMM yyyy'}} - {{exp.endDate | date:'MMM yyyy'}}
+                  </span>
+                </div>
+               </div>
+                <div class="smallText">
+                  <p>{{exp.description}}</p>
+                </div>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="workExperience">
+          <h6 class="text-lg font-bold ">PROJECTS</h6>
+          <hr>
+          <ng-container *ngIf="resumeData?.Project && resumeData?.Project.length">
+            <div class="mt-2 smallText" *ngFor="let project of resumeData?.Project">
+              <p class="bolded">{{project.projectTitle}}</p>
+              <p class="text-gray-600">{{project.startDate | date:'yyyy'}} - {{project.endDate | date:'yyyy'}}</p>
+              <p class="mt-2 text-gray-700">
+                {{project.description}}
+              </p>
+            </div>
+          </ng-container>
+        </div>
+        <div class="workExperience mt-4">
+          <h6 class="text-lg font-bold">CERTIFICATIONS</h6>
+          <hr>
+          <ul class="mt-2 space-y-2 smallText">
+            <ng-container *ngIf="resumeData?.Certification && resumeData?.Certification.length">
+              <li *ngFor="let certi of resumeData?.Certification">➤ {{certi?.field}} – {{certi?.certifyingEntity}}</li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="workExperience">
+          <h6 class="text-lg font-bold">ACHIEVEMENTS</h6>
+          <hr>
+          <ul class="mt-2 space-y-2 smallText">
+            <ng-container *ngIf="resumeData?.Achievements && resumeData?.Achievements.length">
+              <li *ngFor="let achive of resumeData?.Achievements">➤{{achive?.description}}</li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </div>

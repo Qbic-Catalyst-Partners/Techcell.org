@@ -1,0 +1,70 @@
+/////////////////////////////////////////////
+// New code
+@import "../../../../styles/variables";
+
+.career-line {
+  margin: 32px auto 32px;
+  width: 50%;
+  height: 2px;
+  border-radius: 30px;
+  background-color: var(--c-text-secondary);
+}
+
+.bg-img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.logo-img {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  height: 80px;
+  width: 80px;
+  border-radius: 8px;
+}
+
+.modal-h-ctrl {
+  max-height: 85vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
+  }
+
+  &::-webkit-scrollbar:horizontal {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    background-color: #f5f5f5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: rgba(20, 69, 87, 1);
+  }
+}
+
+.close-icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.add-blog-close {
+  width: 24px;
+  height: 24px;
+}

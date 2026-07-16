@@ -1,0 +1,240 @@
+<div class="landing-page-wrapper">
+  <div class="landing-header-wrapper">
+    <div class="logo-wrapper text-center mx-auto">
+      <img
+        src="assets/images/techcell-logo-beta-5.png"
+        class="logo"
+        alt="TechCell Logo"
+      />
+    </div>
+
+    <div class="landing-carousel-wrapper">
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let item of carouselItem">
+          <ng-template carouselSlide class="">
+            <div class="overlay" [style.background]="item.grident"></div>
+            <img [src]="item.img_url" class="carouselItem-img" />
+            <div class="centered">
+              <div class="img-header text-end">{{ item.count }}</div>
+              <div class="img-header">{{ item.itemName }}</div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+  </div>
+
+  <div class="linear-gradient">
+    <div class="c-container">
+      <div class="landing-main-wrapper">
+        <div class="landing-main-right">
+          <div class="d-flex c-mb-4 justify-content-between mt-3 mt-lg-0">
+            <div
+              class="d-flex gap-1 flex-column align-items-center flex-md-row gap-md-3 flex-md-fill"
+            >
+              <p class="c-label">Existing User</p>
+              <button
+                class="btn btn-sm c-pop-btn-primary c-pop-btn-primary--sm"
+                (click)="openLoginModal()"
+              >
+                Login
+              </button>
+            </div>
+            <div
+              class="d-flex gap-1 flex-column align-items-center flex-md-row align-items-md-center gap-md-3 flex-md-fill"
+            >
+              <p class="c-label">New User</p>
+              <button
+                class="btn btn-sm c-pop-btn-primary c-pop-btn-primary--sm"
+                (click)="navigateTo()"
+              >
+                Pre-Register
+              </button>
+            </div>
+          </div>
+          <div class="text-white t-bg-landing-page">
+            <div class="video-wrapper">
+              <video
+                #video
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                defaultMuted
+                style="width: 100%; height: 100%"
+              >
+                <source
+                  src="assets/videos/new-video-desktop.mp4"
+                  type="video/mp4"
+                  media="(min-width: 768px)"
+                />
+                <source
+                  src="assets/videos/new-video-mobile.mp4"
+                  type="video/mp4"
+                  media="(max-width: 767px)"
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <!-- <h1 class="about-title fw-bold text-center">About TechCell</h1>
+            <p class="about-description">
+              TechCell is a unique community platform initiative, that heralds a
+              new era of interactions among Students, Institution
+              representatives & Industry experts across India. Our objective,
+              true to our mission, is to provide engineering & technology
+              students & enthusiasts, access to the power of Subject Matter
+              Expertise and Technology Solutions. We are proud to have pioneered
+              new methods of communication across great distances, allowing
+              like-minded people to meet, access information, and forge
+              partnerships. Through TechCell, you can now participate,
+              collaborate, seek & access information related to your fields of
+              interest. You can access career options shared by our Industry
+              partners, attend webinars (coming soon), enroll in communities &
+              contribute to a collective learning process! Simply sign up,
+              explore the multitude of opportunities, and embark on a learning
+              experience that transcends traditional boundaries
+            </p> -->
+          </div>
+        </div>
+        <div class="landing-main-left">
+          <div class="what-inside">
+            <p class="c-label">What's Inside?</p>
+          </div>
+          <div class="recent-content-wrapper t-bg-landing-page">
+            <!-- Item 1 start -->
+            <div class="recent-content">
+              <div class="recent-content__img-wrapper">
+                <img
+                  class="recent-content__img"
+                  [src]="
+                    commonService.convertTOBAse64Format(blog?.blog?.thumbnail)
+                  "
+                  alt=""
+                  onError="this.src='./../../../assets/images/whats-new-1.png'"
+                />
+              </div>
+
+              <div class="recent-content__text">
+                <div class="recent-content__time">
+                  {{ getDays(blog?.createdDate) }}
+                </div>
+                <div class="recent-content__title">
+                  {{ commonService.trimText(blog?.title, 30) }}
+                </div>
+                <div class="recent-content__description">
+                  {{ commonService.trimText(blog?.shortDescription, 30) }}
+                </div>
+              </div>
+            </div>
+            <!-- Item 1 end -->
+            <!-- Item 2 start -->
+            <div class="recent-content">
+              <div class="recent-content__img-wrapper">
+                <youtube-player
+                  class="recent-content__img pointer-none"
+                  [videoId]="getVideoId(videoo?.video?.videoLink)"
+                  suggestedQuality="highres"
+                  [playerVars]="playerConfig"
+                >
+                </youtube-player>
+              </div>
+              <div class="recent-content__text">
+                <div class="recent-content__time">
+                  {{ getDays(videoo?.createdDate) }}
+                </div>
+                <div class="recent-content__title">
+                  {{ videoo?.title }}
+                </div>
+                <div class="recent-content__description">
+                  {{ commonService.trimText(videoo?.shortDescription, 30) }}
+                </div>
+              </div>
+            </div>
+            <!-- Item 2 end -->
+            <!-- Item 3 start -->
+            <div class="recent-content">
+              <div class="recent-content__img-wrapper">
+                <img
+                  class="recent-content__img"
+                  [src]="
+                    commonService.convertTOBAse64Format(
+                      community?.community?.profilePhoto
+                    )
+                  "
+                  alt=""
+                  onError="this.src='./../../../assets/images/whats-new-3.png'"
+                />
+              </div>
+              <div class="recent-content__text">
+                <div class="recent-content__time">
+                  {{ getDays(community?.createdDate) }}
+                </div>
+                <div class="recent-content__title">
+                  {{ community?.title }}
+                </div>
+                <div class="recent-content__description">
+                  {{ commonService.trimText(community?.shortDescription, 30) }}
+                </div>
+              </div>
+            </div>
+            <!-- Item 3 end -->
+
+            <!-- Item 4 start -->
+            <div class="recent-content">
+              <div class="recent-content__img-wrapper">
+                <img
+                  class="recent-content__img"
+                  [src]="
+                    commonService.convertTOBAse64Format(software?.thumbnail)
+                  "
+                  alt=""
+                  onError="this.src='./../../../assets/images/whats-new-4.png'"
+                />
+              </div>
+              <div class="recent-content__text">
+                <div class="recent-content__time">
+                  {{ getDays(software?.createdDate) }}
+                </div>
+                <div class="recent-content__title pt-2">
+                  {{ software?.softwareName }}
+                </div>
+              </div>
+            </div>
+            <!-- Item 4 end -->
+            <!-- Item 5 start -->
+            <div class="recent-content">
+              <div class="recent-content__img-wrapper">
+                <img
+                  class="recent-content__img"
+                  [src]="
+                    commonService.convertTOBAse64Format(
+                      careerData?.data?.companyLogo
+                    )
+                  "
+                  alt=""
+                  onError="this.src='./../../../assets/images/whats-new-1.png'"
+                />
+              </div>
+
+              <div class="recent-content__text">
+                <div class="recent-content__time">
+                  {{ getDays(careerData?.data?.createdDate) }}
+                </div>
+                <div class="recent-content__title">
+                  {{ commonService.trimText(careerData?.data?.title, 30) }}
+                </div>
+                <div class="recent-content__description">
+                  {{ commonService.trimText(careerData?.data?.desc, 30) }}
+                </div>
+              </div>
+            </div>
+            <!-- Item 5 end -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Assign-Moderator preview block removed after styling -->

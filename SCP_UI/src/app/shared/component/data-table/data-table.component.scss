@@ -1,0 +1,284 @@
+//////////////////////////////////////////////////
+// Table specific styling
+table {
+  border-collapse: separate;
+  border-spacing: 0 0.5em;
+  td {
+    font-weight: 500;
+    font-size: 18px;
+    vertical-align: middle;
+    padding: 5px;
+    color: rgba(16, 24, 40, 1);
+    &:first-child {
+      padding-left: 1.5rem;
+    }
+  }
+
+  th {
+    color: #9da5b9;
+    font-weight: 700;
+    font-size: 12px !important;
+  }
+  tr {
+    cursor: pointer;
+  }
+}
+
+.header-row {
+  height: 38px !important;
+  vertical-align: middle;
+  th {
+    &:first-child {
+      padding-left: 1.5rem !important;
+    }
+  }
+}
+
+.header-row {
+  position: sticky;
+  top: 9px;
+  z-index: 1;
+  background-color: #fff;
+  box-shadow: 0 -4px 0 11px #e4e4e4;
+}
+
+.table-container {
+  background-color: rgba(228, 228, 228, 1);
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: auto;
+  border-radius: 0.5rem;
+}
+
+#scroll-design::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+#scroll-design::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+
+#scroll-design::-webkit-scrollbar {
+  width: 3px;
+  background-color: #f5f5f5;
+}
+
+#scroll-design::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgba(20, 69, 87, 1);
+}
+
+.card-img {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #b4b4b4;
+}
+
+.download-link {
+  color: rgba(4, 107, 236, 1);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.active {
+  color: #1cb5eb;
+}
+
+tr td:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+tr td:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+tr th:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+tr th:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.text-ellipsis {
+  display: -webkit-inline-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  line-height: 15px;
+  max-height: 20px;
+  max-width: 145px;
+}
+
+.action-box {
+  position: absolute;
+  background-color: #f0f0f0;
+  right: 55px;
+  top: 35px;
+  z-index: 1;
+  box-shadow: 0 5px 7px -6px;
+}
+
+.action-text {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: Lato;
+  color: #000000;
+  background: #ffffff;
+  margin: 2px 3px;
+  border-radius: 5px;
+  width: 113px;
+  padding: 3px;
+}
+
+.table > :not(caption) > * > * {
+  border-bottom-width: 0px !important;
+}
+
+td,
+th {
+  font-size: 12px !important;
+}
+
+tbody {
+  tr {
+    &:not(:last-child) {
+      border-bottom: 8px !important;
+    }
+  }
+}
+
+.header-row {
+  th {
+    padding: 5px !important;
+  }
+}
+
+// Additional styles for data-table specific elements
+.primary {
+  color: rgba(4, 107, 236, 1);
+  text-decoration: none;
+  cursor: pointer;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.clickable-text {
+  cursor: pointer;
+  color: rgba(4, 107, 236, 1);
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.btn-primary {
+  background-color: rgba(4, 107, 236, 1);
+  border-color: rgba(4, 107, 236, 1);
+  
+  &:hover {
+    background-color: darken(rgba(4, 107, 236, 1), 10%);
+    border-color: darken(rgba(4, 107, 236, 1), 10%);
+  }
+}
+
+.btn-primary{
+  border-radius: 5px;
+}
+
+.approve,
+.reject {
+  color: #FFFFFF;
+  line-height: 100%;
+  border-radius: 99px;
+  font-size: 12px;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.approve{
+  background-color: #22c55e;
+  &:hover{
+    background-color: #16a34a;
+  }
+  
+}
+.reject{
+  background-color: #ef4444;
+  &:hover{
+    background-color: #dc2626;
+  }
+ 
+}
+
+.down-arr{
+  transform: rotate(180deg);
+}
+
+.list-down-arr {
+  transform: rotate(180deg);
+}
+
+tr th:first-child {
+  border-top-left-radius:  5px;
+  border-bottom-left-radius:  5px;
+}
+tr th:last-child {
+  border-top-right-radius:  5px;
+  border-bottom-right-radius:  5px;
+}
+
+.clickable-text {
+  cursor: pointer;
+  color: #007bff;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Custom tooltip styles
+::ng-deep {
+  .tooltip {
+    opacity: 1 !important;
+    .tooltip-inner {
+      background-color: #ffffff !important;
+      color: #000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e4e4e4;
+      font-size: 12px;
+      padding: 4px 8px;
+      opacity: 1 !important;
+    }
+    &.bs-tooltip-top .tooltip-arrow::before {
+      border-top-color: #ffffff !important;
+    }
+    &.bs-tooltip-bottom .tooltip-arrow::before {
+      border-bottom-color: #ffffff !important;
+    }
+    &.bs-tooltip-start .tooltip-arrow::before {
+      border-left-color: #ffffff !important;
+    }
+    &.bs-tooltip-end .tooltip-arrow::before {
+      border-right-color: #ffffff !important;
+    }
+  }
+}
+ 

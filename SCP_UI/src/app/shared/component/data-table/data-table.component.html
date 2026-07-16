@@ -1,0 +1,174 @@
+<div class="smooth-table-curve">
+  <div class="table-container px-2 scroll-design" id="scroll-design">
+    <table class="table table-hover m-0" [ngClass]="tableClass">
+      <thead>
+        <tr class="header-row">
+          <th
+            class="table-header"
+            scope="col"
+            *ngFor="let col of tableHeader"
+            (click)="sortHeader(col)"
+          >
+            {{ col.name }}
+            <span *ngIf="col?.isSort">
+              <svg
+                [class.list-down-arr]="!col.sort"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 5V19"
+                  stroke="#9da5b9"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M19 12L12 19L5 12"
+                  stroke="#9da5b9"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="scroll-section">
+        <ng-container *ngFor="let data of tableAllData; index as i">
+          <tr
+            appScroll
+            (elementVisible)="getData($event)"
+            [isTargetElement]="i + 1 === tableAllData.length"
+            *ngIf="i + 1 === tableAllData.length"
+            (click)="onRowClick(data)"
+          >
+            <ng-container
+              *ngTemplateOutlet="content; context: { data }"
+            ></ng-container>
+            
+          </tr>
+         
+         
+          <tr *ngIf="i + 1 != tableAllData.length" (click)="onRowClick(data)">
+            <ng-container
+              *ngTemplateOutlet="content; context: { data }"
+            ></ng-container>
+          </tr>
+          <!-- Team members dynamic rows (Projects) -->
+          <ng-container *ngIf="data.members && data.members.length">
+            <ng-container *ngFor="let mem of data.members; let last = last">
+              <tr [ngClass]="{'team-end': last}">
+                <td>{{ mem.firstName }} {{ mem.lastName }}</td>
+                <!-- Blank cell for Members count column -->
+                <td></td>
+                <td>
+                  <a class="c-text-primary" (click)="getLink(mem)">View</a>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <tr *ngIf="tableAllData && tableAllData.length == 0">
+          <td [attr.colspan]="tableHeader.length" class="text-center">
+            No Record Found
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+<ng-template #content let-data="data">
+  <ng-container *ngFor="let col of tableHeader">
+    <ng-container *ngIf="col.visible">
+      <td>
+        <ng-container *ngIf="col.type == 'text'">
+          <div [class.clickable-text]="col.name === 'Title'" (click)="col.name === 'Title' ? takeAction({name: 'Preview'}, data) : null">
+            {{ col.displayValue ? col.displayValue(data[col.dataKey]) : data[col.dataKey] }}
+          </div>
+        </ng-container>
+        <ng-container *ngIf="col.type == 'link'">
+          <div class="d-flex align-items-center">
+            <!-- Display thumbnail if available -->
+            <img
+              *ngIf="data.thumbnail"
+              [src]="data.thumbnail"
+              alt=""
+              class="card-img me-1"
+            />
+            <a class="c-text-primary" (click)="getLink(data)">
+              {{ commonService.trimText(data[col.dataKey], 50) }}
+            </a>
+          </div>
+        </ng-container>
+        <div class="d-flex gap-2 justify-content-center">
+          <ng-container *ngIf="col.type == 'Action'">
+            <ng-container *ngFor="let action of col.action; index as j">
+              <ng-container *ngIf="action.visible">
+                <span class="" (click)="takeAction(action, data)">
+                  <!-- for btn -->
+                  <ng-container *ngIf="action.type == 'btn'">
+                    <button
+                      class="btn"
+                      type="button"
+                      [ngClass]="action.style.class"
+                      *ngIf="hideBtn(data, action)"
+                      [ngbTooltip]="action.name"
+                      placement="top"
+                    >
+                      <ng-container *ngIf="action.name === 'Approve'">
+                        <!-- This is approve icon -->
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20 6L9 17L4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </ng-container>
+                      <ng-container *ngIf="action.name === 'Reject'">
+                        <!-- This is reject icon -->
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M18 6L6 18" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M6 6L18 18" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </ng-container>
+                    </button>
+                  </ng-container>
+                  <!-- for action-tooltip -->
+                  <ng-container *ngIf="action.type == 'actionToolTip'">
+                    <button
+                      mat-icon-button
+                      [matMenuTriggerFor]="menu"
+                      aria-label="Example icon-button with a menu"
+                    >
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+                      <ng-container
+                        *ngIf="action.menuList && action.menuList.length"
+                      >
+                        <div
+                          mat-menu-item
+                          class="action-text"
+                          *ngFor="let act of action.menuList"
+                          (click)="actionToolTipStatus(act, data)"
+                        >
+                          {{ act.name }}
+                        </div>
+                      </ng-container>
+                    </mat-menu>
+                  </ng-container>
+                </span>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </td>
+    </ng-container>
+  </ng-container>
+</ng-template>

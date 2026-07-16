@@ -1,0 +1,12 @@
+<td *ngIf="userInfo.role == 'Admin'">
+    <span class="application-count">
+        <span class="span-click" (click)="openModal(row,'',row?.total); $event.stopPropagation()">{{row?.total}}</span>
+        <span> (</span>
+        <span class="accept span-click" (click)="openModal(row,'Accepted',row?.selectedCount); $event.stopPropagation()">{{row?.selectedCount}}</span>
+        <span>/</span>
+        <span class="reject span-click" (click)="openModal(row,'Rejected',row?.rejectedCount); $event.stopPropagation()">{{row?.rejectedCount}}</span>
+        <span>/</span>
+        <span class="pending span-click" (click)="openModal(row,'Applied',row?.appliedCount); $event.stopPropagation()">{{row?.appliedCount}}</span>
+        <span>)</span>
+    </span>
+</td> 

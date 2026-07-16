@@ -1,0 +1,74 @@
+<div class="container-fluid rounded height-controller">
+  <div class="row">
+    <div class="col-12 header px-3 user-name">
+      {{ userInfo?.firstName }}&nbsp;{{ userInfo?.lastName }}’s Profile
+    </div>
+  </div>
+  <div class="row pb-2">
+    <div
+      class="col-12 col-lg-4 col-md-4 d-flex justify-content-center align-items-center m-top"
+    >
+      <div class="text-center">
+        <img
+          [src]="profilePhoto"
+          onError="this.src='../../../assets/images/Ellipse 77.png'"
+          class="rounded-img mb-3"
+          alt=""
+        />
+        <div class="d-flex mt-1 align-items-center justify-content-center">
+          <div class="profile d-inline-block px-2">
+            {{ userInfo?.firstName }}&nbsp;{{ userInfo?.lastName }}
+          </div>
+          <div class="profile-bw d-inline-block px-2">
+            {{ userInfo?.role }}
+          </div>
+        </div>
+        <div>
+          <a href="{{ userInfo?.linkedinProfile }}" target="_blank">
+            <img
+              class="linkedin"
+              src="../../../assets/social-media/devicon_linkedin-wordmark.png"
+              alt=""
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-7 col-lg-7 bg-white">
+      <div class="row mt-4 mb-2">
+        <div class="col-12">
+          <p class="title">About me</p>
+          <p class="desc" *ngIf="userInfo?.description">
+            {{ userInfo?.description }}
+          </p>
+          <p class="desc" *ngIf="!userInfo?.description">
+            A business consultant with proficient knowledge in predictive
+            analytics, machine learning, financial analysis, and corporate
+            finance.
+          </p>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-12">
+          <p class="title">Qualification</p>
+          <!-- <p class="desc">MSc Decision and Computing Science, Computer Programming and Data Analytics</p> -->
+          <p class="desc">{{ userInfo?.qualification }}</p>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-12">
+          <p class="title">Expertise</p>
+          <p class="desc">
+            {{ userInfo?.domailExp }}
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <p class="title">Experience</p>
+          <p class="desc">{{ userInfo?.workExp }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

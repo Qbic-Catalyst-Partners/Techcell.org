@@ -1,0 +1,1 @@
+ALTER TABLE internship ALTER COLUMN duration TYPE DECIMAL(10,2); 

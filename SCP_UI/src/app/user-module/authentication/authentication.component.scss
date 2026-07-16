@@ -1,0 +1,100 @@
+@import "../../../styles/_variables.scss";
+@import "@angular/cdk/overlay-prebuilt.css";
+
+.w-40 {
+  width: 40% !important;
+}
+.main-container {
+  height: 480px;
+}
+
+.form-wrapper {
+  display: grid;
+
+  gap: 16px;
+
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.form-control {
+  box-shadow: none !important;
+
+  &:focus {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  }
+}
+
+.verify-otp-btn {
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+.login-box {
+  // z-index: 1;
+  // .card {
+  //     border-radius: 20px;
+  //     width: 100%;
+  //     padding: 2rem 1rem;
+  //     z-index: 1;
+  //     border: none;
+  //     box-shadow: 0px 4px 4px 0px #00000040 !important;
+  //     border-top: 0.2px solid #000000;
+  // }
+  // .verify-button {
+  //   width: 150px;
+  //   // position: absolute;
+  //   // left: 30%;
+  //   // bottom: -30px;
+  //   border-radius: 50px;
+  //   background-color: $button-primary;
+  // }
+}
+.title-text {
+  font-size: 20px;
+  color: rgba(3, 0, 0, 1);
+  // margin-left: 6rem;
+
+  @media (min-width: 992px) {
+    font-size: 30px;
+  }
+}
+.sub-title-text {
+  font-size: 14px;
+  color: #000000;
+  font-weight: 400;
+  line-height: 19.2px;
+
+  @media (min-width: 992px) {
+    font-size: 16px;
+  }
+}
+input:not([type="checkbox"]) {
+  background-color: $light-gray;
+  box-shadow: $common-box-shadow;
+  border: 1px solid $input-box-border;
+  padding: 15px 10px 15px 10px;
+  border-radius: 5px;
+  height: 44px;
+  &::placeholder {
+    font-size: 15px;
+  }
+}
+.resend {
+  width: 98px !important;
+  height: 28px !important;
+  border-radius: 31px !important;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0em;
+}
+
+.resend-text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+}

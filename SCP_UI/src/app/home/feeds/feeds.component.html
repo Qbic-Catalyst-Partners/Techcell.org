@@ -1,0 +1,304 @@
+<div class="container-fluid p-0 p-md-0 p-lg-0">
+  <ng-container *ngFor="let item of postingList; let i = index">
+    <div
+      appScroll
+      (elementVisible)="getData($event)"
+      [isTargetElement]="i + 1 === postingList.length"
+      *ngIf="i + 1 === postingList.length"
+    >
+      <ng-container
+        *ngTemplateOutlet="content; context: { item, index: i }"
+      ></ng-container>
+    </div>
+    <div *ngIf="i + 1 != postingList.length">
+      <ng-container
+        *ngTemplateOutlet="content; context: { item, index: i }"
+      ></ng-container>
+    </div>
+  </ng-container>
+</div>
+
+<div class="feeds-list">
+  <ng-template #content let-item="item" let-i="index">
+    <ng-container [ngSwitch]="item.postType">
+      <ng-container *ngSwitchCase="'Videos'">
+        <article class="feed-card">
+          <div class="feed-card__header">
+            <img
+              (click)="viewProfile(item)"
+              [src]="item.postedUser.profilePhoto"
+              onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+              class="feed-card__author-img"
+            />
+            <div class="feed-card__header-text-content">
+              <div class="feed-card__author-details">
+                <h5 class="feed-card__author-name" (click)="viewProfile(item)">
+                  <span>{{ item?.postedUser?.firstName }} </span>
+                  <span class="d-none d-xl-inline">{{
+                    item?.postedUser?.lastName
+                  }}</span>
+                </h5>
+
+                <span class="feed-card__posted-date"
+                  >posted on
+                  {{
+                    item.createdDate | date : "d MMM yyyy 'at' hh:mm a"
+                  }}</span
+                >
+                <img
+                  src="assets/temp-img/video-feed-icon.svg"
+                  alt="Community Icon"
+                  class="feed-card__type-icon"
+                />
+              </div>
+              <div class="feed-card__body-text">
+                <span class="fw-semibold">{{ item?.title }}</span>
+
+                <span> {{ item?.shortDescription }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="feed-card__body">
+            <div class="video-wrapper">
+              <youtube-player
+                [videoId]="getVideoId(item?.video?.videoLink)"
+                suggestedQuality="highres"
+                [playerVars]="{
+                  controls: 1,
+                  autoplay: 0,
+                  rel: 0,
+                  start: 0,
+                  modestbranding: 1,
+                  showinfo: 0,
+                  fs: 1,
+                  playsinline: 1,
+                  enablejsapi: 1
+                }"
+                width="100%"
+                height="50"
+                #video
+              >
+              </youtube-player>
+            </div>
+          </div>
+          <div class="feed-card__footer">
+            <div class="feed-card__like-icons">
+              <img
+                *ngIf="!item.liked"
+                (click)="handleLike(item)"
+                src="../../../assets/svg/like.svg"
+                alt="like"
+              />
+              <img
+                *ngIf="item.liked"
+                (click)="handleLike(item)"
+                src="../../../assets/svg/like_fill.svg"
+                alt="like_fill"
+              />
+            </div>
+            <div class="feed-card__likes">
+              <span class="feed-card__like-count">{{ item.likes }}</span>
+              <span class="feed-card__like-text">Likes</span>
+            </div>
+            <div class="feed-card__views">
+              <span class="feed-card__view-count">{{ item.views }}</span>
+              <span class="feed-card__view-text">Views</span>
+            </div>
+            <div class="feed-card__comments" (click)="toggelComment(item)">
+              <span class="feed-card__comment-count">{{ item.comments }}</span>
+              <span class="feed-card__comment-text">Comments</span>
+            </div>
+            <div class="feed-card__share">
+              <img
+                src="../../../assets/svg/star.svg"
+                alt="star"
+                (click)="markAsStar(item)"
+                *ngIf="!item.favoured"
+              />
+              <img
+                src="../../../assets/svg/star_active.svg"
+                alt="star"
+                (click)="markAsStar(item)"
+                *ngIf="item.favoured"
+              />
+              <img
+                src="../../../assets/svg/next.svg"
+                (click)="openShare(item)"
+              />
+            </div>
+          </div>
+          <div *ngIf="item.postingId == activeCommentId" class="mb-2">
+            <app-comment [item]="currentItem"></app-comment>
+          </div>
+        </article>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Blogs'">
+        <article class="feed-card">
+          <div class="feed-card__header">
+            <img
+              (click)="viewProfile(item)"
+              [src]="item.postedUser.profilePhoto"
+              onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+              class="feed-card__author-img"
+            />
+            <div class="feed-card__header-text-content">
+              <div class="feed-card__author-details">
+                <h5 class="feed-card__author-name" (click)="viewProfile(item)">
+                  <span>{{ item?.postedUser?.firstName }} </span>
+                  <span class="d-none d-xl-inline">{{
+                    item?.postedUser?.lastName
+                  }}</span>
+                </h5>
+
+                <span class="feed-card__posted-date"
+                  >posted on
+                  {{
+                    item.createdDate | date : "d MMM yyyy 'at' hh:mm a"
+                  }}</span
+                >
+                <img
+                  src="assets/svg/ooui_articles-rtl.svg"
+                  alt="Blog icon"
+                  class="feed-card__type-icon"
+                />
+              </div>
+              <div class="feed-card__body-text">
+                <span class="fw-semibold">{{ item?.title }}</span
+                ><span>
+                  {{ commonService.trimText(item?.shortDescription, 24) }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="feed-card__body feed-card__body--blog">
+            <img
+              [src]="item.blog.thumbnail"
+              alt=""
+              class="feed-card__thumbnail"
+              (click)="navigateTo(item, 'Blog')"
+            />
+          </div>
+          <div class="feed-card__footer">
+            <div class="feed-card__like-icons">
+              <img
+                *ngIf="!item.liked"
+                (click)="handleLike(item)"
+                src="../../../assets/svg/like.svg"
+                alt="like"
+              />
+              <img
+                *ngIf="item.liked"
+                (click)="handleLike(item)"
+                src="../../../assets/svg/like_fill.svg"
+                alt="like_fill"
+              />
+            </div>
+            <div class="feed-card__likes">
+              <span class="feed-card__like-count">{{ item.likes }}</span>
+              <span class="feed-card__like-text">Likes</span>
+            </div>
+            <div class="feed-card__views">
+              <span class="feed-card__view-count">{{ item.views }}</span>
+              <span class="feed-card__view-text">Views</span>
+            </div>
+            <div class="feed-card__comments" (click)="toggelComment(item)">
+              <span class="feed-card__comment-count">{{ item.comments }}</span>
+              <span class="feed-card__comment-text">Comments</span>
+            </div>
+            <div class="feed-card__share">
+              <img
+                src="../../../assets/svg/star.svg"
+                alt="star"
+                (click)="markAsStar(item)"
+                *ngIf="!item.favoured"
+              />
+              <img
+                src="../../../assets/svg/star_active.svg"
+                alt="star"
+                (click)="markAsStar(item)"
+                *ngIf="item.favoured"
+              />
+              <img
+                src="../../../assets/svg/next.svg"
+                (click)="openShare(item)"
+              />
+            </div>
+          </div>
+          <div *ngIf="item.postingId == activeCommentId" class="mb-2">
+            <app-comment [item]="currentItem"></app-comment>
+          </div>
+        </article>
+      </ng-container>
+      <ng-container *ngSwitchCase="'Community'">
+        <article class="feed-card">
+          <div class="feed-card__header" (click)="viewProfile(item)">
+            <img
+              (click)="viewProfile(item)"
+              [src]="item.postedUser.profilePhoto"
+              onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+              class="feed-card__author-img"
+            />
+            <div class="feed-card__header-text-content">
+              <div class="feed-card__author-details">
+                <h5 class="feed-card__author-name" (click)="viewProfile(item)">
+                  <span>{{ item?.postedUser?.firstName }} </span>
+                  <span class="d-none d-xl-inline">{{
+                    item?.postedUser?.lastName
+                  }}</span>
+                </h5>
+                <span class="feed-card__posted-date"
+                  >posted on
+                  {{
+                    item.createdDate | date : "d MMM yyyy 'at' hh:mm a"
+                  }}</span
+                >
+                <img
+                  src="assets/svg/community1.svg"
+                  alt="Community Icon"
+                  class="feed-card__type-icon"
+                />
+              </div>
+              <div class="feed-card__body-text">
+                <span class="fw-semibold">{{ item?.title }}</span
+                ><span>
+                  {{ commonService.trimText(item?.shortDescription, 24) }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="feed-card__body feed-card__body--community"
+            (click)="navigateTo(item, 'Community')"
+          >
+            <div class="feed-card__community">
+              <div class="feed-card__community-left">
+                <img
+                  class=""
+                  src="assets/svg/preview copy Background Removed.svg"
+                  alt="bg"
+                />
+              </div>
+              <div class="feed-card__community-right">
+                <div class="feed-card__community-img">
+                  <img [src]="item.community?.profilePhoto" />
+                </div>
+                <div class="feed-card__community-name">{{ item?.title }}</div>
+                <div class="feed-card__community-desc">
+                  {{ item.community?.description }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="feed-card__footer">
+            <div class="feed-card__share">
+              <img
+                src="../../../assets/svg/next.svg"
+                (click)="openShare(item)"
+              />
+            </div>
+          </div>
+        </article>
+      </ng-container>
+    </ng-container>
+  </ng-template>
+</div>

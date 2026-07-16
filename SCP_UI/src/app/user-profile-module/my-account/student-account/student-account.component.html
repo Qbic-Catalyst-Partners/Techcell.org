@@ -1,0 +1,903 @@
+<div class="profile-box d-flex flex-column align-items-center py-2">
+  <div class="profile-photo">
+    <img
+      [src]="profilePhoto"
+      onError="this.src='http://www.gravatar.com/avatar/9017a5f22556ae0eb7fb0710711ec125?s=128'"
+      alt="Profile Image"
+    />
+  </div>
+  <div class="user-info-box d-flex flex-column align-items-center mt-2">
+    <div>
+      <span class="user-name">
+        {{ this.userDetails?.firstName }}&nbsp;{{ this.userDetails?.lastName }}
+      </span>
+      <span class="user-type">| {{ this.userDetails?.role }}</span>
+    </div>
+    <div class="user-experience">
+      {{ this.userDetails?.orgName }},&nbsp;{{
+        this.userDetails?.city
+      }},&nbsp;India.
+    </div>
+    <div class="user-experience">
+      Course Registered - B.Tech, Enrolment year - 2024
+    </div>
+  </div>
+
+  <!-- <hr class="hr-line" /> -->
+  <!-- My Info -->
+  <div class="my-info-card card mb-2 mt-2">
+    <div
+      class="card-header d-flex justify-content-between align-items-center py-1"
+    >
+      <div class="card-info-title">My Info</div>
+      <button
+        *ngIf="!isInfoEdit"
+        (click)="enableEdit('edit', true)"
+        class="btn edit-btn"
+        [ngClass]="{ 'disabled-btn': !isInfoEdit }"
+      >
+        Edit
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+      </button>
+      <button
+        *ngIf="isInfoEdit"
+        (click)="enableEdit('edit', false)"
+        class="btn edit-btn"
+      >
+        Discard Changes
+      </button>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="userInfoForm" (ngSubmit)="submitUserInfoForm()">
+        <div class="row mb-3 gx-lg-5 gy-3">
+          <div class="col-lg-6">
+            <label for="firstname" class="">First Name</label>
+            <div class="">
+              <input
+                formControlName="firstName"
+                type="text"
+                class="form-control"
+                id="firstname"
+                [ngClass]="{ 'form-control-active': isInfoEdit }"
+                placeholder="First Name"
+                maxlength="50"
+                (keydown)="this.commonService.alphaOnly($event)"
+              />
+              <div
+                *ngIf="
+                  (userInfoValid['firstName'].touched || userInfoSubmitted) &&
+                  userInfoValid['firstName'].errors
+                "
+              >
+                <div
+                  *ngIf="userInfoValid['firstName'].errors['required']"
+                  class="text-danger"
+                >
+                  Please enter First Name
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="lastname" class="">Last Name</label>
+            <div class="">
+              <input
+                formControlName="lastname"
+                type="text"
+                class="form-control"
+                id="lastname"
+                [ngClass]="{ 'form-control-active': isInfoEdit }"
+                placeholder="Last Name"
+                maxlength="50"
+                (keydown)="this.commonService.alphaOnly($event)"
+              />
+              <div
+                *ngIf="
+                  (userInfoValid['lastname'].touched || userInfoSubmitted) &&
+                  userInfoValid['lastname'].errors
+                "
+              >
+                <div
+                  *ngIf="userInfoValid['lastname'].errors['required']"
+                  class="text-danger"
+                >
+                  Please enter Last Name
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="gender">Gender</label>
+            <div class="">
+              <select
+                formControlName="gender"
+                class="form-select form-control"
+                aria-label="Default select example"
+                id="gender"
+                name="gender"
+                [ngClass]="{ 'form-select-deactive': !isInfoEdit }"
+              >
+                <option
+                  *ngFor="let gender of genderList"
+                  [value]="gender.genderName"
+                >
+                  {{ gender.genderName }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="dob">Date of Birth</label>
+            <div>
+              <div class="mat-datepicker">
+                <input
+                  class="form-control"
+                  [matDatepicker]="picker"
+                  placeholder="DD-MM-YYYY"
+                  [max]="commonService.todayDate"
+                  formControlName="dob"
+                  (keydown)="this.commonService.tabOnly($event)"
+                  [ngClass]="{ 'form-control-active': isInfoEdit }"
+                />
+                <mat-datepicker #picker></mat-datepicker>
+                <img
+                  class="calendar-icon"
+                  (click)="picker.open()"
+                  src="./../../../assets/lucide-icons/calender.svg"
+                  alt="calendar"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="college">Institute /College Name</label>
+            <div>
+              <input
+                formControlName="collegeName"
+                type="text"
+                class="form-control"
+                id="collegeName"
+                placeholder="Institute /College Name"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="state">AICTE Code</label>
+            <div>
+              <input
+                formControlName="aicteCode"
+                type="text"
+                class="form-control"
+                id="aicteCode"
+                placeholder="AICTE Code"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="city" class="">City</label>
+            <div class="">
+              <input
+                formControlName="city"
+                type="text"
+                class="form-control"
+                id="city"
+                placeholder="City"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="state">State</label>
+            <div>
+              <input
+                formControlName="state"
+                type="text"
+                class="form-control"
+                id="state"
+                placeholder="State"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="qualification" class="">Student ID No.</label>
+            <div class="">
+              <input
+                formControlName="studentId"
+                type="text"
+                class="form-control"
+                id="qualification"
+                [ngClass]="{ 'form-control-active': isInfoEdit }"
+                placeholder="Student ID No"
+                appSpecialChracter
+              />
+              <div
+                *ngIf="
+                  (userInfoValid['studentId'].touched || userInfoSubmitted) &&
+                  userInfoValid['studentId'].errors
+                "
+              >
+                <div
+                  *ngIf="userInfoValid['studentId'].errors['required']"
+                  class="text-danger"
+                >
+                  Please enter studentId
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="domainExpertise" class="">Program Name</label>
+            <div class="">
+              <select
+                formControlName="programName"
+                class="form-select form-control"
+                [ngClass]="{ 'form-select-deactive': !isInfoEdit }"
+                aria-label="Default select example"
+                (change)="selectProgram($event)"
+              >
+                <option
+                  *ngFor="let prog of programList"
+                  [value]="prog.programCode"
+                >
+                  {{ prog.description }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="currentCompany">Course Level</label>
+            <div>
+              <input
+                formControlName="courseLevel"
+                type="text"
+                class="form-control"
+                id="currentCompany"
+                placeholder="Course Level"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="currentDesignation">Stream</label>
+            <div>
+              <select
+                formControlName="stream"
+                class="form-select form-control"
+                aria-label="Default select example"
+                [ngClass]="{ 'form-select-deactive': !isInfoEdit }"
+              >
+                <option
+                  *ngFor="let stlist of streamList"
+                  [value]="stlist.description"
+                >
+                  {{ stlist.description }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="workExperience">Enrolment Year</label>
+            <div>
+              <div class="mat-datepicker" appCustomDateFormate>
+                <input
+                  class="form-control"
+                  [matDatepicker]="picker1"
+                  placeholder="(MM/YYYY)"
+                  formControlName="enrolmentYear"
+                  (keydown)="this.commonService.tabOnly($event)"
+                  [ngClass]="{ 'form-control-active': isInfoEdit }"
+                />
+                <mat-datepicker
+                  #picker1
+                  startView="multi-year"
+                  (monthSelected)="setMonthAndYear($event, picker1)"
+                ></mat-datepicker>
+                <img
+                  class="calendar-icon"
+                  (click)="picker.open()"
+                  src="./../../../assets/lucide-icons/calender.svg"
+                  alt="calendar"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="linkedinProfile">Graduation Year</label>
+            <div>
+              <div class="mat-datepicker" appCustomDateFormate>
+                <input
+                  class="form-control"
+                  [matDatepicker]="picker2"
+                  placeholder="(MM/YYYY)"
+                  formControlName="graduationYear"
+                  (keydown)="this.commonService.tabOnly($event)"
+                  [ngClass]="{ 'form-control-active': isInfoEdit }"
+                />
+                <mat-datepicker
+                  #picker2
+                  startView="multi-year"
+                  (monthSelected)="setMonthAndYear1($event, picker2)"
+                ></mat-datepicker>
+                <img
+                  class="calendar-icon"
+                  (click)="picker.open()"
+                  src="./../../../assets/lucide-icons/calender.svg"
+                  alt="calendar"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="securityQuestion" class="">Security Question</label>
+            <div class="">
+              <select
+                formControlName="securityQuestion"
+                class="form-select form-control"
+                (change)="onChangeAnswer()"
+                aria-label="Default select example"
+                [ngClass]="{ 'form-select-deactive': !isInfoEdit }"
+              >
+                <option
+                  *ngFor="let qlist of securityQuestionList"
+                  [value]="qlist.questionId"
+                >
+                  {{ qlist.questiondesc }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="securityAnswer" class="">Security Answer</label>
+            <div class="">
+              <input
+                formControlName="securityAnswer"
+                type="text"
+                class="form-control"
+                id="securityAnswer"
+                [ngClass]="{ 'form-control-active': isInfoEdit }"
+                placeholder="Security Answer"
+                maxlength="50"
+                appSpecialChracter
+              />
+              <div
+                *ngIf="
+                  (userInfoValid['securityAnswer'].touched ||
+                    userInfoSubmitted) &&
+                  userInfoValid['securityAnswer'].errors
+                "
+              >
+                <div
+                  *ngIf="userInfoValid['securityAnswer'].errors['required']"
+                  class="text-danger"
+                >
+                  Please enter Security Answer
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <label for="about">About me</label>
+            <div>
+              <textarea
+                type="text"
+                class="form-control"
+                id="about"
+                formControlName="aboutMe"
+                [maxlength]="descriptionMaxChars"
+                placeholder="A few words about my self"
+                cols="30"
+                rows="5"
+                [ngClass]="{ 'form-control-active': isInfoEdit }"
+              ></textarea>
+              <div class="remaining-character d-flex justify-content-end">
+                {{ fieldName["aboutMe"].value?.length || 0 }}/{{
+                  descriptionMaxChars
+                }}
+                Characters left
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-sm-flex d-lg-flex d-md-flex d-xl-flex gap-3 mb-3">
+          <div class="field-box">
+            <label for="securityQuestion" class="col-sm-2 col-form-label"
+              >Student Id Card</label
+            >
+            <div class="col-sm-9 d-flex align-items-center gap-3">
+              <div class="upload-btn-wrapper">
+                <button
+                  class="upload-btn"
+                  type="button"
+                  [class.disabledBtn]="!isInfoEdit"
+                >
+                  Upload
+                </button>
+                <input
+                  type="file"
+                  name="studentIdCard"
+                  [accept]="imageType"
+                  formControlName="studentIdCard"
+                  (change)="upload($event, 'studentId')"
+                  [class.disabledBtn]="!isInfoEdit"
+                />
+                <div class="tooltip-wrapper">
+                  <div class="file-info">
+                    <img
+                      class="info-icon-img"
+                      [class.cur-p]="isInfoEdit"
+                      [style.opacity]="isInfoEdit ? 1 : 0.5"
+                      (mouseenter)="isInfoEdit && (activeStudentIdCardTooltip = true)"
+                      (mouseleave)="isInfoEdit && (activeStudentIdCardTooltip = false)"
+                      src="../../../../assets/svg/info.svg"
+                      alt="Info Icon"
+                    />
+                  </div>
+                  <div class="file-tooltip" *ngIf="activeStudentIdCardTooltip && isInfoEdit">
+                    (.jpg, .png, .jpeg) Max size 1mb
+                  </div>
+                </div>
+              </div>
+              <div
+                class="file-name"
+                *ngIf="userInfoValid['studentIdCard'].valid"
+              >
+                {{ studentIdCardName }}
+              </div>
+              <div
+                *ngIf="
+                  (userInfoValid['studentIdCard'].touched ||
+                    userInfoSubmitted) &&
+                  userInfoValid['studentIdCard'].errors
+                "
+                class="mx-2"
+              >
+                <div
+                  *ngIf="userInfoValid['studentIdCard'].errors?.['fileSize'] && !userInfoValid['studentIdCard'].errors?.['fileType']"
+                  class="text-danger d-inline-block mt-1"
+                >
+                  File size exceeds the limit (1 MB).
+                </div>
+              </div>
+              <div
+                *ngIf="userInfoValid['studentIdCard'].errors?.['fileType']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Invalid File Type
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-sm-flex d-lg-flex d-md-flex d-xl-flex gap-3 mb-3">
+          <div class="field-box">
+            <label for="securityQuestion" class="col-sm-2 col-form-label"
+              >Profile Photo</label
+            >
+            <div class="col-sm-9 d-flex align-items-center gap-3">
+              <div class="upload-btn-wrapper">
+                <button
+                  class="upload-btn"
+                  type="button"
+                  [class.disabledBtn]="!isInfoEdit"
+                >
+                  Upload
+                </button>
+                <input
+                  type="file"
+                  name="profilePhoto"
+                  [accept]="imageType"
+                  formControlName="StudentPhoto"
+                  (change)="upload($event, 'profilePhoto')"
+                  [class.disabledBtn]="!isInfoEdit"
+                />
+                <div class="tooltip-wrapper">
+                  <div class="file-info">
+                    <img
+                      class="info-icon-img"
+                      [class.cur-p]="isInfoEdit"
+                      [style.opacity]="isInfoEdit ? 1 : 0.5"
+                      (mouseenter)="isInfoEdit && (activeProfilePhotoTooltip = true)"
+                      (mouseleave)="isInfoEdit && (activeProfilePhotoTooltip = false)"
+                      src="../../../../assets/svg/info.svg"
+                      alt="Info Icon"
+                    />
+                  </div>
+                  <div class="file-tooltip" *ngIf="activeProfilePhotoTooltip && isInfoEdit">
+                    (.jpg, .png, .jpeg) Max size 1mb
+                  </div>
+                </div>
+              </div>
+              <div
+                class="file-name"
+                *ngIf="userInfoValid['StudentPhoto'].valid"
+              >
+                {{ profilePhotoName }}
+              </div>
+              <div
+                *ngIf="
+                  (userInfoValid['StudentPhoto'].touched ||
+                    userInfoSubmitted) &&
+                  userInfoValid['StudentPhoto'].errors
+                "
+                class="mx-2"
+              >
+                <div
+                  *ngIf="userInfoValid['StudentPhoto'].errors?.['fileSize'] && !userInfoValid['StudentPhoto'].errors?.['fileType']"
+                  class="text-danger d-inline-block mt-1"
+                >
+                  File size exceeds the limit (1 MB).
+                </div>
+              </div>
+              <div
+                *ngIf="userInfoValid['StudentPhoto'].errors?.['fileType']"
+                class="text-danger d-inline-block mt-1"
+              >
+                Invalid File Type
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="isValidUserForm"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Contact Info -->
+  <div class="my-info-card card mb-2">
+    <div
+      class="card-header d-flex justify-content-between align-items-center py-1"
+    >
+      <div class="card-info-title">Contact Info</div>
+      <button
+        *ngIf="!isConactEdit"
+        (click)="enableEdit('edit-contact', true)"
+        class="btn edit-btn"
+        [ngClass]="{ 'disabled-btn': !isInfoEdit }"
+      >
+        Edit
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+      </button>
+      <button
+        *ngIf="isConactEdit"
+        (click)="enableEdit('edit-contact', false)"
+        class="btn edit-btn"
+      >
+        Discard Changes
+      </button>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="userContactInfoForm" (ngSubmit)="submitContactForm()">
+        <div class="row gx-lg-5 gy-3 mb-3">
+          <div class="col-lg-6">
+            <label for="email">Email</label>
+            <div>
+              <input
+                formControlName="email"
+                type="text"
+                class="form-control"
+                id="email"
+                placeholder="Email"
+                [ngClass]="{ 'form-control-active': isConactEdit }"
+              />
+              <div
+                *ngIf="
+                  (userContactValid['email'].touched || userContactSubmitted) &&
+                  userContactValid['email'].errors
+                "
+              >
+                <div
+                  *ngIf="userContactValid['email'].errors['required']"
+                  class="text-danger"
+                >
+                  Please enter email
+                </div>
+                <div
+                  *ngIf="userContactValid['email'].errors['pattern']"
+                  class="text-danger"
+                >
+                  Email is not Valid
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="mobileNo">Mobile No.</label>
+            <div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">+91</span>
+                <input
+                  formControlName="mobileNo"
+                  type="text"
+                  class="form-control"
+                  id="mobileNo"
+                  placeholder="MobileNo"
+                  [ngClass]="{ 'form-control-active': isConactEdit }"
+                />
+              </div>
+              <div
+                *ngIf="
+                  (userContactValid['mobileNo'].touched ||
+                    userContactSubmitted) &&
+                  userContactValid['mobileNo'].errors
+                "
+              >
+                <div
+                  *ngIf="userContactValid['mobileNo'].errors['required']"
+                  class="text-danger"
+                >
+                  Please enter mobileNo
+                </div>
+                <div
+                  *ngIf="userContactValid['mobileNo'].errors['minlength']"
+                  class="text-danger"
+                >
+                  Min length is 10
+                </div>
+                <div
+                  *ngIf="userContactValid['mobileNo'].errors['maxlength']"
+                  class="text-danger"
+                >
+                  Max length is 10
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="isValidUserContactForm"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Password Info -->
+  <div class="my-info-card card mb-2">
+    <div
+      class="card-header d-flex justify-content-between align-items-center py-1"
+    >
+      <div class="card-info-title">Change Password</div>
+      <button
+        *ngIf="!isPwdEdit"
+        (click)="openForgotPasswordModal()"
+        class="btn edit-btn"
+        [ngClass]="{ 'disabled-btn': !isInfoEdit }"
+      >
+        Edit
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+      </button>
+      <button
+        *ngIf="isPwdEdit"
+        (click)="enableEdit('edit-pwd', false)"
+        class="btn edit-btn"
+      >
+        Discard Changes
+      </button>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="userPwdInfoForm" (ngSubmit)="submitPwdForm()">
+        <div class="row mb-3 gx-lg-5 gy-3">
+          <div class="col-lg-6">
+            <label for="newPassword" class="">New Password</label>
+            <div>
+              <div class="position-relative">
+                <input
+                  [type]="isPwd ? 'text' : 'password'"
+                  class="form-control"
+                  id="newPassword"
+                  placeholder="New Password"
+                  formControlName="password"
+                  [ngClass]="{ 'form-control-active': isPwdEdit }"
+                  (keydown.space)="$event.preventDefault()"
+                />
+                <img
+                  *ngIf="!isPwd"
+                  src="./../../../assets/lucide-icons/eye-off.svg"
+                  class="input-group-eye"
+                  height="20"
+                  width="20"
+                  alt=""
+                  (click)="togglePwd()"
+                  [class.disabledBtn]="!isPwdEdit"
+                />
+                <img
+                  *ngIf="isPwd"
+                  src="./../../../assets/lucide-icons/eye.svg"
+                  class="input-group-eye"
+                  height="20"
+                  width="20"
+                  alt=""
+                  (click)="togglePwd()"
+                  [class.disabledBtn]="!isPwdEdit"
+                />
+              </div>
+              <div
+                *ngIf="
+                  (userPwdValid['password'].touched || userPwdSubmitted) &&
+                  userPwdValid['password'].errors
+                "
+                class="text-danger"
+              >
+                <div *ngIf="userPwdValid.password?.errors?.['required']">
+                  Password is required
+                </div>
+                <div *ngIf="userPwdValid.password?.errors?.['pattern']">
+                  Password Don't meet the requirement
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <label for="confirmPassword">Confirm Password</label>
+            <div>
+              <div class="position-relative">
+                <input
+                  [type]="isCfPwd ? 'text' : 'password'"
+                  class="form-control"
+                  [ngClass]="{ 'form-control-active': isPwdEdit }"
+                  id="confirmPassword"
+                  placeholder="Confirm Password"
+                  formControlName="confirmPassword"
+                  (keydown.space)="$event.preventDefault()"
+                />
+                <img
+                  *ngIf="!isCfPwd"
+                  src="./../../../assets/lucide-icons/eye-off.svg"
+                  class="input-group-eye"
+                  height="20"
+                  width="20"
+                  alt=""
+                  (click)="toggleCnfPwd()"
+                  [class.disabledBtn]="!isPwdEdit"
+                />
+                <img
+                  *ngIf="isCfPwd"
+                  src="./../../../assets/lucide-icons/eye.svg"
+                  class="input-group-eye"
+                  height="20"
+                  width="20"
+                  alt=""
+                  (click)="toggleCnfPwd()"
+                  [class.disabledBtn]="!isPwdEdit"
+                />
+              </div>
+              <div
+                *ngIf="
+                  (userPwdValid['confirmPassword'].touched ||
+                    userPwdSubmitted) &&
+                  userPwdValid['confirmPassword'].errors
+                "
+                class="text-danger"
+              >
+                <div *ngIf="userPwdValid.confirmPassword?.errors?.['required']">
+                  ConfirmPassword is required
+                </div>
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="userPwdValid.confirmPassword.value != '' && userPwdInfoForm.errors?.['PasswordNotMatched']"
+              >
+                Password Does not match
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="isValidUserPwdForm"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Content Tagging -->
+  <div class="my-info-card card mb-2">
+    <div
+      class="card-header d-flex justify-content-between align-items-center py-1"
+    >
+      <div class="card-info-title">Content Tagging</div>
+      <button
+        *ngIf="!isTaggingEdit"
+        (click)="enableEdit('content-tagging', true)"
+        class="btn edit-btn"
+        [ngClass]="{ 'disabled-btn': !isInfoEdit }"
+      >
+        Edit
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+      </button>
+      <button
+        *ngIf="isTaggingEdit"
+        (click)="enableEdit('content-tagging', false)"
+        class="btn edit-btn"
+      >
+        Discard Changes
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="content-tagging mb-3">
+        Below displayed are the list of Technology Tagging, which you had
+        favourited. Please click on edit button to remove any tags from the
+        list. Once a tagging has been removed, all Videos, Communities, Blogs
+        etc with that Tagging will not be displayed to you.
+      </div>
+      <div class="d-flex justify-content-center mb-3 tags-container">
+        <div class="chip mx-2" *ngFor="let list of favouriteTagList">
+          <div class="chip-content" [ngClass]="!isTaggingEdit ? 'px-2' : ''">
+            {{ list.text }}
+          </div>
+          <div class="chip-close" *ngIf="isTaggingEdit" (click)="removeTag(list)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18" stroke="#8787a3" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 6L18 18" stroke="#8787a3" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+          </div>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center pb-2 pt-2">
+        <div class="col-sm-8 col-12">
+          <div class="tag-input" [ngClass]="{ disabledBtn: !isTaggingEdit }">
+            <tag-input
+              [(ngModel)]="selectedItem"
+              [identifyBy]="'id'"
+              [displayBy]="'description'"
+              [onlyFromAutocomplete]="true"
+              (input)="getText($event)"
+              [onTextChangeDebounce]="1000"
+              [secondaryPlaceholder]="
+                'Search to add technology tags of your interest'
+              "
+            >
+              <tag-input-dropdown
+                [appendToBody]="true"
+                [autocompleteItems]="tagItems"
+                [identifyBy]="'id'"
+                [displayBy]="'description'"
+                [zIndex]="99999"
+              >
+              </tag-input-dropdown>
+            </tag-input>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button
+          class="btn btn-primary"
+          type="button"
+          [disabled]="isValidTagging"
+          (click)="updateTag()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

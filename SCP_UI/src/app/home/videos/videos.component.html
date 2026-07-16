@@ -1,0 +1,529 @@
+<div class="secondary-header-wrapper">
+  <div class="bg-white c-shadow secondary-header">
+    <div class="row d-flex align-items-center py-2 flex-wrap">
+      <div class="carousel-box d-flex justify-content-between gap-2">
+        <div class="search-box flex-grow-1 d-none d-lg-block d-md-block">
+          <input
+            type="text"
+            placeholder="Search Hashtags"
+            [(ngModel)]="term"
+            (input)="getSearchText($event)"
+            class="form-control search-bar"
+          />
+          <svg
+            class="search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+              stroke="#a1a1a1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M20.9984 21.0004L16.6484 16.6504"
+              stroke="#a1a1a1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <div
+          class="d-flex flex-column position-relative"
+          *ngIf="viewType == 'list'"
+          (click)="openFilterSearch()"
+        >
+          <img
+            class="cur-p filter-icon"
+            src="../../../assets/svg/tabler_filter-search.svg"
+            alt="prev arrow"
+          />
+        </div>
+        <button
+          [disabled]="hasAsscessToAdd"
+          class="btn btn-primary btn-add"
+          (click)="addVideo()"
+        >
+          Add
+        </button>
+        <!-- I want owl carousel here -->
+        <section class="custom-carousel-container" id="filter">
+          <div class="arrow-left" (click)="scrollTo(menu, -1)">
+            <svg
+              class="tag-slider-icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <ul class="carousel-container" #menu swiper-scroll>
+            <ng-container
+              *ngIf="hashTagList | searchFilter : term : 'text' as hashTagList"
+            >
+              <li
+                [attr.data-item]="hash.id"
+                *ngFor="let hash of hashTagList; let i = index"
+                [ngClass]="{ activeTag: currTagId == hash.id }"
+              >
+                <div
+                  class="search__filter__title cur-p"
+                  (click)="getDynamicHashTagList(hash, null, true)"
+                >
+                  {{ hash.description }}
+                </div>
+                <span
+                  class="cur-p"
+                  *ngIf="currTagId == hash.id"
+                  (click)="cancelTag()"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                      stroke="#fff"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M15 9L9 15"
+                      stroke="#fff"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M9 9L15 15"
+                      stroke="#fff"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </li>
+              <p *ngIf="hashTagList.length === 0">No Record found</p>
+            </ng-container>
+          </ul>
+          <div class="arrow-right" (click)="scrollTo(menu, 1)">
+            <svg
+              class="tag-slider-icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="blog-content" [ngClass]="{ 'pb-2': viewType === 'grid' }">
+  <div class="blog-content-inner">
+    <div class="d-flex justify-content-end content-view">
+      <div class="border rounded view d-none d-sm-block d-md-none d-lg-block">
+        <img
+          class="gray-scale cur-p"
+          [ngClass]="{ 'active-scale': viewType == 'grid' }"
+          (click)="viewList('grid')"
+          src="../../../assets/svg/grid-view.svg"
+          alt="Grid View"
+        />
+        <img
+          class="gray-scale cur-p"
+          [ngClass]="{ 'active-scale': viewType == 'list' }"
+          (click)="viewList('list')"
+          src="../../../assets/svg/list-view.svg"
+          alt="List View"
+        />
+      </div>
+    </div>
+
+    <div>
+      <ng-container *ngIf="viewType == 'grid'">
+        <div class="category-card" *ngIf="dynamicTagVideoList.length">
+          <p class="header-title">{{ currentTagTitle }}</p>
+
+          <div class="d-flex align-items-center px-1-custom">
+            <div
+              (click)="dynamicSlide.prev()"
+              class="d-none d-lg-flex arrow-left"
+            >
+              <svg
+                class="tag-slider-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+
+            <div class="slide-container">
+              <div class="side-pad"></div>
+              <div class="d-flex flex-column flex-1">
+                <div class="py-1"></div>
+                <owl-carousel-o
+                  [options]="dynamicCarouselOptions"
+                  #dynamicSlide
+                >
+                  <ng-container
+                    *ngFor="let item of dynamicTagVideoList; let i = index"
+                  >
+                    <ng-template carouselSlide>
+                      <div class="video position-relative">
+                        <!-- Add clickable overlay div that sits on top of the YouTube player -->
+                        <div
+                          class="video-overlay position-absolute w-100 h-100"
+                          style="z-index: 10; cursor: pointer"
+                          (click)="handleVideoClick(item)"
+                        ></div>
+
+                        <youtube-player
+                          (stateChange)="previewVideo($event, item, i)"
+                          [videoId]="getVideoId(item?.video?.videoLink)"
+                          suggestedQuality="highres"
+                          #dynamicVideo
+                        >
+                        </youtube-player>
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </owl-carousel-o>
+                <div class="py-1"></div>
+              </div>
+              <div class="side-pad"></div>
+            </div>
+            <div (click)="dynamicSlide.next(); handleNext('dynamic')">
+              <img
+                class="cur-p slider-nav-btn"
+                src="../../../assets/svg/nextArrow.svg"
+                alt="next arrow"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="category-card mb-2" *ngIf="favouriteVideoList.length">
+          <div>
+            <p class="header-title">My Favourite</p>
+
+            <div class="d-flex align-items-center px-1-custom">
+              <div
+                (click)="videoSlide.prev()"
+                class="d-none d-lg-flex arrow-left"
+              >
+                <svg
+                  class="tag-slider-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 18L9 12L15 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <div class="slide-container">
+                <div class="side-pad"></div>
+                <div class="d-flex flex-column flex-1">
+                  <div class="py-1"></div>
+                  <owl-carousel-o [options]="carouselOptions" #videoSlide>
+                    <ng-container
+                      *ngFor="let item of favouriteVideoList; let i = index"
+                    >
+                      <ng-template carouselSlide>
+                        <div class="video position-relative">
+                          <!-- Add clickable overlay div that sits on top of the YouTube player -->
+                          <div
+                            class="video-overlay position-absolute w-100 h-100"
+                            style="z-index: 10; cursor: pointer"
+                            (click)="handleVideoClick(item)"
+                          ></div>
+
+                          <youtube-player
+                            (stateChange)="previewVideo($event, item, i)"
+                            [videoId]="getVideoId(item?.video?.videoLink)"
+                            suggestedQuality="highres"
+                            [height]="getPlayerDimensions(item, i).height"
+                            [width]="getPlayerDimensions(item, i).width"
+                            #video
+                          >
+                          </youtube-player>
+                        </div>
+                      </ng-template>
+                    </ng-container>
+                  </owl-carousel-o>
+                  <div class="py-1"></div>
+                </div>
+                <div class="side-pad"></div>
+              </div>
+              <div
+                (click)="videoSlide.next(); handleNext('videos')"
+                class="d-none d-lg-flex arrow-right"
+              >
+                <svg
+                  class="tag-slider-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 18L15 12L9 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Videos -->
+        <div class="category-card mb-4" *ngIf="myVideoList.length">
+          <div>
+            <p class="header-title">My Videos</p>
+
+            <div class="d-flex align-items-center px-1-custom">
+              <div
+                (click)="videoSlide.prev()"
+                class="d-none d-lg-flex arrow-left"
+              >
+                <svg
+                  class="tag-slider-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 18L9 12L15 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <div class="slide-container">
+                <div class="side-pad"></div>
+                <div class="d-flex flex-column flex-1">
+                  <div class="py-1"></div>
+                  <owl-carousel-o [options]="carouselOptions" #videoSlide>
+                    <ng-container
+                      *ngFor="let item of myVideoList; let i = index"
+                    >
+                      <ng-template carouselSlide>
+                        <div class="video position-relative">
+                          <!-- Add clickable overlay div that sits on top of the YouTube player -->
+                          <div
+                            class="video-overlay position-absolute w-100 h-100"
+                            style="z-index: 10; cursor: pointer"
+                            (click)="handleVideoClick(item)"
+                          ></div>
+
+                          <youtube-player
+                            (stateChange)="previewVideo($event, item, i)"
+                            [videoId]="getVideoId(item?.video?.videoLink)"
+                            suggestedQuality="highres"
+                            [height]="getPlayerDimensions(item, i).height"
+                            [width]="getPlayerDimensions(item, i).width"
+                            #video
+                          >
+                          </youtube-player>
+                        </div>
+                      </ng-template>
+                    </ng-container>
+                  </owl-carousel-o>
+                  <div class="py-1"></div>
+                </div>
+                <div class="side-pad"></div>
+              </div>
+              <div
+                (click)="videoSlide.next(); handleNext('videos')"
+                class="d-none d-lg-flex arrow-right"
+              >
+                <svg
+                  class="tag-slider-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 18L15 12L9 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-card d-flex flex-column gap-2">
+          <ng-container
+            *ngFor="let carouselData of hashTagListItems; let i = index"
+          >
+            <div>
+              <p class="header-title">
+                {{ carouselData?.text }}
+              </p>
+              <div class="d-flex align-items-center px-1-custom">
+                <div (click)="prevSlide(i)" class="d-none d-lg-flex arrow-left">
+                  <svg
+                    class="tag-slider-icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 18L9 12L15 6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+
+                <div class="slide-container">
+                  <div class="side-pad"></div>
+                  <div class="d-flex flex-column flex-1">
+                    <div class="py-1"></div>
+                    <owl-carousel-o [options]="carouselOptions" #slides>
+                      <ng-container
+                        *ngFor="
+                          let obj of carouselData.data;
+                          let j = index;
+                          let last = last
+                        "
+                      >
+                        <ng-template carouselSlide [id]="obj.id">
+                          <div class="video position-relative">
+                            <!-- Add clickable overlay div that sits on top of the YouTube player -->
+                            <div
+                              class="video-overlay position-absolute w-100 h-100"
+                              style="z-index: 10; cursor: pointer"
+                              (click)="handleVideoClick(obj)"
+                            ></div>
+
+                            <youtube-player
+                              (Action)="playPauseVideo($event, i)"
+                              (ready)="onPlayerReady($event)"
+                              (stateChange)="previewVideo($event, obj, j)"
+                              [playerVars]="obj?.playerConfig"
+                              showBeforeIframeApiLoads
+                              [videoId]="getVideoId(obj?.video?.videoLink)"
+                              [height]="getPlayerDimensions(obj, j).height"
+                              [width]="getPlayerDimensions(obj, j).width"
+                              suggestedQuality="highres"
+                              #video
+                            >
+                            </youtube-player>
+                          </div>
+                        </ng-template>
+                      </ng-container>
+                    </owl-carousel-o>
+                    <div class="py-1"></div>
+                  </div>
+                  <div class="side-pad"></div>
+                </div>
+
+                <div
+                  (click)="nextSlide(i, carouselData)"
+                  class="d-none d-lg-flex arrow-right"
+                >
+                  <svg
+                    class="tag-slider-icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 18L15 12L9 6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="viewType == 'list'">
+        <app-video-list-view
+          [filterData]="filterData"
+          [tagId]="currTagId"
+          [tagName]="selectedText"
+          (closeEvent)="close()"
+        ></app-video-list-view>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div class="p-1" [ngClass]="{ 'd-none': viewType === 'list' }"></div>
+<!-- "No content" modal replaced by newErrorModal triggered from component logic -->

@@ -1,0 +1,160 @@
+<div class="video-parent-container">
+  <div class="video-parent-container__inner" [class.video-modal-height]="!isApprovalView" #containerInner>
+    <div class="video-container">
+      <div
+        class="d-flex justify-content-between align-items-center video-header"
+      >
+        <div class="d-flex gap-2 align-items-center">
+          <div class="avatar-round">
+            <img
+              class="author-img"
+              height="60px"
+              width="60px"
+              [src]="
+                viewData._skipPhotoConversion
+                  ? viewData.postedUser.profilePhoto
+                  : commonService.convertTOBAse64Format(
+                      viewData.postedUser.profilePhoto
+                    )
+              "
+              alt="Profile Image"
+              (click)="viewProfile(viewData)"
+            />
+          </div>
+          <div class="d-flex flex-column">
+            <div class="d-flex gap-2 align-items-baseline">
+              <span
+                class="name cur-p text-title flex align-items-baseline"
+                (click)="viewProfile(viewData)"
+              >
+                <span>{{ viewData.postedUser.firstName }} </span>
+                <span class="d-none d-lg-inline-block"
+                  >{{ viewData.postedUser.lastName }}
+                </span>
+              </span>
+              <span class="posted-date">
+                posted on
+                {{ viewData.createdDate | date : "d MMM y h:mm a" }}</span
+              >
+            </div>
+            <div class="line-h-100">
+              <span class="title">{{ viewData.title }}</span>
+              <span class="short-description">
+                {{ viewData.shortDescription }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <div>
+          <img
+            src="../../../assets/images/Close_round.png"
+            alt=""
+            class="cur-p close-icon"
+            (click)="close()"
+          />
+        </div>
+      </div>
+      <div class="video-wrapper">
+        <youtube-player
+          (stateChange)="playerStateChange($event, viewData)"
+          width="500"
+          height="360"
+          [videoId]="getVideoId(viewData?.video?.videoLink)"
+          suggestedQuality="highres"
+          [playerVars]="playerConfig"
+          #video
+        >
+        </youtube-player>
+        <div
+          class="d-flex align-items-center justify-content-between flex-wrap video-footer"
+          *ngIf="!isApprovalView"
+        >
+          <div class="d-flex align-items-center">
+            <img
+              *ngIf="!viewData.liked"
+              (click)="handleLike(viewData)"
+              src="../../../assets/svg/like.svg"
+              alt="like"
+              class="like me-2 cur-p"
+              height="18px"
+            />
+            <img
+              *ngIf="viewData.liked"
+              (click)="handleLike(viewData)"
+              src="../../../assets/svg/like_fill.svg"
+              alt="like_fill"
+              class="like_fill me-2 cur-p"
+              height="18px"
+            />
+            <div class="feed-like">
+              <span class="like-count me-2">{{ viewData.likes }}</span>
+              <span class="text-body-tertiary me-2">{{
+                viewData.likes > 1 ? "Likes" : "Like"
+              }}</span>
+            </div>
+            <div class="views">
+              <span class="me-2">{{ viewData.views }}</span>
+              <span class="feed-views text-body-tertiary me-2">Views</span>
+            </div>
+            <div class="feed-comments cur-p">
+              <span class="me-1">{{ viewData.comments }}</span
+              ><span class="me-2 cur-p" (click)="toggelComment(viewData)">
+                Comments</span
+              >
+            </div>
+          </div>
+          <div class="share-section">
+            <!-- <img src="../../../assets/svg/star.svg" alt="star" (click)="markAsStar()"> -->
+            <img
+              src="../../../assets/svg/star.svg"
+              alt="star"
+              (click)="markAsStar(viewData)"
+              *ngIf="!viewData.favoured"
+              height="20px"
+            />
+            <img
+              src="../../../assets/svg/star_active.svg"
+              alt="star"
+              (click)="markAsStar(viewData)"
+              *ngIf="viewData.favoured"
+              height="20px"
+            />
+            <img
+              src="../../../assets/svg/next.svg"
+              alt="next"
+              (click)="openShare(viewData)"
+              height="20px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="video-description-container">
+        <div class="video-description" [class.expanded]="isDescriptionExpanded" #videoDescription>
+          <span class="video-description-show-more" [class.hidden]="isDescriptionExpanded" (click)="toggleDescription()">Show More</span>
+         <div class="mb-2">
+          <span class="c-text-primary fw-bold"> Description: </span> <span class="c-text-secondary">{{ viewData.video.description }}</span>
+         </div>
+         <div class="video-legal-text">
+          The videos displayed on this website are embedded from YouTube and are the property of their respective owners. We do not claim ownership of any content and are not responsible for any copyright infringement. All rights to the videos belong to the original creators. If you have any concerns regarding the content, please contact the original content owner.
+        </div>
+        <span class="video-description-show-less" [class.hidden]="!isDescriptionExpanded" (click)="toggleDescription()">Show Less</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-2 comment-section" *ngIf="!isApprovalView && activeCommentId === viewData.postingId">
+      <app-comment [item]="viewData"></app-comment>
+    </div>
+    <div class="d-flex justify-content-end gap-3" *ngIf="isApprovalView">
+
+      <button type="button" class="btn reject btn-sm" (click)="reject()">Reject</button>
+      <button type="button" class="btn approve btn-sm" (click)="approve()">Approve</button>
+    </div>
+  </div>
+</div>
+
+

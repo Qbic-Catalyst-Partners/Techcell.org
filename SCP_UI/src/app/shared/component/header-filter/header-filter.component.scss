@@ -1,0 +1,40 @@
+@import "../../../../styles/variables";
+
+.search-block {
+  width: 366px;
+}
+
+.search-box {
+  position: relative;
+  .search-status {
+    position: absolute;
+    left: 200px;
+    top: 5px;
+  }
+
+  input {
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(150, 147, 147, 1);
+    border-radius: 30px;
+    width: 234px;
+    height: 33px;
+    padding: 10px;
+    &::placeholder {
+      color: rgba(153, 153, 153, 1);
+      font-size: 19px;
+      font-weight: 500;
+    }
+  }
+}
+
+.arrow-left img {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+}
+
+.arrow-right img {
+  width: 18px;
+  height: 18px;
+  margin-left: 10px;
+}

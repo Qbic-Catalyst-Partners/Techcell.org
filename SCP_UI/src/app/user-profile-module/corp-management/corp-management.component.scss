@@ -1,0 +1,9 @@
+// copied styles from user-management
+.profile-table-container {
+  padding: 5px;
+  height: 100%;
+  height: calc(100vh - 102px);
+}
+
+/* rest of styles same as user-management */
+@import '../user-management/user-management.component'; 

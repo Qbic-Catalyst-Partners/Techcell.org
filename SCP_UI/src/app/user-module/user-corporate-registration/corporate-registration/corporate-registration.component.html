@@ -1,0 +1,212 @@
+<div class="container-fluid px-lg-4">
+  <form [formGroup]="registerForm" (ngSubmit)="submitForm()" autocomplete="off">
+    <div class="px-2 py-4">
+      <div class="card-body">
+        <!-- Row 1: Company Name / CIN -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="companyName">Company Name<sup class="text-danger fs-6">*</sup></label>
+            <input
+              formControlName="companyName"
+              type="text"
+              class="form-control"
+              id="companyName"
+              placeholder="Enter company name"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="cin">CIN<sup class="text-danger fs-6">*</sup></label>
+            <input
+              formControlName="cin"
+              type="text"
+              class="form-control"
+              id="cin"
+              placeholder="Corporate Identification Number"
+            />
+          </div>
+        </div>
+
+        <!-- Row 2: GST / Company Email -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="gstNumber">GST Number<sup class="text-danger fs-6">*</sup></label>
+            <input
+              formControlName="gstNumber"
+              type="text"
+              class="form-control"
+              id="gstNumber"
+              placeholder="GSTIN"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="companyEmail">Company Email<sup class="text-danger fs-6">*</sup></label>
+            <input
+              formControlName="companyEmail"
+              type="email"
+              class="form-control"
+              id="companyEmail"
+              placeholder="Email"
+            />
+          </div>
+        </div>
+
+        <!-- Row 3: Phone / Website -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="companyPhone">Company Phone<sup class="text-danger fs-6">*</sup></label>
+            <input
+              formControlName="companyPhone"
+              type="text"
+              class="form-control"
+              id="companyPhone"
+              placeholder="10-digit phone"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="website">Website<sup class="text-danger fs-6">*</sup></label>
+            <input
+              formControlName="website"
+              type="text"
+              class="form-control"
+              id="website"
+              placeholder="https://"
+            />
+          </div>
+        </div>
+
+        <!-- Row 4: Address -->
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <label for="orgAddress">Address<sup class="text-danger fs-6">*</sup></label>
+            <textarea
+              formControlName="orgAddress"
+              id="orgAddress"
+              rows="2"
+              class="form-control"
+              placeholder="Full address"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Row 5: City / State / Pincode -->
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="city">City<sup class="text-danger fs-6">*</sup></label>
+            <input formControlName="city" type="text" class="form-control" id="city" />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="state">State<sup class="text-danger fs-6">*</sup></label>
+            <input formControlName="state" type="text" class="form-control" id="state" />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="pincode">Pincode<sup class="text-danger fs-6">*</sup></label>
+            <input formControlName="pincode" type="text" class="form-control" id="pincode" />
+          </div>
+        </div>
+
+        <!-- Row 6: Industry / Size -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="industryType">Industry Type<sup class="text-danger fs-6">*</sup></label>
+            <input formControlName="industryType" type="text" class="form-control" id="industryType" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="companySize">Company Size<sup class="text-danger fs-6">*</sup></label>
+            <input formControlName="companySize" type="text" class="form-control" id="companySize" />
+          </div>
+        </div>
+
+        <!-- Row 7: Incorporation year / Reg ID -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="yearOfIncorporation">Year of Incorporation<sup class="text-danger fs-6">*</sup></label>
+            <input formControlName="yearOfIncorporation" type="number" class="form-control" id="yearOfIncorporation" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="registrationId">Registration Id<sup class="text-danger fs-6">*</sup></label>
+            <input formControlName="registrationId" type="text" class="form-control" id="registrationId" />
+          </div>
+        </div>
+
+        <!-- Row 8: Security Question / Answer -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="securityQuestion">Security Question<sup class="text-danger fs-6">*</sup></label>
+            <select
+              formControlName="securityQuestion"
+              id="securityQuestion"
+              class="select-option"
+            >
+              <option value="">Select question</option>
+              <option *ngFor="let q of securityQuestionList" [value]="q.questionId">
+                {{ q.questiondesc }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="securityAnswer">Security Answer<sup class="text-danger fs-6">*</sup></label>
+            <input
+              formControlName="securityAnswer"
+              type="text"
+              class="form-control"
+              id="securityAnswer"
+              placeholder="Answer"
+            />
+          </div>
+        </div>
+
+        <!-- Row 9: Logo & MCA/ROC -->
+        <div class="row">
+          <div class="col-md-6 mb-3 d-flex align-items-center">
+            <label class="me-3">Logo<sup class="text-danger fs-6">*</sup></label>
+            <div class="upload-btn-wrapper">
+              <button class="upload-btn">Upload</button>
+              <input type="file" accept="image/png, image/jpeg" (change)="uploadLogo($event)" />
+            </div>
+            <span class="ms-2" *ngIf="fieldName.logo.valid">{{ logoName }}</span>
+          </div>
+          <div class="col-md-6 mb-3 d-flex align-items-center">
+            <input type="checkbox" formControlName="mcaRocVerified" class="checkbox" />
+            <span class="ms-2">MCA/ROC Verification</span>
+          </div>
+        </div>
+
+        <!-- Row 10: Password / Confirm -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="password">Password<sup class="text-danger fs-6">*</sup></label>
+            <input formControlName="password" type="password" class="form-control" id="password" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="confirmPassword">Confirm Password<sup class="text-danger fs-6">*</sup></label>
+            <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword" />
+          </div>
+        </div>
+
+        <!-- Policies -->
+        <div class="row mt-2">
+          <div class="d-flex align-items-center gap-3">
+            <input type="checkbox" formControlName="termsConditions" class="checkbox" />
+            <span class="agreement">I have read and agree to the</span>
+            <a class="agreement c-btn-link" routerLink="/tnc">Terms & Conditions</a>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="d-flex align-items-center gap-3">
+            <input type="checkbox" formControlName="privacyPolicy" class="checkbox" />
+            <span class="agreement">I have read and agree to the</span>
+            <a class="agreement c-btn-link" routerLink="/privacy">Privacy Policy</a>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="d-flex align-items-center gap-3">
+            <input type="checkbox" formControlName="cookiePolicy" class="checkbox" />
+            <span class="agreement">I have read and agree to the</span>
+            <a class="agreement c-btn-link" (click)="commonService.cookieModal()">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary register-button">Register</button>
+  </form>
+</div> 

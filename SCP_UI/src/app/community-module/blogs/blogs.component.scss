@@ -1,0 +1,126 @@
+.blog-list {
+  display: grid;
+  grid-gap: 3px;
+}
+
+.blog-card {
+  background-color: #fff;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 20px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #dbe7f7;
+  }
+
+  &__img {
+    height: 50px;
+    width: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  &__divider {
+    background-color: #30303080;
+    width: 1px;
+    height: 80%;
+    border-radius: 20px;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: 12px;
+  }
+
+  &__desc {
+    font-size: 10px;
+  }
+
+  .btn {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 0;
+    min-width: 75px;
+    min-height: 25px;
+  }
+}
+
+// .container-fluid-wrapper {
+//   background-color: #eeeeee;
+//   padding: 8px;
+
+//   border-radius: 0.5rem;
+// }
+
+// .container-fluid {
+//   padding-bottom: 1px;
+//   max-height: 75vh;
+//   overflow: auto;
+//   padding-right: 20px;
+// }
+
+// .img-background {
+//   height: 60px;
+//   object-fit: cover;
+// }
+// .blog-title {
+//   font-size: 14px;
+//   font-weight: 600;
+//   // line-height: 21.6px;
+//   text-align: left;
+// }
+// .blog-desc {
+//   font-size: 12px;
+//   font-weight: 400;
+//   // line-height: 16.8px;
+//   text-align: justified;
+// }
+
+// @media only screen and (max-width: 600px) {
+//   .read-more-btn {
+//     font-size: 12px;
+//   }
+// }
+
+// .container-fluid::-webkit-scrollbar-track {
+//   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+//   border-radius: 10px;
+//   background-color: #f5f5f5;
+// }
+
+// .container-fluid::-webkit-scrollbar {
+//   width: 6px;
+//   background-color: #f5f5f5;
+// }
+
+// .container-fluid::-webkit-scrollbar:horizontal {
+//   height: 10px;
+// }
+
+// .container-fluid::-webkit-scrollbar-thumb {
+//   border-radius: 10px;
+//   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+//   background-color: rgba(20, 69, 87, 1);
+// }
+
+// .row {
+//   background-color: #fff;
+//   padding: 5px;
+//   cursor: pointer;
+
+//   &:hover {
+//     background-color: #dbe7f7;
+//   }
+// }
+
+// .c-left-border {
+//   border-left: 2px solid #b6b6b6;
+// }

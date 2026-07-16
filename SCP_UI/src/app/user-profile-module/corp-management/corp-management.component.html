@@ -1,0 +1,95 @@
+<div class="profile-table-container">
+   <div class="smooth-table-curve">
+    <div class="table-container px-2 scroll-design" id="scroll-design">
+        <table class="table table-hover m-0">
+            <thead>
+                <tr class="header-row">
+                    <th class="table-header" scope="col" *ngFor="let column of header_data" (click)="sortHeader(column)" [style.width]="column.width">
+                        {{column?.fieldName}}
+                        <span *ngIf="column?.isSort">
+                            <svg
+                              [class.list-down-arr]="!column.sort"
+                              width="12"
+                              height="12"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 5V19"
+                                stroke="#9da5b9"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M19 12L12 19L5 12"
+                                stroke="#9da5b9"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="scroll-section">
+                <ng-container *ngFor="let row of all_data;let i = index">
+                    <tr appScroll (elementVisible)="getData($event)" [isTargetElement]="i +1 === all_data.length" *ngIf="i + 1 === all_data.length">
+                        <ng-container *ngTemplateOutlet="content; context: {row} "></ng-container>
+                    </tr>
+                    <tr *ngIf="i + 1 != all_data.length">
+                        <ng-container *ngTemplateOutlet="content; context: {row}"></ng-container>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="all_data && all_data.length == 0">
+                    <td [attr.colspan]="header_data.length" class="text-center">
+                        No Record Found
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+   </div>
+</div>
+
+<ng-template #content let-row = 'row' >
+    <td>
+        {{ row?.userId}}
+    </td>
+    <td>{{ row?.firstName}}&nbsp;{{ row?.lastName}}</td>
+    <td>{{ row?.role }}</td>
+    <td>{{ row?.orgDetail?.cin }}</td>
+    <td>{{ row?.orgName }}</td>
+    <td>{{ row?.state}}</td>
+    <td [ngClass]="row?.status == 'Active' ? 'active-text-color':'Inactive-text-color'">{{ row?.status}}</td>
+    <td>
+        <div class="d-flex gap-2 justify-content-center">
+            <button 
+                mat-icon-button
+                class="action-btn" 
+                [ngbTooltip]="actionContent"
+                [tooltipContext]="{row: row, tooltip: t}"
+                triggers="manual"
+                #t="ngbTooltip"
+                (click)="toggleTooltip(t)">
+                <img src="../../../../assets/svg/action-icon.svg" alt="action" class="action-icon" />
+            </button>
+        </div>
+    </td>
+</ng-template>
+
+<ng-template #actionContent let-row="row" let-tooltip="tooltip">
+    <div class="action-tooltip">
+        <div class="action-item" (click)="updateStatus('Active', row); tooltip.close()" *ngIf="row?.status != 'Active'">
+            Activate
+        </div>
+        <div class="action-item" (click)="updateStatus('InActive', row); tooltip.close()" *ngIf="row?.status == 'Active'">
+            InActivate
+        </div>
+        <div class="action-item" style="opacity:0.4; pointer-events:none;">
+            Delete
+        </div>
+    </div>
+</ng-template> 

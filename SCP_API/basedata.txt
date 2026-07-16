@@ -1,0 +1,32 @@
+
+INSERT INTO security_question VALUES (1,"What is your mother's maiden name?");
+INSERT INTO security_question VALUES (2,"What is the name of your first pet?");
+INSERT INTO security_question VALUES (3,"In what city were you born?");
+INSERT INTO security_question VALUES (4,"What is the name of your favorite teacher?");
+INSERT INTO security_question VALUES (5,"What is your favorite book?");
+INSERT INTO security_question VALUES (6,"What is your favorite movie?");
+INSERT INTO security_question VALUES (7,"What is your favorite sports team?");
+INSERT INTO security_question VALUES (8,"What is your favorite color?");
+
+
+INSERT INTO hash_tag VALUES (1,'Java',null,'Programing','Java');
+INSERT INTO hash_tag VALUES (2,'IOT',null,'Technology','IOT');
+INSERT INTO hash_tag VALUES (3,'Python',null,'Programing','Python');
+INSERT INTO hash_tag VALUES (4,'Oracle',null,'DB','Oracle');
+INSERT INTO hash_tag VALUES (5,'Figma',null,'Technology','Figma');
+INSERT INTO hash_tag VALUES (6,'AIML',null,'Technology','AIML');
+INSERT INTO hash_tag VALUES (7,'MachineLearning',null,'Technology','Machine Learning');
+INSERT INTO hash_tag VALUES (8,'AI',null,'Technology','AI');
+INSERT INTO hash_tag VALUES (9,'Salesforce',null,'Technology','Salesforce');
+INSERT INTO hash_tag VALUES (10,'Pegasystems',null,'Technology','Pegasystems');
+INSERT INTO hash_tag VALUES (11,'SAPSD',null,'Technology','SAPSD');
+INSERT INTO hash_tag VALUES (12,'SAPPM',null,'Technology','SAPPM');
+INSERT INTO hash_tag VALUES (13,'SAPQA',null,'Technology','SAPQA');
+INSERT INTO hash_tag VALUES (14,'IOT',null,'Technology','IOT');
+INSERT INTO hash_tag VALUES (15,'CyberSecurity',null,'Technology','Cyber Security');
+INSERT INTO hash_tag VALUES (16,'PowerBI',null,'Technology','Power BI');
+INSERT INTO hash_tag VALUES (17,'Graphana',null,'Technology','Graphana');
+INSERT INTO hash_tag VALUES (18,'BI',null,'Technology','BI');
+INSERT INTO hash_tag VALUES (19,'PowerTools',null,'Technology','Power Tools');
+
+INSERT INTO role_access_rltnp Value (1,'AddVideo',1,'Video','Student');

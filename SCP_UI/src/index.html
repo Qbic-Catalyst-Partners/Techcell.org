@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>TechCell</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/png" href="./favicon.png" />
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  </head>
+  <body>
+    <script>
+      window.global = window;
+    </script>
+    <app-root></app-root>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .querySelectorAll(".sidebar .nav-link")
+          .forEach(function (element) {
+            element.addEventListener("click", function (e) {
+              let nextEl = element.nextElementSibling;
+              let parentEl = element.parentElement;
+
+              if (nextEl) {
+                e.preventDefault();
+                let mycollapse = new bootstrap.Collapse(nextEl);
+
+                if (nextEl.classList.contains("show")) {
+                  mycollapse.hide();
+                } else {
+                  mycollapse.show();
+                  // find other submenus with class=show
+                  var opened_submenu =
+                    parentEl.parentElement.querySelector(".submenu.show");
+                  // if it exists, then close all of them
+                  if (opened_submenu) {
+                    new bootstrap.Collapse(opened_submenu);
+                  }
+                }
+              }
+            }); // addEventListener
+          }); // forEach
+      });
+    </script>
+  </body>
+</html>
